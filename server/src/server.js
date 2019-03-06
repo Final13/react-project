@@ -8,7 +8,7 @@ config.express(app);
 config.mongo();
 
 routes.mail(app);
-app.use('/api/users', routes.user);
+routes.user(app);
 
 
 app.listen(config.app.appPort, () => { console.log(`Listening on port ${config.app.appPort}...`); });
