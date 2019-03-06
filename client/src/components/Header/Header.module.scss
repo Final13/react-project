@@ -1,0 +1,37 @@
+.header {
+  position: relative;
+  z-index: 9999 !important;
+}
+
+.link {
+  padding: 10px;
+  font-size: 16px;
+  color: #a4a4a4;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.addLink {
+  composes: link;
+  padding-left: 0;
+  margin-left: -5px;
+}
+
+.login {
+  composes: link;
+  color: #6363d4;
+}
+
+.register {
+  composes: link;
+  color: #d04649;
+}
+
+.logout {
+  width: 25px;
+  margin-right: 5px;
+}
