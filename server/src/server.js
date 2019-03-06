@@ -9,6 +9,7 @@ config.mongo();
 
 routes.mail(app);
 routes.user(app);
+routes.work(app);
 
 
 app.listen(config.app.appPort, () => { console.log(`Listening on port ${config.app.appPort}...`); });
