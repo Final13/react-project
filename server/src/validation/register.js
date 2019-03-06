@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
-module.exports = function validateRegisterInput(data) {
+const validateRegisterInput = (data) => {
     let errors = {};
     data.name = !isEmpty(data.name) ? data.name : '';
     data.email = !isEmpty(data.email) ? data.email : '';
@@ -49,3 +49,5 @@ module.exports = function validateRegisterInput(data) {
         isValid: isEmpty(errors)
     }
 };
+
+module.exports = validateRegisterInput;

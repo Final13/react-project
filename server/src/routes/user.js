@@ -8,13 +8,14 @@ const validateLoginInput = require('../validation/login');
 
 const User = require('../models/User');
 
-router.post('/register', function(req, res) {
+router.post('/register', (req, res) => {
 
     const { errors, isValid } = validateRegisterInput(req.body);
 
     if(!isValid) {
         return res.status(400).json(errors);
     }
+
     User.findOne({
         email: req.body.email
     }).then(user => {
