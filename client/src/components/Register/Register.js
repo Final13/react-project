@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { registerUser } from '../../actions/authentication';
-import styles from './Register.module.scss'
+import styles from './Register.module.scss';
 
 class Register extends Component {
 
@@ -55,7 +55,7 @@ class Register extends Component {
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.regHeader}>Registration</h2>
                 <form onSubmit={ this.handleSubmit }>
-                    <div className="form-group">
+                    <div className={`form-group`}>
                         <input
                             type="text"
                             placeholder="Name"
@@ -99,7 +99,7 @@ class Register extends Component {
                         />
                         {errors.password_confirm && (<div className="invalid-feedback">{errors.password_confirm}</div>)}
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group`}>
                         <button type="submit" className={`btn btn-primary`}>
                             Register User
                         </button>

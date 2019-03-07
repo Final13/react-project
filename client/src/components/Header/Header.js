@@ -16,9 +16,11 @@ class Header extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const {navbarClasses} = this.props.nav;
         const authLinks = (
-            <button className={`btn btn-secondary`} onClick={this.onLogout}>
-                <img src={user.avatar} alt={user.name} title={user.name}
-                     className={`rounded-circle ${styles.logout}`}
+            <button className={`btn btn-secondary ${styles.logoutBtn}`} onClick={this.onLogout}>
+                <img src={user.avatar}
+                     alt={user.name}
+                     title={user.name}
+                     className={`rounded-circle ${styles.logoutImg}`}
                 />
                 Logout
             </button>
@@ -46,14 +48,16 @@ class Header extends Component {
                     <div className={`collapse navbar-collapse ${navbarClasses}`} id="navbarNavAltMarkup">
                         <div className={`navbar-nav ml-auto`}>
                             <Link className={styles.link} to='/services'>Services</Link>
-                            <Link className={styles.link} to='/portfolio'>Portfolio</Link>
-                            {
-                                this.props.auth.user.role === 'admin' ?
-                                    <Link className={styles.addLink} to='/portfolio-form'>
-                                        <i className={`fas fa-plus-circle`} />
-                                    </Link>
-                                    : null
-                            }
+                            <div className={`d-flex`}>
+                                <Link className={styles.link} to='/portfolio'>Portfolio</Link>
+                                {
+                                    this.props.auth.user.role === 'admin' ?
+                                        <Link className={styles.addLink} to='/portfolio-form'>
+                                            <i className={`fas fa-plus-circle`} />
+                                        </Link>
+                                        : null
+                                }
+                            </div>
                             <Link className={styles.link} to='/contacts'>Contacts</Link>
                             {isAuthenticated ? authLinks : guestLinks}
                         </div>

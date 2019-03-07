@@ -18,7 +18,6 @@
 .addLink {
   composes: link;
   padding-left: 0;
-  margin-left: -5px;
 }
 
 .login {
@@ -31,7 +30,12 @@
   color: #d04649;
 }
 
-.logout {
+.logoutImg {
   width: 25px;
   margin-right: 5px;
+}
+
+.logoutBtn {
+  width: fit-content;
+  margin-left: 10px;
 }

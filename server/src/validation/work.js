@@ -8,7 +8,7 @@ const validateWorkInput = (data) => {
     data.type = !isEmpty(data.type) ? data.type : '';
     data.form = !isEmpty(data.form) ? data.form : '';
     data.color = !isEmpty(data.color) ? data.color : '';
-    data.images = !isEmpty(data.images) ? data.images : '';
+    data.images = !isEmpty(data.images) ? data.images : [];
 
     if(Validator.isEmpty(data.name)) {
         errors.name = 'Name field is required';
