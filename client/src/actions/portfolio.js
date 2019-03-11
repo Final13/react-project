@@ -3,7 +3,7 @@ import { GET_ERRORS } from './types';
 
 export const createWork = (work, history) => dispatch => {
     axios.post('/api/works/create', work)
-        .then(res => history.push('/portfolio'))
+        // .then(res => history.push('/portfolio'))
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
