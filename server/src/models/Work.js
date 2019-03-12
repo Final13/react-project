@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const WorkSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -11,13 +11,13 @@ const WorkSchema = new Schema({
         type: String
     },
     type: {
-        type: String
+        type: Object
     },
     form: {
-        type: String
+        type: Object
     },
     color: {
-        type: String
+        type: Object
     },
     images: {
         type: Array

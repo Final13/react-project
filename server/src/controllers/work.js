@@ -14,7 +14,7 @@ const createWork = (req, res) => {
     });
 
     const newWork = new Work({
-        name: req.body.name,
+        title: req.body.title,
         description: req.body.description,
         type: req.body.type,
         form: req.body.form,
