@@ -45,21 +45,26 @@ class PortfolioForm extends Component {
     };
 
     handleImageChange = (images) => {
-        this.setState({
-            images: [...images]
+        images.forEach( image => {
+            this.setState({
+                images: [...this.state.images, image]
+            });
         });
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const work = {
-            title: this.state.title,
-            description: this.state.description,
-            type: this.state.type,
-            form: this.state.form,
-            color: this.state.color,
-            images: this.state.images
-        };
+
+        const work = new FormData();
+        work.append('title', this.state.title);
+        work.append('description', this.state.description);
+        work.append('type', JSON.stringify(this.state.type));
+        work.append('form', JSON.stringify(this.state.form));
+        work.append('color', JSON.stringify(this.state.color));
+        this.state.images.forEach(image => {
+            work.append('files', image);
+        });
+
         this.props.createWork(work, this.props.history);
     };
 

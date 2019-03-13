@@ -1,6 +1,5 @@
 const validateWorkInput = require('../validation/work');
 const Work = require('../models/Work');
-const fs = require('fs-extra');
 
 const createWork = (req, res) => {
     const { errors, isValid } = validateWorkInput(req.body);
@@ -9,17 +8,18 @@ const createWork = (req, res) => {
         return res.status(400).json(errors);
     }
 
-    req.body.images.forEach(image => {
-        console.log(image);
+    let images = [];
+    req.files.forEach(image => {
+        return images = [...images, image.filename]
     });
 
     const newWork = new Work({
         title: req.body.title,
         description: req.body.description,
-        type: req.body.type,
-        form: req.body.form,
-        color: req.body.color,
-        images: req.body.images,
+        type: JSON.parse(req.body.type),
+        form: JSON.parse(req.body.form),
+        color: JSON.parse(req.body.color),
+        images: images,
     });
 
     newWork
