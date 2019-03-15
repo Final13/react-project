@@ -206,7 +206,7 @@ PortfolioForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    work: state.work,
+    work: state.work.work,
     errors: state.errors
 });
 

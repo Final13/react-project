@@ -30,7 +30,6 @@ const createWork = (req, res) => {
 };
 
 const getAllWorks = (req, res) => {
-
     Work
         .find()
         .then(works => {
@@ -42,7 +41,52 @@ const getAllWorks = (req, res) => {
         });
 };
 
+const getWorkById = (req, res) => {
+    const id = req.params.id;
+    Work
+        .findById(id)
+        .then(work => {
+            if(!work) {
+                errors.email = 'Work not found';
+                return res.status(404).json(errors);
+            }
+            res.json(work);
+        });
+};
+
+const updateWork = (req, res) => {
+    Work
+        .findById(req.params.id, (err, work) => {
+        if (!work) {
+            return res.status(404).send("data is not found");
+        }
+
+            let images = [];
+            req.files.forEach(image => {
+                return images = [...images, image.filename]
+            });
+
+            work.title = req.body.title;
+            work.description = req.body.description;
+            work.type = JSON.parse(req.body.type);
+            work.form = JSON.parse(req.body.form);
+            work.color = JSON.parse(req.body.color);
+            work.images = images;
+
+            work
+                .save()
+                .then(() => {
+                    res.json('Work updated!');
+                })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                });
+    });
+};
+
 module.exports = {
     createWork,
-    getAllWorks
+    getAllWorks,
+    getWorkById,
+    updateWork,
 };
