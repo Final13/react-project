@@ -55,17 +55,25 @@ const getWorkById = (req, res) => {
 };
 
 const updateWork = (req, res) => {
+    const { errors, isValid } = validateWorkInput(req.body);
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     Work
         .findById(req.params.id, (err, work) => {
         if (!work) {
             return res.status(404).send("data is not found");
         }
-
             let images = [];
             req.files.forEach(image => {
                 return images = [...images, image.filename]
             });
-
+            if (req.body.files) {
+                Array.from(req.body.files).forEach(image => {
+                    return images = [...images, image]
+                });
+            }
             work.title = req.body.title;
             work.description = req.body.description;
             work.type = JSON.parse(req.body.type);
@@ -84,9 +92,19 @@ const updateWork = (req, res) => {
     });
 };
 
+const deleteWork = (req, res) => {
+    const id = req.params.id;
+    Work
+        .findByIdAndDelete(id)
+        .then(() => {
+            res.json('Work deleted!');
+        });
+};
+
 module.exports = {
     createWork,
     getAllWorks,
     getWorkById,
     updateWork,
+    deleteWork,
 };

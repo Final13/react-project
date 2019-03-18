@@ -54,3 +54,14 @@ export const updateWork = (id, work, history) => dispatch => {
             });
         });
 };
+
+export const deleteWork = (id, history) => dispatch => {
+    axios.delete(`/api/works/delete/${id}`)
+        .then(res => history.push('/portfolio'))
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};

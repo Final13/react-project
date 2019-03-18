@@ -7,6 +7,12 @@
   margin-bottom: 40px;
 }
 
+.workTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .slider {
   width: 85%;
   margin: auto;

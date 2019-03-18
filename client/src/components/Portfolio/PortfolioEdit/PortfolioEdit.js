@@ -50,12 +50,20 @@ class PortfolioEdit extends Component {
     };
 
     handleImageChange = (images) => {
+        const work = {...this.state.work};
         images.forEach( image => {
-            const work = [...this.state.work];
             work.images = [...work.images, image];
-            this.setState({
-                work: work
-            });
+        });
+        this.setState({
+            work: work
+        });
+    };
+
+    removeImage = (image) => {
+        const work = {...this.state.work};
+        work.images = work.images.filter(el => el !== image);
+        this.setState({
+            work: work
         });
     };
 
@@ -71,7 +79,6 @@ class PortfolioEdit extends Component {
         this.state.work.images.forEach(image => {
             work.append('files', image);
         });
-        return console.log(work);
         this.props.updateWork(this.props.match.params.id, work, this.props.history);
     };
 
@@ -185,12 +192,21 @@ class PortfolioEdit extends Component {
                                         {work.images ?
                                             <React.Fragment>
                                                 {work.images.map((image) => (
-                                                    <img
-                                                        alt={image}
-                                                        key={image}
-                                                        src={uploadsUrl + image}
-                                                        className={styles.thumbImg}
-                                                    />
+                                                    <React.Fragment key={typeof image === 'object' ? image.name : image}>
+                                                        <img
+                                                            alt={typeof image === 'object' ? image.name : image}
+                                                            src={typeof image === 'object' ? URL.createObjectURL(image): uploadsUrl + image}
+                                                            className={styles.thumbImg}
+                                                        />
+                                                        <i
+                                                            className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                            onClick={(event) => {
+                                                                event.preventDefault();
+                                                                event.stopPropagation();
+                                                                this.removeImage(image);
+                                                            }}
+                                                        />
+                                                    </React.Fragment>
                                                 ))}
                                             </React.Fragment>
                                             :

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import { withRouter, Link } from 'react-router-dom';
-import { getWorkById } from '../../../actions/portfolio';
+import { getWorkById, deleteWork } from '../../../actions/portfolio';
 import styles from './PortfolioDetails.module.scss';
 import {uploadsUrl} from "../../../config";
 
@@ -11,6 +11,10 @@ class PortfolioDetails extends Component {
     componentDidMount() {
         this.props.getWorkById(this.props.match.params.id);
     }
+
+    handleDelete = () => {
+        this.props.deleteWork(this.props.match.params.id, this.props.history);
+    };
 
     render() {
         const settings = {
@@ -24,14 +28,27 @@ class PortfolioDetails extends Component {
             slidesToScroll: 1
         };
         const { work } = this.props;
+        const { role } = this.props.auth.user;
         return(
             <div className={`${styles.container}`}>
-                <Link
-                    to={`/portfolio/edit/${work._id}`}
-                    className={`btn btn-primary ${styles.editButton}`}
-                >
-                    Edit
-                </Link>
+                {
+                    role === 'admin' ? (
+                        <React.Fragment>
+                            <Link
+                                to={`/portfolio/edit/${work._id}`}
+                                className={`btn btn-primary ${styles.editButton}`}
+                            >
+                                Edit
+                            </Link>
+                            <button
+                                onClick={this.handleDelete}
+                                className={`btn btn-danger ${styles.deleteButton}`}
+                            >
+                                Delete
+                            </button>
+                        </React.Fragment>
+                    ) : null
+                }
                 <h2 className={styles.workHeader}>{ work.title }</h2>
                 <div className={`row`}>
                     <div className={`col-sm-12 col-lg-6`}>
@@ -50,10 +67,22 @@ class PortfolioDetails extends Component {
                         </Slider>
                     </div>
                     <div className={`col-sm-12 col-lg-6 ${styles.rightBlock}`}>
-                        <div>Description: {work.description}</div>
-                        <div>Color: {work.color.label}</div>
-                        <div>Type: {work.type.label}</div>
-                        <div>Form: {work.form.label}</div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0`}>Description:</h6>
+                            {work.description}
+                        </div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0`}>Color:</h6>
+                            {work.color.label}
+                        </div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0`}>Type:</h6>
+                            {work.type.label}
+                        </div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0`}>Form:</h6>
+                            {work.form.label}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,10 +92,12 @@ class PortfolioDetails extends Component {
 
 PortfolioDetails.propTypes = {
     getWorkById: PropTypes.func.isRequired,
+    deleteWork: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    work: state.work.work
+    work: state.work.work,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps,{ getWorkById })(withRouter(PortfolioDetails));
+export default connect(mapStateToProps,{ getWorkById, deleteWork })(withRouter(PortfolioDetails));

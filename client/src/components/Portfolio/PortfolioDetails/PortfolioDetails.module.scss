@@ -8,8 +8,9 @@
 }
 
 .sliderImage {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 300px;
+  margin: auto;
 }
 
 .rightBlock {
@@ -24,6 +25,11 @@
 .editButton {
   position: absolute;
   right: 100px;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 160px;
 }
 
 @media only screen and (min-width: 992px) {

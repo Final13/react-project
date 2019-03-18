@@ -33,7 +33,7 @@ class Portfolio extends Component {
                             <div key={work._id} className={`col-4`}>
                                 <div className={styles.cardWhite}>
                                     <div className={styles.cardContent}>
-                                        <h4 className={`pb-3`}>{work.title}</h4>
+                                        <h4 className={`pb-3 ${styles.workTitle}`}>{work.title}</h4>
                                         <Slider {...settings}>
                                             {
                                                 work.images.map( image => (
