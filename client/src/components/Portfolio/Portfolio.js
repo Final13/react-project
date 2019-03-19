@@ -71,6 +71,8 @@ class Portfolio extends Component {
 
 Portfolio.propTypes = {
     works: PropTypes.array,
+    getAllWorks: PropTypes.func.isRequired,
+    getWorkById: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
