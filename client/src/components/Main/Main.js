@@ -25,7 +25,7 @@ const Main = () => (
             <Route exact path='/services' component={ Service } />
             <Route exact path="/register" component={ Register } />
             <Route exact path="/login" component={ Login } />
-            <PrivateRoute path="/portfolio-form" component={ PortfolioForm } />
+            <PrivateRoute exact path="/portfolio-form" component={ PortfolioForm } />
             <Route exact path='/404' component={ ErrorPage } />
             <Redirect to='/404'/>
         </Switch>

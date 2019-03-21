@@ -27,11 +27,11 @@ class Contact extends Component {
                             </div>
                             <div className={`col-12 ${styles.infoBlock}`}>
                                 <i className={`fas fa-phone pr-3`} />
-                                <a className="" href="tel:+375(29)175-21-14">123456</a>
+                                <a className={styles.customLink} href="tel:+375(29)175-21-14">123456</a>
                             </div>
                             <div className={`col-12 ${styles.infoBlock}`}>
                                 <i className={`fas fa-envelope pr-3`} />
-                                <a href="mailto:example@gmail.com">example@gmail.com</a>
+                                <a className={styles.customLink} href="mailto:example@gmail.com">example@gmail.com</a>
                             </div>
                         </div>
                     </div>
