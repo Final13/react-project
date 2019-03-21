@@ -9,5 +9,13 @@ export default {
             form: {value: '', label: ''},
             images: [],
         }
+    },
+    mail() {
+        return {
+            name: '',
+            phone: '',
+            email: '',
+            message: ''
+        }
     }
 }
