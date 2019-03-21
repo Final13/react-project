@@ -1,0 +1,38 @@
+.cardWhite {
+  box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  padding-top: 100%;
+  margin-top: 25px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  position: relative;
+}
+
+.cardContent {
+  position: absolute;
+  padding: 20px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.cardContent i {
+  font-size: 50px;
+  padding: 20px;
+  color: #6c87ec;
+}
+
+.cardHeader {
+  color: #4F4F4F;
+  margin: 15px 0 15px 0;
+}
+
+.threeLineEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
