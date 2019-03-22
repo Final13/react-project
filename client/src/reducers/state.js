@@ -1,5 +1,36 @@
 export default {
 
+    errors() {
+        return {
+            customer: {
+                name: '',
+                phone: '',
+            },
+            stone: {
+                color: '',
+                type: '',
+                form: '',
+            },
+            extra: {
+                stella: '',
+                stand: '',
+                tombstone: '',
+                plate: '',
+                vase: '',
+                adds: '',
+            },
+            info: {
+                firstName: '',
+                secondName: '',
+                lastName: '',
+                date: '',
+                epitaph: '',
+                portrait: '',
+                text: '',
+                adds: '',
+            },
+        }
+    },
     work() {
         return {
             title: '',
@@ -7,7 +38,7 @@ export default {
             color: {value: '', label: ''},
             type: {value: '', label: ''},
             form: {value: '', label: ''},
-            images: [],
+            images: []
         }
     },
     mail() {
@@ -16,6 +47,43 @@ export default {
             phone: '',
             email: '',
             message: ''
+        }
+    },
+    contract() {
+        return {
+            number: '',
+            customer: {
+                name: '',
+                phone: '',
+            },
+            stone: {
+                color: {value: '', label: ''},
+                type: {value: '', label: ''},
+                form: {value: '', label: ''},
+            },
+            extra: {
+                stella: '',
+                stand: '',
+                tombstone: '',
+                plate: '',
+                vase: '',
+                adds: '',
+            },
+            info: {
+                firstName: '',
+                secondName: '',
+                lastName: '',
+                date: '',
+                epitaph: '',
+                portrait: '',
+                text: '',
+                adds: '',
+            },
+            cemetery: {},
+            payments: [],
+            total: 0,
+            install: '',
+            deleted: false
         }
     }
 }

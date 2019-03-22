@@ -3,6 +3,7 @@ const isEmpty = require('./is-empty');
 
 const validateContractInput = (data) => {
     let errors = {};
+    data.number = !isEmpty(data.number) ? data.number : '';
     data.customer = !isEmpty(data.customer) ? data.customer : {};
     data.stone = !isEmpty(data.stone) ? data.stone : {};
     data.extra = !isEmpty(data.extra) ? data.extra : {};
@@ -12,8 +13,8 @@ const validateContractInput = (data) => {
     data.total = !isEmpty(data.total) ? data.total : '';
     data.install = !isEmpty(data.install) ? data.install : '';
 
-    if(Validator.isEmpty(data.customer)) {
-        errors.customer = 'Customer is required';
+    if(Validator.isEmpty(data.number)) {
+        errors.number = 'Contract number is required';
     }
 
     return {

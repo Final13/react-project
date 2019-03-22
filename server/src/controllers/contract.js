@@ -9,11 +9,12 @@ const createContract = (req, res) => {
     }
 
     const newContract = new Contract({
-        customer: JSON.parse(req.body.customer),
-        stone: JSON.parse(req.body.stone),
-        extra: JSON.parse(req.body.extra),
-        info: JSON.parse(req.body.info),
-        payments: JSON.parse(req.body.payments),
+        number: req.body.number,
+        customer: req.body.customer,
+        stone: req.body.stone,
+        extra: req.body.extra,
+        info: req.body.info,
+        payments: req.body.payments,
         total: req.body.total,
         install: req.body.install,
     });
@@ -28,8 +29,8 @@ const createContract = (req, res) => {
 const getAllContracts = (req, res) => {
     Contract
         .find({ deleted: false })
-        .then(contract => {
-            if(!contract) {
+        .then(contracts => {
+            if(!contracts) {
                 errors.email = 'Contracts not found';
                 return res.status(404).json(errors);
             }
@@ -61,12 +62,14 @@ const updateContract = (req, res) => {
             if (!contract) {
                 return res.status(404).send("data is not found");
             }
-            contract.title = req.body.title;
-            contract.description = req.body.description;
-            contract.type = JSON.parse(req.body.type);
-            contract.form = JSON.parse(req.body.form);
-            contract.color = JSON.parse(req.body.color);
-            contract.images = images;
+            contract.number = req.body.number;
+            contract.customer = req.body.customer;
+            contract.stone = req.body.stone;
+            contract.extra = req.body.extra;
+            contract.info = req.body.info;
+            contract.payments = req.body.payments;
+            contract.total = req.body.total;
+            contract.install = req.body.install;
 
             contract
                 .save()

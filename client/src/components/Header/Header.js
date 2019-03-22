@@ -52,9 +52,17 @@ class Header extends Component {
                                 <Link className={styles.link} to='/portfolio'>Portfolio</Link>
                                 {
                                     this.props.auth.user.role === 'admin' ?
-                                        <Link className={styles.addLink} to='/portfolio-form'>
-                                            <i className={`fas fa-plus-circle`} />
-                                        </Link>
+                                        <React.Fragment>
+                                            <Link className={styles.addLink} to='/portfolio-form'>
+                                                <i className={`fas fa-plus-circle`} />
+                                            </Link>
+                                            <Link className={styles.link} to='/contract'>
+                                                Contracts
+                                            </Link>
+                                            <Link className={styles.addLink} to='/contract-form'>
+                                                <i className={`fas fa-plus-circle`} />
+                                            </Link>
+                                        </React.Fragment>
                                         : null
                                 }
                             </div>

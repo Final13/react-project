@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ContractSchema = new Schema({
+    number: {
+        type: String
+    },
     customer: {
         type: Object
     },
