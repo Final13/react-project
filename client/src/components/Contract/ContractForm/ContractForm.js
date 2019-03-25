@@ -99,12 +99,12 @@ class ContractForm extends Component {
                                 <input
                                     type="text"
                                     placeholder="Customer name"
-                                    className={`form-control ${errors.customer && 'is-invalid'}`}
+                                    className={`form-control ${errors.customerName && 'is-invalid'}`}
                                     name="customer.name"
                                     onChange={ this.handleInputChange }
                                     value={ contract.customer.name }
                                 />
-                                {errors.customer && (<div className={`invalid-feedback`}>{errors.customer}</div>)}
+                                {errors.customerName && (<div className={`invalid-feedback`}>{errors.customerName}</div>)}
                             </div>
                         </div>
                         <div className={`col-sm-12 col-lg-6`}>
@@ -113,12 +113,12 @@ class ContractForm extends Component {
                                 <input
                                     type="text"
                                     placeholder="Customer phone"
-                                    className={`form-control ${errors.customer && 'is-invalid'}`}
+                                    className={`form-control ${errors.customerPhone && 'is-invalid'}`}
                                     name="customer.phone"
                                     onChange={ this.handleInputChange }
                                     value={ contract.customer.phone }
                                 />
-                                {errors.customer && (<div className={`invalid-feedback`}>{errors.customer}</div>)}
+                                {errors.customerPhone && (<div className={`invalid-feedback`}>{errors.customerPhone}</div>)}
                             </div>
                         </div>
                         <div className={`col-sm-12 col-lg-6`}>
@@ -162,6 +162,34 @@ class ContractForm extends Component {
                                     options={colors}
                                 />
                                 {errors.stone && (<div className={`invalid-feedback`}>{errors.stone}</div>)}
+                            </div>
+                        </div>
+                        <div className={`col-sm-12 col-lg-6`}>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Info name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Info Name"
+                                    className={`form-control ${errors.info && 'is-invalid'}`}
+                                    name="info.firstName"
+                                    onChange={ this.handleInputChange }
+                                    value={ contract.info.firstName }
+                                />
+                                {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                            </div>
+                        </div>
+                        <div className={`col-sm-12 col-lg-6`}>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Info2 name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Info2 Name"
+                                    className={`form-control ${errors.info2 && 'is-invalid'}`}
+                                    name="info2.firstName"
+                                    onChange={ this.handleInputChange }
+                                    value={ contract.info2.firstName }
+                                />
+                                {errors.info2 && (<div className={`invalid-feedback`}>{errors.info2}</div>)}
                             </div>
                         </div>
                     </div>

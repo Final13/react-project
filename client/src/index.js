@@ -17,6 +17,8 @@ import { setCurrentUser, logoutUser } from './actions/authentication';
 if(localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
     const decoded = jwt_decode(localStorage.jwtToken);
+    //Setting logout time to 10 hours
+    decoded.exp = (new Date().getTime() + (60 * 60 * 10) * 1000)/1000;
     store.dispatch(setCurrentUser(decoded));
 
     const currentTime = Date.now() / 1000;

@@ -14,6 +14,7 @@ const createContract = (req, res) => {
         stone: req.body.stone,
         extra: req.body.extra,
         info: req.body.info,
+        info2: req.body.info2,
         payments: req.body.payments,
         total: req.body.total,
         install: req.body.install,
@@ -67,6 +68,7 @@ const updateContract = (req, res) => {
             contract.stone = req.body.stone;
             contract.extra = req.body.extra;
             contract.info = req.body.info;
+            contract.info2 = req.body.info2;
             contract.payments = req.body.payments;
             contract.total = req.body.total;
             contract.install = req.body.install;

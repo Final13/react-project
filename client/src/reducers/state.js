@@ -1,36 +1,5 @@
 export default {
 
-    errors() {
-        return {
-            customer: {
-                name: '',
-                phone: '',
-            },
-            stone: {
-                color: '',
-                type: '',
-                form: '',
-            },
-            extra: {
-                stella: '',
-                stand: '',
-                tombstone: '',
-                plate: '',
-                vase: '',
-                adds: '',
-            },
-            info: {
-                firstName: '',
-                secondName: '',
-                lastName: '',
-                date: '',
-                epitaph: '',
-                portrait: '',
-                text: '',
-                adds: '',
-            },
-        }
-    },
     work() {
         return {
             title: '',
@@ -70,6 +39,16 @@ export default {
                 adds: '',
             },
             info: {
+                firstName: '',
+                secondName: '',
+                lastName: '',
+                date: '',
+                epitaph: '',
+                portrait: '',
+                text: '',
+                adds: '',
+            },
+            info2: {
                 firstName: '',
                 secondName: '',
                 lastName: '',

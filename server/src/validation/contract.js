@@ -17,6 +17,16 @@ const validateContractInput = (data) => {
         errors.number = 'Contract number is required';
     }
 
+    if(Validator.isEmpty(data.customer.name)) {
+
+        errors.customerName = 'Customer name is required';
+    }
+
+    if(Validator.isEmpty(data.customer.phone)) {
+
+        errors.customerPhone = 'Customer phone is required';
+    }
+
     return {
         errors,
         isValid: isEmpty(errors)

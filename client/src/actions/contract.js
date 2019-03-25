@@ -45,7 +45,7 @@ export const getContractById = (id) => dispatch => {
 };
 
 export const updateContract = (id, contract, history) => dispatch => {
-    axios.put(`/api/works/edit/${id}`, contract)
+    axios.put(`/api/contract/edit/${id}`, contract)
         .then(res => history.push('/contract'))
         .catch(err => {
             dispatch({
@@ -56,7 +56,7 @@ export const updateContract = (id, contract, history) => dispatch => {
 };
 
 export const deleteContract = (id, history) => dispatch => {
-    axios.put(`/api/works/delete/${id}`)
+    axios.put(`/api/contract/delete/${id}`)
         .then(res => history.push('/contract'))
         .catch(err => {
             dispatch({

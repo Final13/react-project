@@ -12,8 +12,8 @@ import PortfolioDetails from '../Portfolio/PortfolioDetails';
 import PortfolioEdit from '../Portfolio/PortfolioEdit';
 import Contract from '../Contract';
 import ContractForm from '../Contract/ContractForm';
-// import ContractDetails from '../Contract/ContractDetails';
-// import ContractEdit from '../Contract/ContractEdit';
+import ContractDetails from '../Contract/ContractDetails';
+import ContractEdit from '../Contract/ContractEdit';
 import Service from '../Service';
 import Login from '../Login';
 import Register from '../Register';
@@ -27,9 +27,9 @@ const Main = () => (
             <Route exact path='/portfolio/:id' component={ PortfolioDetails } />
             <PrivateRoute exact path='/portfolio/edit/:id' component={ PortfolioEdit } />
             <PrivateRoute exact path="/portfolio-form" component={ PortfolioForm } />
-            <Route exact path='/contract' component={ Contract } />
-            {/*<Route exact path='/contract/:id' component={ ContractDetails } />*/}
-            {/*<PrivateRoute exact path='/contract/edit/:id' component={ ContractEdit } />*/}
+            <PrivateRoute exact path='/contract' component={ Contract } />
+            <PrivateRoute exact path='/contract/:id' component={ ContractDetails } />
+            <PrivateRoute exact path='/contract/edit/:id' component={ ContractEdit } />
             <PrivateRoute exact path="/contract-form" component={ ContractForm } />
             <Route exact path='/services' component={ Service } />
             <Route exact path="/register" component={ Register } />

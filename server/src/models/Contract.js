@@ -18,6 +18,9 @@ const ContractSchema = new Schema({
     info: {
         type: Object
     },
+    info2: {
+        type: Object
+    },
     cemetery: {
         type: Object
     },
