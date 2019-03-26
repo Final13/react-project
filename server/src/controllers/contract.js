@@ -39,6 +39,38 @@ const getAllContracts = (req, res) => {
         });
 };
 
+const searchContracts = (req, res) => {
+    const query = new RegExp(req.body.search, 'i');
+    Contract
+        .find({ deleted: false })
+        .or([
+            {'number': query},
+            {'customer.name': query},
+            {'customer.phone': query},
+            {'info.firstName': query},
+            {'info.lastName': query},
+            {'info.date': query},
+            {'info2.firstName': query},
+            {'info2.lastName': query},
+            {'info2.date': query},
+            // {'stone.color.value': req.body.color},
+            // {'stone.type.value': req.body.type},
+            // {'stone.form.value': req.body.form}
+        ])
+        // .and([
+        //     {'stone.color.value': req.body.color},
+        //     {'stone.type.value': req.body.type},
+        //     {'stone.form.value': req.body.form}
+        // ])
+        .then(contracts => {
+            if(!contracts) {
+                errors.email = 'Contracts not found';
+                return res.status(404).json(errors);
+            }
+            res.json(contracts);
+        });
+};
+
 const getContractById = (req, res) => {
     const id = req.params.id;
     Contract
@@ -107,6 +139,7 @@ const deleteContract = (req, res) => {
 module.exports = {
     createContract,
     getAllContracts,
+    searchContracts,
     getContractById,
     updateContract,
     deleteContract,

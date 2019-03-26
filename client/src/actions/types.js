@@ -5,3 +5,4 @@ export const GET_ALL_WORKS = 'GET_ALL_WORKS';
 export const GET_WORK_BY_ID = 'GET_WORK_BY_ID';
 export const GET_ALL_CONTRACTS = 'GET_ALL_CONTRACTS';
 export const GET_CONTRACT_BY_ID = 'GET_CONTRACT_BY_ID';
+export const SEARCH_CONTRACTS = 'SEARCH_CONTRACTS';

@@ -2,18 +2,111 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
-import { getAllContracts, getContractById } from '../../actions/contract';
+import { getAllContracts, getContractById, searchContracts } from '../../actions/contract';
 import styles from './Contract.module.scss';
+import Select from 'react-select';
 
 class Contract extends Component {
+    state = {
+        query: {
+            search: '',
+            color: '',
+            type: '',
+            form: ''
+        },
+        color: '',
+        type: '',
+        form: ''
+    };
+
     componentDidMount() {
         this.props.getAllContracts();
     }
 
+    handleSearch = (e) => {
+        const query = {...this.state.query};
+        query.search = e.target.value;
+        this.setState({
+            query: query
+        }, () => {
+            this.props.searchContracts(this.state.query)
+        });
+
+    };
+
+    handleFilter = (event, type) => {
+        const query = {...this.state.query};
+        query[type] = event.value;
+        this.setState({
+            query: query,
+            [type]: event
+        }, () => {
+            this.props.searchContracts(this.state.query);
+        });
+    };
+
+
     render() {
+        const { query, color, form, type } = this.state;
+        const colors = [
+            {value: '', label: 'Default'},
+            {value: 'black', label: 'Black'},
+            {value: 'white', label: 'White'},
+            {value: 'red', label: 'Red'},
+            {value: 'green', label: 'Green'}
+        ];
+        const types = [
+            {value: '', label: 'Default', href: ''},
+            {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
+            {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
+        ];
+        const forms = [
+            {value: '', label: 'Default'},
+            {value: 'single', label: 'Single'},
+            {value: 'double', label: 'Double'}
+        ];
         return (
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>Contracts</h2>
+                <div className={`row`}>
+                    <div className={`col-3`}>
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className={`form-control`}
+                            name="search"
+                            onChange={ this.handleSearch }
+                            value={ query.search }
+                        />
+                    </div>
+                    <div className={`col-3`}>
+                        <Select
+                            placeholder="Color"
+                            name="color"
+                            onChange={ (event) => {this.handleFilter(event,'color')} }
+                            value={ color }
+                            options={colors}
+                        />
+                    </div>
+                    <div className={`col-3`}>
+                        <Select
+                            placeholder="Type"
+                            name="type"
+                            onChange={ (event) => {this.handleFilter(event,'type')} }
+                            value={ type }
+                            options={types}
+                        />
+                    </div>
+                    <div className={`col-3`}>
+                        <Select
+                            placeholder="Form"
+                            name="form"
+                            onChange={ (event) => {this.handleFilter(event,'form')} }
+                            value={ form }
+                            options={forms}
+                        />
+                    </div>
+                </div>
                 <div className={`row`}>
                     {
                         this.props.contracts.map( (contract) => (
@@ -62,6 +155,7 @@ Contract.propTypes = {
     contracts: PropTypes.array,
     getAllContracts: PropTypes.func.isRequired,
     getContractById: PropTypes.func.isRequired,
+    searchContracts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -69,4 +163,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps,{ getAllContracts, getContractById })(withRouter(Contract));
+export default connect(mapStateToProps,{ getAllContracts, getContractById, searchContracts })(withRouter(Contract));

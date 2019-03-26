@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ERRORS, GET_ALL_CONTRACTS, GET_CONTRACT_BY_ID} from './types';
+import {GET_ERRORS, GET_ALL_CONTRACTS, GET_CONTRACT_BY_ID, SEARCH_CONTRACTS} from './types';
 
 export const createContract = (contract, history) => dispatch => {
     axios.post('/api/contract/create', contract)
@@ -17,6 +17,22 @@ export const getAllContracts = () => dispatch => {
         .then(res => {
             dispatch({
                 type: GET_ALL_CONTRACTS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
+export const searchContracts = (search) => dispatch => {
+    axios.post('/api/contract/search', search)
+        .then(res => {
+            dispatch({
+                type: SEARCH_CONTRACTS,
                 payload: res.data
             });
         })
