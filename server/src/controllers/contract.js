@@ -40,28 +40,34 @@ const getAllContracts = (req, res) => {
 };
 
 const searchContracts = (req, res) => {
-    const query = new RegExp(req.body.search, 'i');
+    const search = new RegExp(req.body.search, 'i');
+    const filter = {};
+    if (req.body.color) {
+         filter['stone.color.value'] = req.body.color;
+    }
+    if (req.body.type) {
+        filter['stone.type.value'] = req.body.type;
+    }
+    if (req.body.form) {
+        filter['stone.form.value'] = req.body.form;
+    }
+
     Contract
         .find({ deleted: false })
         .or([
-            {'number': query},
-            {'customer.name': query},
-            {'customer.phone': query},
-            {'info.firstName': query},
-            {'info.lastName': query},
-            {'info.date': query},
-            {'info2.firstName': query},
-            {'info2.lastName': query},
-            {'info2.date': query},
-            // {'stone.color.value': req.body.color},
-            // {'stone.type.value': req.body.type},
-            // {'stone.form.value': req.body.form}
+            {'number': search},
+            {'customer.name': search},
+            {'customer.phone': search},
+            {'info.firstName': search},
+            {'info.lastName': search},
+            {'info.date': search},
+            {'info2.firstName': search},
+            {'info2.lastName': search},
+            {'info2.date': search}
         ])
-        // .and([
-        //     {'stone.color.value': req.body.color},
-        //     {'stone.type.value': req.body.type},
-        //     {'stone.form.value': req.body.form}
-        // ])
+        .and([
+            filter
+        ])
         .then(contracts => {
             if(!contracts) {
                 errors.email = 'Contracts not found';

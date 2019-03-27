@@ -49,19 +49,19 @@ class Contract extends Component {
     render() {
         const { query, color, form, type } = this.state;
         const colors = [
-            {value: '', label: 'Default'},
+            {value: '', label: 'All colors'},
             {value: 'black', label: 'Black'},
             {value: 'white', label: 'White'},
             {value: 'red', label: 'Red'},
             {value: 'green', label: 'Green'}
         ];
         const types = [
-            {value: '', label: 'Default', href: ''},
+            {value: '', label: 'All types'},
             {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
             {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
         ];
         const forms = [
-            {value: '', label: 'Default'},
+            {value: '', label: 'All forms'},
             {value: 'single', label: 'Single'},
             {value: 'double', label: 'Double'}
         ];
