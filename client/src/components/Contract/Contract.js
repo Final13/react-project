@@ -4,7 +4,23 @@ import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import { getAllContracts, getContractById, searchContracts } from '../../actions/contract';
 import styles from './Contract.module.scss';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
+
+const { Option } = components;
+
+const ImageOption = (props) => {
+    return (
+        <Option {...props}>
+            <div>
+                {
+                    props.data.href &&
+                    <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                }
+                {props.data.label}
+            </div>
+        </Option>
+    );
+};
 
 class Contract extends Component {
     state = {
@@ -68,7 +84,7 @@ class Contract extends Component {
         return (
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>Contracts</h2>
-                <div className={`row`}>
+                <div className={`row text-left pb-3 pt-3`}>
                     <div className={`col-3`}>
                         <input
                             type="text"
@@ -95,6 +111,7 @@ class Contract extends Component {
                             onChange={ (event) => {this.handleFilter(event,'type')} }
                             value={ type }
                             options={types}
+                            components={{ Option: ImageOption }}
                         />
                     </div>
                     <div className={`col-3`}>
@@ -115,26 +132,50 @@ class Contract extends Component {
                                     <div className={styles.cardContent}>
                                         <h4 className={`pb-3 ${styles.contractTitle}`}>{contract.number}</h4>
                                         <div>
-                                            {contract.info.lastName}
-                                        </div>
-                                        <div>
-                                            {`Customer: ${contract.customer.name}`}
-                                        </div>
-                                        <div>
-                                            {`Phone: ${contract.customer.phone}`}
-                                        </div>
-                                        <div>
-                                            {`Payments: ${contract.payments}`}
-                                        </div>
-                                        <div>
-                                            {`Total: ${contract.total}`}
-                                        </div>
-                                        <div>
-                                            {`Balance: ${contract.total - contract.payments}`}
+                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                <span>
+                                                    Customer:
+                                                </span>
+                                                <span>
+                                                    {contract.customer.name}
+                                                </span>
+                                            </div>
+                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                <span>
+                                                    Phone:
+                                                </span>
+                                                <span>
+                                                    {contract.customer.phone}
+                                                </span>
+                                            </div>
+                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                <span>
+                                                    Payments:
+                                                </span>
+                                                <span>
+                                                    {contract.payments}
+                                                </span>
+                                            </div>
+                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                <span>
+                                                    Total:
+                                                </span>
+                                                <span>
+                                                    {contract.total}
+                                                </span>
+                                            </div>
+                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                <span>
+                                                    Balance:
+                                                </span>
+                                                <span>
+                                                    {contract.total - contract.payments}
+                                                </span>
+                                            </div>
                                         </div>
                                         <Link
                                             to={`/contract/${contract._id}`}
-                                            className={`btn btn-outline-primary mt-2`}
+                                            className={`btn btn-outline-primary mt-3`}
                                         >
                                             Details
                                         </Link>

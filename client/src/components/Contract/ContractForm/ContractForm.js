@@ -14,7 +14,10 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                {
+                    props.data.href &&
+                    <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                }
                 {props.data.label}
             </div>
         </Option>

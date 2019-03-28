@@ -59,7 +59,7 @@ export default {
                 adds: '',
             },
             cemetery: {},
-            payments: [],
+            payments: 0,
             total: 0,
             install: '',
             deleted: false
