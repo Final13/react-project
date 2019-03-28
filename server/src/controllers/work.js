@@ -41,6 +41,37 @@ const getAllWorks = (req, res) => {
         });
 };
 
+const searchWorks = (req, res) => {
+    const search = new RegExp(req.body.search, 'i');
+    const filter = {};
+    if (req.body.color) {
+        filter['color.value'] = req.body.color;
+    }
+    if (req.body.type) {
+        filter['type.value'] = req.body.type;
+    }
+    if (req.body.form) {
+        filter['form.value'] = req.body.form;
+    }
+
+    Work
+        .find()
+        .or([
+            {'title': search},
+            {'description': search}
+        ])
+        .and([
+            filter
+        ])
+        .then(works => {
+            if(!works) {
+                errors.email = 'Contracts not found';
+                return res.status(404).json(errors);
+            }
+            res.json(works);
+        });
+};
+
 const getWorkById = (req, res) => {
     const id = req.params.id;
     Work
@@ -107,4 +138,5 @@ module.exports = {
     getWorkById,
     updateWork,
     deleteWork,
+    searchWorks,
 };

@@ -1,4 +1,4 @@
-import { GET_ALL_WORKS, GET_WORK_BY_ID } from '../actions/types';
+import {GET_ALL_WORKS, GET_WORK_BY_ID, SEARCH_WORKS} from '../actions/types';
 import State from './state.js'
 
 const initialState = {
@@ -17,6 +17,11 @@ export default (state = initialState, action ) => {
             return {
                 ...state,
                 work: action.payload
+            };
+        case SEARCH_WORKS:
+            return {
+                ...state,
+                works: action.payload
             };
         default:
             return state;

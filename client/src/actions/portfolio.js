@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ERRORS, GET_ALL_WORKS, GET_WORK_BY_ID} from './types';
+import {GET_ERRORS, GET_ALL_WORKS, GET_WORK_BY_ID, SEARCH_WORKS} from './types';
 
 export const createWork = (work, history) => dispatch => {
     axios.post('/api/works/create', work)
@@ -17,6 +17,22 @@ export const getAllWorks = () => dispatch => {
         .then(res => {
             dispatch({
                 type: GET_ALL_WORKS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
+export const searchWorks = (search) => dispatch => {
+    axios.post('/api/works/search', search)
+        .then(res => {
+            dispatch({
+                type: SEARCH_WORKS,
                 payload: res.data
             });
         })
