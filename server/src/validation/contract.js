@@ -12,6 +12,7 @@ const validateContractInput = (data) => {
     data.payments = !isEmpty(data.payments) ? data.payments : [];
     data.total = !isEmpty(data.total) ? data.total : '';
     data.install = !isEmpty(data.install) ? data.install : '';
+    data.builder = !isEmpty(data.builder) ? data.builder : {};
 
     if(Validator.isEmpty(data.number)) {
         errors.number = 'Contract number is required';
@@ -25,6 +26,16 @@ const validateContractInput = (data) => {
     if(Validator.isEmpty(data.customer.phone)) {
 
         errors.customerPhone = 'Customer phone is required';
+    }
+
+    if(Validator.isEmpty(data.builder.name)) {
+
+        errors.builderName = 'Builder name is required';
+    }
+
+    if(Validator.isEmpty(data.builder.phone)) {
+
+        errors.builderPhone = 'Builder phone is required';
     }
 
     return {

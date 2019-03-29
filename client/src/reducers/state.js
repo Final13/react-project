@@ -59,6 +59,10 @@ export default {
                 adds: '',
             },
             cemetery: {},
+            builder: {
+                name: '',
+                phone: '',
+            },
             payments: 0,
             total: 0,
             install: '',

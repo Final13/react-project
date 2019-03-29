@@ -11,6 +11,7 @@ routes.mail(app);
 routes.user(app);
 routes.work(app);
 routes.contract(app);
+routes.builder(app);
 
 
 app.listen(config.app.appPort, () => { console.log(`Listening on port ${config.app.appPort}...`); });

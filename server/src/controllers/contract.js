@@ -1,5 +1,6 @@
 const validateContractInput = require('../validation/contract');
 const Contract = require('../models/Contract');
+const Builder = require('../models/Builder');
 
 const createContract = (req, res) => {
     const { errors, isValid } = validateContractInput(req.body);
@@ -8,28 +9,41 @@ const createContract = (req, res) => {
         return res.status(400).json(errors);
     }
 
-    const newContract = new Contract({
-        number: req.body.number,
-        customer: req.body.customer,
-        stone: req.body.stone,
-        extra: req.body.extra,
-        info: req.body.info,
-        info2: req.body.info2,
-        payments: req.body.payments,
-        total: req.body.total,
-        install: req.body.install,
+    const newBuilder = new Builder({
+        value: req.body.builder.name,
+        label: req.body.builder.name,
+        name: req.body.builder.name,
+        phone: req.body.builder.phone
     });
 
-    newContract
-        .save()
-        .then(contract => {
-            res.json(contract)
+    newBuilder.save((err) => {
+        if(err) return console.error(err.stack);
+
+        const newContract = new Contract({
+            builder: newBuilder._id,
+            number: req.body.number,
+            customer: req.body.customer,
+            stone: req.body.stone,
+            extra: req.body.extra,
+            info: req.body.info,
+            info2: req.body.info2,
+            payments: req.body.payments,
+            total: req.body.total,
+            install: req.body.install,
         });
+
+        newContract
+            .save()
+            .then(contract => {
+                res.json(contract)
+            });
+    });
 };
 
 const getAllContracts = (req, res) => {
     Contract
         .find({ deleted: false })
+        .populate('builder')
         .then(contracts => {
             if(!contracts) {
                 errors.email = 'Contracts not found';
@@ -51,9 +65,13 @@ const searchContracts = (req, res) => {
     if (req.body.form) {
         filter['stone.form.value'] = req.body.form;
     }
+    if (req.body.builder) {
+        filter['builder'] = req.body.builder._id;
+    }
 
     Contract
         .find({ deleted: false })
+        .populate('builder')
         .or([
             {'number': search},
             {'customer.name': search},
@@ -81,6 +99,7 @@ const getContractById = (req, res) => {
     const id = req.params.id;
     Contract
         .findById(id)
+        .populate('builder')
         .then(contract => {
             if(!contract) {
                 errors.email = 'Contract not found';
@@ -112,12 +131,28 @@ const updateContract = (req, res) => {
             contract.install = req.body.install;
 
             contract
-                .save()
-                .then(() => {
-                    res.json('Contract updated!');
-                })
-                .catch(err => {
-                    res.status(400).send("Update not possible");
+                .save(() => {
+                    Builder.findById(contract.builder, (err, builder) => {
+                        if (!builder) {
+                            return res.status(404).send("data is not found");
+                        }
+                        builder.value = req.body.builder.name;
+                        builder.label = req.body.builder.name;
+                        builder.name = req.body.builder.name;
+                        builder.phone = req.body.builder.phone;
+
+                        builder
+                            .save()
+                            .then(() => {
+                                res.json('Builder updated!');
+                            })
+                    })
+                        .then(() => {
+                            res.json('Contract updated!');
+                        })
+                        .catch(err => {
+                            res.status(400).send("Update not possible");
+                        });
                 });
         });
 };

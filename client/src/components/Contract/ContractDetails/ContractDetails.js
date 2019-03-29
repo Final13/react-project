@@ -32,7 +32,7 @@ class ContractDetails extends Component {
                 </button>
                 <h2 className={styles.contractHeader}>{`Contract: ${contract.number}`}</h2>
                 <div className={`row`}>
-                    <div className={`col-6`}>
+                    <div className={`col-4`}>
                         <h2>Customer:</h2>
                         <div className={`mb-2`}>
                             <h6 className={`m-0 d-inline`}>Name:</h6>
@@ -47,7 +47,7 @@ class ContractDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={`col-6`}>
+                    <div className={`col-4`}>
                         <h2>Stone:</h2>
                         <div className={`mb-2`}>
                             <h6 className={`m-0 d-inline`}>Type:</h6>
@@ -68,7 +68,22 @@ class ContractDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={`col-12`}>
+                    <div className={`col-4`}>
+                        <h2>Builder:</h2>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0 d-inline`}>Name:</h6>
+                            <div className={`pl-2 d-inline`}>
+                                {contract.builder.name}
+                            </div>
+                        </div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0 d-inline`}>Phone:</h6>
+                            <div className={`pl-2 d-inline`}>
+                                {contract.builder.phone}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`col-12 pt-5`}>
                         <h2>Info:</h2>
                         <div className={`row`}>
                             <div className={`col-6`}>

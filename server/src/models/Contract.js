@@ -25,13 +25,16 @@ const ContractSchema = new Schema({
         type: Object
     },
     payments: {
-        type: Array
+        type: Number
     },
     total: {
         type: Number
     },
     install: {
         type: Date
+    },
+    builder: {
+        type: Schema.Types.ObjectId, ref: 'builders'
     },
     deleted: {
         type: Boolean,

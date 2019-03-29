@@ -195,6 +195,33 @@ class ContractForm extends Component {
                                 {errors.info2 && (<div className={`invalid-feedback`}>{errors.info2}</div>)}
                             </div>
                         </div>
+                        <div className={`col-sm-12 col-lg-6 border`}>
+                            <label className={`pr-3 ${styles.labelFont}`}>Builder:</label>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Builder name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Builder Name"
+                                    className={`form-control ${errors.builderName && 'is-invalid'}`}
+                                    name="builder.name"
+                                    onChange={ this.handleInputChange }
+                                    value={ contract.builder.name }
+                                />
+                                {errors.builderName && (<div className={`invalid-feedback`}>{errors.builderName}</div>)}
+                            </div>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Builder phone:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Builder Phone"
+                                    className={`form-control ${errors.builderPhone && 'is-invalid'}`}
+                                    name="builder.phone"
+                                    onChange={ this.handleInputChange }
+                                    value={ contract.builder.phone }
+                                />
+                                {errors.builderPhone && (<div className={`invalid-feedback`}>{errors.builderPhone}</div>)}
+                            </div>
+                        </div>
                     </div>
                     <div className={`form-group text-right`}>
                         <button type="submit" className={`btn btn-primary btn-lg`}>

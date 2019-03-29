@@ -138,7 +138,7 @@ class Portfolio extends Component {
                 <div className={`row`}>
                     {
                         this.props.works.map( (work) => (
-                            <div key={work._id} className={`col-4`}>
+                            <div key={work._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
                                 <div className={styles.cardWhite}>
                                     <div className={styles.cardContent}>
                                         <h4 className={`pb-3 ${styles.workTitle}`}>{work.title}</h4>
