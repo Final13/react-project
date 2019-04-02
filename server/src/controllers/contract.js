@@ -1,6 +1,7 @@
 const validateContractInput = require('../validation/contract');
 const Contract = require('../models/Contract');
 const Builder = require('../models/Builder');
+const mongoose = require('mongoose');
 
 const createContract = (req, res) => {
     const { errors, isValid } = validateContractInput(req.body);
@@ -9,35 +10,41 @@ const createContract = (req, res) => {
         return res.status(400).json(errors);
     }
 
-    const newBuilder = new Builder({
-        value: req.body.builder.name,
-        label: req.body.builder.name,
-        name: req.body.builder.name,
-        phone: req.body.builder.phone
-    });
+    Builder
+        .findById(req.body.builder._id, (err, builder) => {
+            if (!builder) {
+                builder = new Builder({
+                    value: req.body.builder.name,
+                    label: req.body.builder.name,
+                    name: req.body.builder.name,
+                    phone: req.body.builder.phone
+                });
+            }
 
-    newBuilder.save((err) => {
-        if(err) return console.error(err.stack);
+            builder
+                .save((err) => {
+                    if(err) return console.error(err.stack);
 
-        const newContract = new Contract({
-            builder: newBuilder._id,
-            number: req.body.number,
-            customer: req.body.customer,
-            stone: req.body.stone,
-            extra: req.body.extra,
-            info: req.body.info,
-            info2: req.body.info2,
-            payments: req.body.payments,
-            total: req.body.total,
-            install: req.body.install,
+                    const newContract = new Contract({
+                        builder: builder._id,
+                        number: req.body.number,
+                        customer: req.body.customer,
+                        stone: req.body.stone,
+                        extra: req.body.extra,
+                        info: req.body.info,
+                        info2: req.body.info2,
+                        payments: req.body.payments,
+                        total: req.body.total,
+                        install: req.body.install,
+                    });
+
+                    newContract
+                        .save()
+                        .then(contract => {
+                            res.json(contract)
+                        });
+                });
         });
-
-        newContract
-            .save()
-            .then(contract => {
-                res.json(contract)
-            });
-    });
 };
 
 const getAllContracts = (req, res) => {
@@ -65,26 +72,46 @@ const searchContracts = (req, res) => {
     if (req.body.form) {
         filter['stone.form.value'] = req.body.form;
     }
-    if (req.body.builder) {
-        filter['builder'] = req.body.builder._id;
+    if (req.body.builder._id) {
+        filter['builder._id'] = mongoose.Types.ObjectId(req.body.builder._id);
+
     }
 
     Contract
-        .find({ deleted: false })
-        .populate('builder')
-        .or([
-            {'number': search},
-            {'customer.name': search},
-            {'customer.phone': search},
-            {'info.firstName': search},
-            {'info.lastName': search},
-            {'info.date': search},
-            {'info2.firstName': search},
-            {'info2.lastName': search},
-            {'info2.date': search}
-        ])
-        .and([
-            filter
+        .aggregate([
+            {
+                $lookup:
+                    {
+                        from: 'builders',
+                        localField: 'builder',
+                        foreignField: '_id',
+                        as: 'builder'
+                    }
+            },
+            {
+                $unwind: "$builder"
+            },
+            {
+                $match: {
+                    deleted: false,
+                    $or : [
+                        {'number': search},
+                        {'customer.name': search},
+                        {'customer.phone': search},
+                        {'info.firstName': search},
+                        {'info.lastName': search},
+                        {'info.date': search},
+                        {'info2.firstName': search},
+                        {'info2.lastName': search},
+                        {'info2.date': search},
+                        {'builder.name': search},
+                        {'builder.phone': search}
+                    ],
+                    $and: [
+                        filter
+                    ]
+                }
+            }
         ])
         .then(contracts => {
             if(!contracts) {
@@ -118,7 +145,7 @@ const updateContract = (req, res) => {
     Contract
         .findById(req.params.id, (err, contract) => {
             if (!contract) {
-                return res.status(404).send("data is not found");
+                return res.status(404).send('data is not found');
             }
             contract.number = req.body.number;
             contract.customer = req.body.customer;
@@ -134,7 +161,7 @@ const updateContract = (req, res) => {
                 .save(() => {
                     Builder.findById(contract.builder, (err, builder) => {
                         if (!builder) {
-                            return res.status(404).send("data is not found");
+                            return res.status(404).send('data is not found');
                         }
                         builder.value = req.body.builder.name;
                         builder.label = req.body.builder.name;
@@ -151,7 +178,7 @@ const updateContract = (req, res) => {
                             res.json('Contract updated!');
                         })
                         .catch(err => {
-                            res.status(400).send("Update not possible");
+                            res.status(400).send('Update not possible');
                         });
                 });
         });
@@ -161,7 +188,7 @@ const deleteContract = (req, res) => {
     Contract
         .findById(req.params.id, (err, contract) => {
             if (!contract) {
-                return res.status(404).send("data is not found");
+                return res.status(404).send('data is not found');
             }
 
             contract.deleted = true;
@@ -172,7 +199,7 @@ const deleteContract = (req, res) => {
                     res.json('Contract deleted!');
                 })
                 .catch(err => {
-                    res.status(400).send("Delete not possible");
+                    res.status(400).send('Delete not possible');
                 });
         });
 };

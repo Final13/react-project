@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { createContract } from '../../../actions/contract';
+import { getAllBuilders } from '../../../actions/builder';
 import styles from './ContractForm.module.scss';
 import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
@@ -28,7 +29,28 @@ class ContractForm extends Component {
 
     state = {
         contract: State.contract(),
-        errors: {}
+        errors: {},
+        newBuilder: false
+    };
+
+    componentDidMount() {
+        this.props.getAllBuilders();
+    }
+
+    toggleBuilder = (e) => {
+        e.preventDefault();
+        const contract = {...this.state.contract};
+        contract.builder = {
+            value: '',
+            label: '',
+            name: '',
+            phone: '',
+        };
+
+        this.setState({
+            newBuilder: !this.state.newBuilder,
+            contract: contract
+        })
     };
 
     handleInputChange = (e) => {
@@ -62,6 +84,7 @@ class ContractForm extends Component {
 
     render() {
         const { errors, contract } = this.state;
+        const { builders } = this.props;
         const types = [
             {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
             {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
@@ -129,7 +152,7 @@ class ContractForm extends Component {
                                 <label className={`pr-3 ${styles.labelFont}`}>Select type:</label>
                                 <Select
                                     placeholder="Type"
-                                    className={`${errors.stone && 'is-invalid'}`}
+                                    className={`${styles.selectWithFormControl}form-control ${errors.stone && 'is-invalid'}`}
                                     name="type"
                                     onChange={ (event) => {this.handleSelectChange(event,'stone.type')} }
                                     value={ contract.stone.type }
@@ -144,7 +167,7 @@ class ContractForm extends Component {
                                 <label className={`pr-3 ${styles.labelFont}`}>Select form:</label>
                                 <Select
                                     placeholder="Form"
-                                    className={`${errors.stone && 'is-invalid'}`}
+                                    className={`${styles.selectWithFormControl}form-control ${errors.stone && 'is-invalid'}`}
                                     name="form"
                                     onChange={ (event) => {this.handleSelectChange(event,'stone.form')} }
                                     value={ contract.stone.form }
@@ -158,7 +181,7 @@ class ContractForm extends Component {
                                 <label className={`pr-3 ${styles.labelFont}`}>Select color:</label>
                                 <Select
                                     placeholder="Color"
-                                    className={`${errors.stone && 'is-invalid'}`}
+                                    className={`${styles.selectWithFormControl}form-control ${errors.stone && 'is-invalid'}`}
                                     name="color"
                                     onChange={ (event) => {this.handleSelectChange(event,'stone.color')} }
                                     value={ contract.stone.color }
@@ -195,32 +218,65 @@ class ContractForm extends Component {
                                 {errors.info2 && (<div className={`invalid-feedback`}>{errors.info2}</div>)}
                             </div>
                         </div>
-                        <div className={`col-sm-12 col-lg-6 border`}>
-                            <label className={`pr-3 ${styles.labelFont}`}>Builder:</label>
-                            <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Builder name:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Builder Name"
-                                    className={`form-control ${errors.builderName && 'is-invalid'}`}
-                                    name="builder.name"
-                                    onChange={ this.handleInputChange }
-                                    value={ contract.builder.name }
-                                />
-                                {errors.builderName && (<div className={`invalid-feedback`}>{errors.builderName}</div>)}
+                        <div className={`col-sm-12 col-lg-6 border p-4`}>
+                            <div className={`align-text-middle`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    {
+                                        this.state.newBuilder ? 'New builder:' : 'Select Builder:'
+                                    }
+                                </label>
+                                <button
+                                    onClick={this.toggleBuilder}
+                                    className={`btn btn-link pl-1 ${styles.addButton}`}
+                                >
+                                    {
+                                        this.state.newBuilder ? 'Select builder' : 'Add new builder'
+                                    }
+                                </button>
                             </div>
-                            <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Builder phone:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Builder Phone"
-                                    className={`form-control ${errors.builderPhone && 'is-invalid'}`}
-                                    name="builder.phone"
-                                    onChange={ this.handleInputChange }
-                                    value={ contract.builder.phone }
-                                />
-                                {errors.builderPhone && (<div className={`invalid-feedback`}>{errors.builderPhone}</div>)}
-                            </div>
+                            {
+                                !this.state.newBuilder &&
+                                <div className={`form-group text-left`}>
+                                    <Select
+                                        placeholder="Builder"
+                                        className={`${styles.selectWithFormControl} form-control ${errors.builder && 'is-invalid'}`}
+                                        name="builder"
+                                        onChange={ (event) => {this.handleSelectChange(event,'builder')} }
+                                        value={ contract.builder }
+                                        options={builders}
+                                    />
+                                    {errors.builder && (<div className={`invalid-feedback`}>{errors.builder}</div>)}
+                                </div>
+                            }
+                            {
+                                this.state.newBuilder &&
+                                <div>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Builder name:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Builder Name"
+                                            className={`form-control ${errors.builderName && 'is-invalid'}`}
+                                            name="builder.name"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.builder.name }
+                                        />
+                                        {errors.builderName && (<div className={`invalid-feedback`}>{errors.builderName}</div>)}
+                                    </div>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Builder phone:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Builder Phone"
+                                            className={`form-control ${errors.builderPhone && 'is-invalid'}`}
+                                            name="builder.phone"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.builder.phone }
+                                        />
+                                        {errors.builderPhone && (<div className={`invalid-feedback`}>{errors.builderPhone}</div>)}
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={`form-group text-right`}>
@@ -236,10 +292,12 @@ class ContractForm extends Component {
 
 ContractForm.propTypes = {
     createContract: PropTypes.func.isRequired,
+    getAllBuilders: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    builders: state.builder.builders,
 });
 
-export default connect(mapStateToProps,{ createContract })(withRouter(ContractForm));
+export default connect(mapStateToProps,{ createContract, getAllBuilders })(withRouter(ContractForm));

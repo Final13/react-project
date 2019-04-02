@@ -15,6 +15,9 @@ const BuilderSchema = new Schema({
     phone: {
         type: String
     },
+    contracts: [{
+        type: Schema.Types.ObjectId, ref: 'contracts'
+    }],
 });
 
 const Builder = mongoose.model('builders', BuilderSchema);

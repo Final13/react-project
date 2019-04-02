@@ -19,3 +19,16 @@
   height: 100px;
   width: 100px;
 }
+
+.addButton, .addButton:hover {
+  font-size: 15px !important;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  text-decoration: none !important;
+}
+
+.selectWithFormControl {
+  padding: 0 !important;
+  border: none !important;
+}

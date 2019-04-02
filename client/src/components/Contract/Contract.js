@@ -66,7 +66,6 @@ class Contract extends Component {
     };
 
     handleBuilder = (event) => {
-        console.log(event);
         const query = {...this.state.query};
         query.builder = event;
         this.setState({
@@ -79,8 +78,12 @@ class Contract extends Component {
 
     render() {
         const { query, color, form, type } = this.state;
-        const isAdmin = this.props.role === 'admin';
-        const {builders} = this.props;
+        const isAdmin = (this.props.role === 'admin');
+        let {builders} = this.props;
+        builders = [
+            {value: '', label: 'All builders'},
+            ...builders
+        ];
         const colors = [
             {value: '', label: 'All colors'},
             {value: 'black', label: 'Black'},

@@ -60,6 +60,8 @@ export default {
             },
             cemetery: {},
             builder: {
+                value: '',
+                label: '',
                 name: '',
                 phone: '',
             },

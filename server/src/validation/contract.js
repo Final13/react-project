@@ -31,6 +31,7 @@ const validateContractInput = (data) => {
     if(Validator.isEmpty(data.builder.name)) {
 
         errors.builderName = 'Builder name is required';
+        errors.builder = 'Builder is required';
     }
 
     if(Validator.isEmpty(data.builder.phone)) {
