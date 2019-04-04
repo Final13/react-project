@@ -6,6 +6,8 @@ import { createWork } from '../../../actions/portfolio';
 import styles from './PortfolioForm.module.scss';
 import Dropzone from 'react-dropzone';
 import Select, { components } from 'react-select';
+import { colors, forms, types } from '../../../SelectOptions';
+
 const { Option } = components;
 
 const ImageOption = (props) => {
@@ -78,21 +80,6 @@ class PortfolioForm extends Component {
 
     render() {
         const { errors } = this.state;
-        const types = [
-            {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
-            {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
-        ];
-
-        const colors = [
-            {value: 'black', label: 'Black'},
-            {value: 'white', label: 'White'},
-            {value: 'red', label: 'Red'},
-            {value: 'green', label: 'Green'}
-        ];
-        const forms = [
-            {value: 'single', label: 'Single'},
-            {value: 'double', label: 'Double'}
-        ];
         return(
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.workHeader}>New Work</h2>

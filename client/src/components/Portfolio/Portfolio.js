@@ -7,6 +7,7 @@ import { getAllWorks, getWorkById, searchWorks } from '../../actions/portfolio';
 import styles from './Portfolio.module.scss';
 import { uploadsUrl } from '../../config'
 import Select, { components } from 'react-select';
+import {colors, forms, types} from "../../SelectOptions";
 
 const { Option } = components;
 
@@ -65,22 +66,17 @@ class Portfolio extends Component {
 
     render() {
         const { query, color, form, type } = this.state;
-        const colors = [
+        const modifiedColors = [
             {value: '', label: 'All colors'},
-            {value: 'black', label: 'Black'},
-            {value: 'white', label: 'White'},
-            {value: 'red', label: 'Red'},
-            {value: 'green', label: 'Green'}
+            ...colors
         ];
-        const types = [
+        const modifiedTypes = [
             {value: '', label: 'All types'},
-            {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
-            {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
+            ...types
         ];
-        const forms = [
+        const modifiedForms = [
             {value: '', label: 'All forms'},
-            {value: 'single', label: 'Single'},
-            {value: 'double', label: 'Double'}
+            ...forms
         ];
         const settings = {
             className: styles.slider,
@@ -112,7 +108,7 @@ class Portfolio extends Component {
                             name="color"
                             onChange={ (event) => {this.handleFilter(event,'color')} }
                             value={ color }
-                            options={colors}
+                            options={ modifiedColors }
                         />
                     </div>
                     <div className={`col-3`}>
@@ -121,7 +117,7 @@ class Portfolio extends Component {
                             name="type"
                             onChange={ (event) => {this.handleFilter(event,'type')} }
                             value={ type }
-                            options={types}
+                            options={ modifiedTypes }
                             components={{ Option: ImageOption }}
                         />
                     </div>
@@ -131,7 +127,7 @@ class Portfolio extends Component {
                             name="form"
                             onChange={ (event) => {this.handleFilter(event,'form')} }
                             value={ form }
-                            options={forms}
+                            options={ modifiedForms }
                         />
                     </div>
                 </div>

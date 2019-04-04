@@ -6,6 +6,8 @@ import { getContractById, updateContract } from '../../../actions/contract';
 import styles from './ContractEdit.module.scss';
 import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
+import { colors, forms, types } from '../../../SelectOptions';
+
 const { Option } = components;
 const set = require('lodash.set');
 
@@ -72,21 +74,6 @@ class ContractEdit extends Component {
 
     render() {
         const { errors, contract } = this.state;
-        const types = [
-            {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
-            {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
-        ];
-
-        const colors = [
-            {value: 'black', label: 'Black'},
-            {value: 'white', label: 'White'},
-            {value: 'red', label: 'Red'},
-            {value: 'green', label: 'Green'}
-        ];
-        const forms = [
-            {value: 'single', label: 'Single'},
-            {value: 'double', label: 'Double'}
-        ];
         return(
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>New Contract</h2>
