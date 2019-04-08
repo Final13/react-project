@@ -54,6 +54,15 @@ class PortfolioForm extends Component {
         });
     };
 
+    removeImage = (event, image) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const images = this.state.images.filter(el => el !== image);
+        this.setState({
+            images: images
+        });
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
 
@@ -158,13 +167,18 @@ class PortfolioForm extends Component {
                                     <div className={`mb-4 ${styles.dropArea}`}>
                                         {this.state.images.length > 0 ?
                                             <React.Fragment>
-                                                {this.state.images.map((image) => (
-                                                    <img
-                                                        alt={image.name}
-                                                        key={image.name}
-                                                        src={URL.createObjectURL(image)}
-                                                        className={styles.thumbImg}
-                                                    />
+                                                {this.state.images.map((image, index) => (
+                                                    <React.Fragment key={ index + image.name }>
+                                                        <img
+                                                            alt={image.name}
+                                                            src={URL.createObjectURL(image)}
+                                                            className={styles.thumbImg}
+                                                        />
+                                                        <i
+                                                            className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                            onClick={(event) => { this.removeImage(event, image)}}
+                                                        />
+                                                    </React.Fragment>
                                                 ))}
                                             </React.Fragment>
                                             :

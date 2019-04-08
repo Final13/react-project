@@ -5,12 +5,6 @@ import { sendMail } from '../../actions/contact'
 import EmailForm from './EmailForm';
 
 class Contact extends Component {
-    state = {
-    };
-
-    componentWillReceiveProps(nextProps) {
-    };
-
     render() {
         return (
             <div className={`container ${styles.container}`}>
@@ -44,10 +38,4 @@ class Contact extends Component {
     }
 }
 
-Contact.propTypes = {
-};
-
-const mapStateToProps = state => ({
-});
-
-export default connect(mapStateToProps, { sendMail })(Contact);
+export default connect(null, { sendMail })(Contact);

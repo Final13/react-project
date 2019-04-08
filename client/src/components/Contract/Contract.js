@@ -7,6 +7,8 @@ import { getAllBuilders } from '../../actions/builder';
 import styles from './Contract.module.scss';
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../SelectOptions';
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
 
 const { Option } = components;
 
@@ -26,6 +28,8 @@ const ImageOption = (props) => {
 
 class Contract extends Component {
     state = {
+        currentPage: 1,
+        pageSize: 12,
         query: {
             search: '',
             color: '',
@@ -44,10 +48,20 @@ class Contract extends Component {
         this.props.getAllBuilders();
     }
 
+    handleChangePage = (page) => {
+        window.scrollTo(0, 0);
+        this.props.history.push(`/contract?page=${page}`);
+        this.setState({
+            currentPage: page,
+        });
+    };
+
     handleSearch = (e) => {
+        this.props.history.push(`/contract`);
         const query = {...this.state.query};
         query.search = e.target.value;
         this.setState({
+            currentPage: 1,
             query: query
         }, () => {
             this.props.searchContracts(this.state.query)
@@ -56,9 +70,11 @@ class Contract extends Component {
     };
 
     handleFilter = (event, type) => {
+        this.props.history.push(`/contract`);
         const query = {...this.state.query};
         query[type] = event.value;
         this.setState({
+            currentPage: 1,
             query: query,
             [type]: event
         }, () => {
@@ -67,9 +83,11 @@ class Contract extends Component {
     };
 
     handleBuilder = (event) => {
+        this.props.history.push(`/contract`);
         const query = {...this.state.query};
         query.builder = event;
         this.setState({
+            currentPage: 1,
             query: query,
         }, () => {
             this.props.searchContracts(this.state.query);
@@ -97,6 +115,10 @@ class Contract extends Component {
             {value: '', label: 'All forms'},
             ...forms
         ];
+        const indexOfLastContract = this.state.currentPage * this.state.pageSize;
+        const indexOfFirstContract = indexOfLastContract - this.state.pageSize;
+        const currentContracts = this.props.contracts.slice(indexOfFirstContract, indexOfLastContract);
+
         return (
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>Contracts</h2>
@@ -154,7 +176,7 @@ class Contract extends Component {
                 </div>
                 <div className={`row`}>
                     {
-                        this.props.contracts.map( (contract) => (
+                        currentContracts.map( (contract) => (
                             <div key={contract._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
                                 <div className={styles.cardWhite}>
                                     <div className={styles.cardContent}>
@@ -223,6 +245,17 @@ class Contract extends Component {
                         ))
                     }
                 </div>
+                {
+                    this.props.contracts &&
+                    <Pagination
+                        className={styles.pagination}
+                        total={this.props.contracts.length}
+                        showTotal={(total, range) => `${range[0]} - ${range[1]} of ${total} items`}
+                        onChange={this.handleChangePage}
+                        current={this.state.currentPage}
+                        defaultPageSize={this.state.pageSize}
+                    />
+                }
             </div>
         );
     }

@@ -61,7 +61,10 @@ class PortfolioEdit extends Component {
         });
     };
 
-    removeImage = (image) => {
+    removeImage = (event, image) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         const work = {...this.state.work};
         work.images = work.images.filter(el => el !== image);
         this.setState({
@@ -178,8 +181,8 @@ class PortfolioEdit extends Component {
                                     <div className={`mb-4 ${styles.dropArea}`}>
                                         {work.images ?
                                             <React.Fragment>
-                                                {work.images.map((image) => (
-                                                    <React.Fragment key={typeof image === 'object' ? image.name : image}>
+                                                {work.images.map((image, index) => (
+                                                    <React.Fragment key={typeof image === 'object' ? index + image.name : index + image}>
                                                         <img
                                                             alt={typeof image === 'object' ? image.name : image}
                                                             src={typeof image === 'object' ? URL.createObjectURL(image): uploadsUrl + image}
@@ -187,11 +190,7 @@ class PortfolioEdit extends Component {
                                                         />
                                                         <i
                                                             className={`fas fa-minus-circle ${styles.removeIcon}`}
-                                                            onClick={(event) => {
-                                                                event.preventDefault();
-                                                                event.stopPropagation();
-                                                                this.removeImage(image);
-                                                            }}
+                                                            onClick={(event) => {this.removeImage(event, image)}}
                                                         />
                                                     </React.Fragment>
                                                 ))}

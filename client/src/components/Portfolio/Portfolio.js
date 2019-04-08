@@ -8,6 +8,7 @@ import styles from './Portfolio.module.scss';
 import { uploadsUrl } from '../../config'
 import Select, { components } from 'react-select';
 import {colors, forms, types} from "../../SelectOptions";
+import Pagination from "rc-pagination";
 
 const { Option } = components;
 
@@ -27,6 +28,8 @@ const ImageOption = (props) => {
 
 class Portfolio extends Component {
     state = {
+        currentPage: 1,
+        pageSize: 12,
         query: {
             search: '',
             color: '',
@@ -42,10 +45,20 @@ class Portfolio extends Component {
         this.props.getAllWorks();
     }
 
+    handleChangePage = (page) => {
+        window.scrollTo(0, 0);
+        this.props.history.push(`/portfolio?page=${page}`);
+        this.setState({
+            currentPage: page,
+        });
+    };
+
     handleSearch = (e) => {
+        this.props.history.push(`/contract`);
         const query = {...this.state.query};
         query.search = e.target.value;
         this.setState({
+            currentPage: 1,
             query: query
         }, () => {
             this.props.searchWorks(this.state.query)
@@ -54,9 +67,11 @@ class Portfolio extends Component {
     };
 
     handleFilter = (event, type) => {
+        this.props.history.push(`/contract`);
         const query = {...this.state.query};
         query[type] = event.value;
         this.setState({
+            currentPage: 1,
             query: query,
             [type]: event
         }, () => {
@@ -88,6 +103,10 @@ class Portfolio extends Component {
             slidesToShow: 1,
             slidesToScroll: 1
         };
+        const indexOfLastWork = this.state.currentPage * this.state.pageSize;
+        const indexOfFirstWork = indexOfLastWork - this.state.pageSize;
+        const currentWorks = this.props.works.slice(indexOfFirstWork, indexOfLastWork);
+
         return (
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.workHeader}>Works</h2>
@@ -133,7 +152,7 @@ class Portfolio extends Component {
                 </div>
                 <div className={`row`}>
                     {
-                        this.props.works.map( (work) => (
+                        currentWorks.map( (work) => (
                             <div key={work._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
                                 <div className={styles.cardWhite}>
                                     <div className={styles.cardContent}>
@@ -168,6 +187,17 @@ class Portfolio extends Component {
                         ))
                     }
                 </div>
+                {
+                    this.props.works &&
+                    <Pagination
+                        className={styles.pagination}
+                        total={this.props.works.length}
+                        showTotal={(total, range) => `${range[0]} - ${range[1]} of ${total} items`}
+                        onChange={this.handleChangePage}
+                        current={this.state.currentPage}
+                        defaultPageSize={this.state.pageSize}
+                    />
+                }
             </div>
         );
     }
