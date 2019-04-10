@@ -6,6 +6,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { getWorkById, deleteWork } from '../../../actions/portfolio';
 import styles from './PortfolioDetails.module.scss';
 import {uploadsUrl} from "../../../config";
+import {Helmet} from "react-helmet";
 
 class PortfolioDetails extends Component {
     componentDidMount() {
@@ -31,6 +32,13 @@ class PortfolioDetails extends Component {
         const { role } = this.props.auth.user;
         return(
             <div className={`${styles.container}`}>
+                <Helmet>
+                    <title>{work.title} | Brand Name</title>
+                    <meta property="og:title" content={`${work.title} | Brand Name`} />
+                    <meta property="description" content={work.description.slice(0, 150)} />
+                    <meta property="og:description" content={work.description.slice(0, 150)} />
+                    <meta property="og:url" content={`https://website.com/portfolio/${work._id}`} />
+                </Helmet>
                 {
                     role === 'admin' ? (
                         <React.Fragment>
