@@ -9,6 +9,7 @@ import { uploadsUrl } from '../../config'
 import Select, { components } from 'react-select';
 import {colors, forms, types} from "../../SelectOptions";
 import Pagination from "rc-pagination";
+import {Helmet} from "react-helmet";
 
 const { Option } = components;
 
@@ -109,6 +110,13 @@ class Portfolio extends Component {
 
         return (
             <div className={`container ${styles.container}`}>
+                <Helmet>
+                    <title>Portfolio page title | Brand Name</title>
+                    <meta property="og:title" content="Portfolio page title" />
+                    <meta property="description" content="Portfolio page description" />
+                    <meta property="og:description" content="Portfolio page description" />
+                    <meta property="og:url" content="https://website.com/portfolio" />
+                </Helmet>
                 <h2 className={styles.workHeader}>Works</h2>
                 <div className={`row text-left pb-3 pt-3`}>
                     <div className={`col-3`}>

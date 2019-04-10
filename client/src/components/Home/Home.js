@@ -6,6 +6,7 @@ import {Link, withRouter} from "react-router-dom";
 import {getAllWorks} from '../../actions/portfolio';
 import {uploadsUrl} from '../../config'
 import styles from './Home.module.scss';
+import {Helmet} from "react-helmet";
 
 class Home extends Component {
     componentDidMount() {
@@ -34,6 +35,13 @@ class Home extends Component {
         };
         return (
             <div className={`container`}>
+                <Helmet>
+                    <title>Home page title | Brand Name</title>
+                    <meta property="og:title" content="Home page title" />
+                    <meta property="description" content="Home page description" />
+                    <meta property="og:description" content="Home page description" />
+                    <meta property="og:url" content="https://website.com" />
+                </Helmet>
                 <div className={`row`}>
                     <div className={`col-12 ${styles.h2}`}>About</div>
                     <div className={`col-sm-12 col-lg-4 ${styles.block}`}>

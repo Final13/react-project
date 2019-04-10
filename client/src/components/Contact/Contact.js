@@ -3,11 +3,19 @@ import { connect } from 'react-redux';
 import styles from './Contact.module.scss';
 import { sendMail } from '../../actions/contact'
 import EmailForm from './EmailForm';
+import {Helmet} from "react-helmet";
 
 class Contact extends Component {
     render() {
         return (
             <div className={`container ${styles.container}`}>
+                <Helmet>
+                    <title>Contact page title | Brand Name</title>
+                    <meta property="og:title" content="Contact page title" />
+                    <meta property="description" content="Contact page description" />
+                    <meta property="og:description" content="Contact page description" />
+                    <meta property="og:url" content="https://website.com/contact" />
+                </Helmet>
                 <h2 className={styles.contactHeader}>Contact Us</h2>
                 <div className={`row ${styles.info}`}>
                     <div className={`col-6`}>

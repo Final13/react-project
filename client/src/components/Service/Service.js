@@ -1,9 +1,17 @@
 import React from 'react';
 import styles from './Service.module.scss';
+import {Helmet} from "react-helmet";
 
 const Service = () => {
     return (
         <div>
+            <Helmet>
+                <title>Services page title | Brand Name</title>
+                <meta property="og:title" content="Services page title" />
+                <meta property="description" content="Services page description" />
+                <meta property="og:description" content="Services page description" />
+                <meta property="og:url" content="https://website.com/service" />
+            </Helmet>
             <div className={`container`}>
                 <div className={`row`}>
                     <div className={`col-xs-12 col-md-6 col-xl-4`}>
