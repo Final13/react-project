@@ -55,7 +55,7 @@ class Portfolio extends Component {
     };
 
     handleSearch = (e) => {
-        this.props.history.push(`/contract`);
+        this.props.history.push(`/portfolio`);
         const query = {...this.state.query};
         query.search = e.target.value;
         this.setState({
@@ -68,7 +68,7 @@ class Portfolio extends Component {
     };
 
     handleFilter = (event, type) => {
-        this.props.history.push(`/contract`);
+        this.props.history.push(`/portfolio`);
         const query = {...this.state.query};
         query[type] = event.value;
         this.setState({
