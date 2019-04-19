@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import './setupTests';
+import { render } from 'react-snapshot';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,22 +11,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./styles.scss";
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './setAuthToken';
-import { setCurrentUser, logoutUser } from './actions/authentication';
 
-if(localStorage.jwtToken) {
-    setAuthToken(localStorage.jwtToken);
-    const decoded = jwt_decode(localStorage.jwtToken);
-    store.dispatch(setCurrentUser(decoded));
-
-    const currentTime = Date.now() / 1000;
-    if(decoded.exp < currentTime) {
-        store.dispatch(logoutUser());
-    }
-}
-
-ReactDOM.render(
+render(
     <Provider store={store}>
         <BrowserRouter>
             <App />
