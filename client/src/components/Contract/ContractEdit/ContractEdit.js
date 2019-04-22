@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { getContractById, updateContract } from '../../../actions/contract';
+import { getAllBuilders } from '../../../actions/builder';
 import styles from './ContractEdit.module.scss';
 import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
@@ -30,12 +31,30 @@ class ContractEdit extends Component {
 
     state = {
         contract: State.contract(),
-        errors: {}
+        errors: {},
+        newBuilder: false
     };
 
     componentDidMount() {
         this.props.getContractById(this.props.match.params.id);
-    }
+        this.props.getAllBuilders();
+    };
+
+    toggleBuilder = (e) => {
+        e.preventDefault();
+        const contract = {...this.state.contract};
+        contract.builder = {
+            value: '',
+            label: '',
+            name: '',
+            phone: '',
+        };
+
+        this.setState({
+            newBuilder: !this.state.newBuilder,
+            contract: contract
+        })
+    };
 
     handleInputChange = (e) => {
         const contract = {...this.state.contract};
@@ -58,7 +77,7 @@ class ContractEdit extends Component {
         this.props.updateContract(this.props.match.params.id, this.state.contract, this.props.history);
     };
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -74,6 +93,7 @@ class ContractEdit extends Component {
 
     render() {
         const { errors, contract } = this.state;
+        const { builders } = this.props;
         return(
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>New Contract</h2>
@@ -192,32 +212,65 @@ class ContractEdit extends Component {
                                 {errors.info2 && (<div className={`invalid-feedback`}>{errors.info2}</div>)}
                             </div>
                         </div>
-                        <div className={`col-sm-12 col-lg-6 border`}>
-                            <label className={`pr-3 ${styles.labelFont}`}>Builder:</label>
-                            <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Builder name:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Builder Name"
-                                    className={`form-control ${errors.builderName && 'is-invalid'}`}
-                                    name="builder.name"
-                                    onChange={ this.handleInputChange }
-                                    value={ contract.builder.name }
-                                />
-                                {errors.builderName && (<div className={`invalid-feedback`}>{errors.builderName}</div>)}
+                        <div className={`col-sm-12 col-lg-6 border p-4`}>
+                            <div className={`align-text-middle`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    {
+                                        this.state.newBuilder ? 'New builder:' : 'Select Builder:'
+                                    }
+                                </label>
+                                <button
+                                    onClick={this.toggleBuilder}
+                                    className={`btn btn-link pl-1 ${styles.addButton}`}
+                                >
+                                    {
+                                        this.state.newBuilder ? 'Select builder' : 'Add new builder'
+                                    }
+                                </button>
                             </div>
-                            <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Builder phone:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Builder Phone"
-                                    className={`form-control ${errors.builderPhone && 'is-invalid'}`}
-                                    name="builder.phone"
-                                    onChange={ this.handleInputChange }
-                                    value={ contract.builder.phone }
-                                />
-                                {errors.builderPhone && (<div className={`invalid-feedback`}>{errors.builderPhone}</div>)}
-                            </div>
+                            {
+                                !this.state.newBuilder &&
+                                <div className={`form-group text-left`}>
+                                    <Select
+                                        placeholder="Builder"
+                                        className={`${styles.selectWithFormControl} form-control ${errors.builder && 'is-invalid'}`}
+                                        name="builder"
+                                        onChange={ (event) => {this.handleSelectChange(event,'builder')} }
+                                        value={ contract.builder }
+                                        options={builders}
+                                    />
+                                    {errors.builder && (<div className={`invalid-feedback`}>{errors.builder}</div>)}
+                                </div>
+                            }
+                            {
+                                this.state.newBuilder &&
+                                <div>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Builder name:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Builder Name"
+                                            className={`form-control ${errors.builderName && 'is-invalid'}`}
+                                            name="builder.name"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.builder.name }
+                                        />
+                                        {errors.builderName && (<div className={`invalid-feedback`}>{errors.builderName}</div>)}
+                                    </div>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Builder phone:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Builder Phone"
+                                            className={`form-control ${errors.builderPhone && 'is-invalid'}`}
+                                            name="builder.phone"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.builder.phone }
+                                        />
+                                        {errors.builderPhone && (<div className={`invalid-feedback`}>{errors.builderPhone}</div>)}
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={`form-group text-right`}>
@@ -234,12 +287,20 @@ class ContractEdit extends Component {
 ContractEdit.propTypes = {
     getContractById: PropTypes.func.isRequired,
     updateContract: PropTypes.func.isRequired,
+    getAllBuilders: PropTypes.func.isRequired,
     contract: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
     contract: state.contract.contract,
-    errors: state.errors
+    errors: state.errors,
+    builders: state.builder.builders
 });
 
-export default connect(mapStateToProps,{ getContractById, updateContract })(withRouter(ContractEdit));
+const mapActionsToProps = {
+    getContractById,
+    updateContract,
+    getAllBuilders
+};
+
+export default connect(mapStateToProps,mapActionsToProps)(withRouter(ContractEdit));

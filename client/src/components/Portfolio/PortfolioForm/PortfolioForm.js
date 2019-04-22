@@ -79,12 +79,13 @@ class PortfolioForm extends Component {
         this.props.createWork(work, this.props.history);
     };
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.errors) {
-            this.setState({
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps.errors !== prevState.errors){
+            return {
                 errors: nextProps.errors
-            });
+            };
         }
+        return null;
     };
 
     render() {

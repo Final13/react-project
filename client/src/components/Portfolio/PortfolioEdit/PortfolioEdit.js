@@ -87,7 +87,7 @@ class PortfolioEdit extends Component {
         this.props.updateWork(this.props.match.params.id, work, this.props.history);
     };
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.errors) {
             this.setState({
                 errors: nextProps.errors

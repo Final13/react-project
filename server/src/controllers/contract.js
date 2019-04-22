@@ -142,43 +142,45 @@ const updateContract = (req, res) => {
         return res.status(400).json(errors);
     }
 
-    Contract
-        .findById(req.params.id, (err, contract) => {
-            if (!contract) {
-                return res.status(404).send('data is not found');
+    Builder
+        .findById(req.body.builder._id, (err, builder) => {
+            if (!builder) {
+                builder = new Builder({
+                    value: req.body.builder.name,
+                    label: req.body.builder.name,
+                    name: req.body.builder.name,
+                    phone: req.body.builder.phone
+                });
             }
-            contract.number = req.body.number;
-            contract.customer = req.body.customer;
-            contract.stone = req.body.stone;
-            contract.extra = req.body.extra;
-            contract.info = req.body.info;
-            contract.info2 = req.body.info2;
-            contract.payments = req.body.payments;
-            contract.total = req.body.total;
-            contract.install = req.body.install;
 
-            contract
-                .save(() => {
-                    Builder.findById(contract.builder, (err, builder) => {
-                        if (!builder) {
-                            return res.status(404).send('data is not found');
-                        }
-                        builder.value = req.body.builder.name;
-                        builder.label = req.body.builder.name;
-                        builder.name = req.body.builder.name;
-                        builder.phone = req.body.builder.phone;
+            builder
+                .save((err) => {
+                    if(err) return console.error(err.stack);
 
-                        builder
-                            .save()
-                            .then(() => {
-                                res.json('Builder updated!');
-                            })
-                    })
-                        .then(() => {
-                            res.json('Contract updated!');
-                        })
-                        .catch(err => {
-                            res.status(400).send('Update not possible');
+                    Contract
+                        .findById(req.params.id, (err, contract) => {
+                            if (!contract) {
+                                return res.status(404).send('data is not found');
+                            }
+                            contract.builder = builder._id;
+                            contract.number = req.body.number;
+                            contract.customer = req.body.customer;
+                            contract.stone = req.body.stone;
+                            contract.extra = req.body.extra;
+                            contract.info = req.body.info;
+                            contract.info2 = req.body.info2;
+                            contract.payments = req.body.payments;
+                            contract.total = req.body.total;
+                            contract.install = req.body.install;
+
+                            contract
+                                .save()
+                                .then(() => {
+                                    res.json('Contract updated!');
+                                })
+                                .catch(err => {
+                                    res.status(400).send('Update not possible');
+                                });
                         });
                 });
         });
