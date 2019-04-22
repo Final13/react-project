@@ -3,7 +3,13 @@ import {GET_ERRORS, GET_ALL_WORKS, GET_WORK_BY_ID, SEARCH_WORKS} from './types';
 
 export const createWork = (work, history) => dispatch => {
     axios.post('/api/works/create', work)
-        .then(res => history.push('/portfolio'))
+        .then(() => {
+            history.push('/portfolio');
+            dispatch({
+                type: GET_ERRORS,
+                payload: {}
+            });
+        })
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
@@ -62,7 +68,13 @@ export const getWorkById = (id) => dispatch => {
 
 export const updateWork = (id, work, history) => dispatch => {
     axios.put(`/api/works/edit/${id}`, work)
-        .then(res => history.push('/portfolio'))
+        .then(() => {
+            history.push('/portfolio');
+            dispatch({
+                type: GET_ERRORS,
+                payload: {}
+            });
+        })
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,

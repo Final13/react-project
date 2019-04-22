@@ -3,7 +3,13 @@ import {GET_ERRORS, GET_ALL_CONTRACTS, GET_CONTRACT_BY_ID, SEARCH_CONTRACTS} fro
 
 export const createContract = (contract, history) => dispatch => {
     axios.post('/api/contract/create', contract)
-        .then(res => history.push('/contract'))
+        .then(() => {
+            history.push('/contract');
+            dispatch({
+                type: GET_ERRORS,
+                payload: {}
+            });
+        })
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
@@ -62,7 +68,13 @@ export const getContractById = (id) => dispatch => {
 
 export const updateContract = (id, contract, history) => dispatch => {
     axios.put(`/api/contract/edit/${id}`, contract)
-        .then(res => history.push('/contract'))
+        .then(() => {
+            history.push('/contract');
+            dispatch({
+                type: GET_ERRORS,
+                payload: {}
+            });
+        })
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,

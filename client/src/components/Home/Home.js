@@ -16,7 +16,7 @@ class Home extends Component {
     render() {
         const mainSettings = {
             className: styles.mainSlider,
-            dots: true,
+            dots: false,
             infinite: true,
             autoplay: true,
             speed: 1000,
