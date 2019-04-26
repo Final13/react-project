@@ -4,8 +4,12 @@
   padding-top: 100%;
   margin-top: 25px;
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   position: relative;
+}
+
+.cardWhite:hover {
+  box-shadow: 0 0 15px 10px rgba(0, 155, 255, 0.2);
 }
 
 .cardContent {
@@ -26,13 +30,81 @@
 .cardHeader {
   color: #4F4F4F;
   margin: 15px 0 15px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.threeLineEllipsis {
+.cardEffects:hover {
+  transform: translateY(-10px);
+  transition-duration: .5s;
+}
+
+.fourLineEllipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   /* autoprefixer: ignore next */
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  color: black;
+}
+
+@media only screen and (max-width: 992px) {
+  .cardContent i {
+    font-size: 40px;
+    padding: 15px;
+  }
+  .cardHeader {
+    font-size: 18px !important;
+  }
+  .fourLineEllipsis {
+    font-size: 14px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cardContent i {
+    font-size: 70px;
+    padding: 20px;
+  }
+  .cardHeader {
+    font-size: 32px !important;
+  }
+  .fourLineEllipsis {
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (max-width: 630px) {
+  .cardContent i {
+    font-size: 40px;
+    padding: 15px;
+  }
+  .cardHeader {
+    font-size: 18px !important;
+  }
+  .fourLineEllipsis {
+    font-size: 14px !important;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .cardContent i {
+    font-size: 30px;
+    padding: 10px;
+  }
+  .cardHeader {
+    font-size: 16px !important;
+  }
+  .fourLineEllipsis {
+    font-size: 12px !important;
+  }
 }

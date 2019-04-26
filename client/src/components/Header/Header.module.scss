@@ -1,17 +1,19 @@
 .header {
-  position: relative;
+  position: fixed;
   z-index: 9999 !important;
+  width: 100%;
+  top: 0;
 }
 
 .link {
   padding: 10px;
-  font-size: 16px;
-  color: #a4a4a4;
+  font-size: 18px;
+  color: #eeeeee;
   text-decoration: none;
 }
 
 .link:hover {
-  color: #fff;
+  color: #a4a4a4;
   text-decoration: none;
 }
 

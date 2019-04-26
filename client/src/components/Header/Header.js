@@ -22,21 +22,21 @@ class Header extends Component {
                      title={user.name}
                      className={`rounded-circle ${styles.logoutImg}`}
                 />
-                Logout
+                Выход
             </button>
         );
 
         const guestLinks = (
             <React.Fragment>
-                <Link className={styles.register} to="/register">Sign Up</Link>
-                <Link className={styles.login} to="/login">Sign In</Link>
+                <Link className={styles.register} to="/register">Регистрация</Link>
+                <Link className={styles.login} to="/login">Вход</Link>
             </React.Fragment>
         );
 
         return (
             <div className={`${styles.header}`}>
                 <nav className={`navbar navbar-expand-lg navbar-dark bg-dark`}>
-                    <Link to='/' className={`navbar-brand`}>Navbar</Link>
+                    <Link to='/' className={`navbar-brand`}>Logo</Link>
                     <button
                         className={`navbar-toggler`}
                         onClick={ this.props.toggleNavbar }
@@ -47,9 +47,29 @@ class Header extends Component {
                     </button>
                     <div className={`collapse navbar-collapse ${navbarClasses}`} id="navbarNavAltMarkup">
                         <div className={`navbar-nav ml-auto`}>
-                            <Link className={styles.link} to='/services'>Services</Link>
+                            <Link className={styles.link} to='/services'>Услуги</Link>
                             <div className={`d-flex`}>
-                                <Link className={styles.link} to='/portfolio'>Portfolio</Link>
+                                <Link className={styles.link} to='/catalog'>Каталог</Link>
+                                {
+                                    this.props.auth.user.role === 'admin' ?
+                                        <Link className={styles.addLink} to='/catalog-form'>
+                                            <i className={`fas fa-plus-circle`} />
+                                        </Link>
+                                        : null
+                                }
+                            </div>
+                            <div className={`d-flex`}>
+                                    <Link className={styles.link} to='/price'>Цены</Link>
+                                {
+                                    this.props.auth.user.role === 'admin' ?
+                                        <Link className={styles.addLink} to='/price-form'>
+                                            <i className={`fas fa-plus-circle`} />
+                                        </Link>
+                                        : null
+                                }
+                            </div>
+                            <div className={`d-flex`}>
+                                <Link className={styles.link} to='/portfolio'>Наши работы</Link>
                                 {
                                     this.props.auth.user.role === 'admin' ?
                                         <React.Fragment>
@@ -57,7 +77,7 @@ class Header extends Component {
                                                 <i className={`fas fa-plus-circle`} />
                                             </Link>
                                             <Link className={styles.link} to='/contract'>
-                                                Contracts
+                                                Договоры
                                             </Link>
                                             <Link className={styles.addLink} to='/contract-form'>
                                                 <i className={`fas fa-plus-circle`} />
@@ -66,7 +86,7 @@ class Header extends Component {
                                         : null
                                 }
                             </div>
-                            <Link className={styles.link} to='/contacts'>Contacts</Link>
+                            <Link className={styles.link} to='/contacts'>Контакты</Link>
                             {isAuthenticated ? authLinks : guestLinks}
                         </div>
                     </div>

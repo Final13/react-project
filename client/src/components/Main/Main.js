@@ -17,6 +17,12 @@ import ContractEdit from '../Contract/ContractEdit';
 import Service from '../Service';
 import Login from '../Login';
 import Register from '../Register';
+import Decoration from '../Service/Decoration';
+import Dismantling from '../Service/Dismantling';
+import Fence from '../Service/Fence';
+import Landscape from '../Service/Landscape';
+import Monument from '../Service/Monument';
+import Production from '../Service/Production';
 
 const Main = () => (
     <main className={`text-center ${styles.wrapper}`}>
@@ -32,6 +38,12 @@ const Main = () => (
             <PrivateRoute exact path='/contract/edit/:id' component={ ContractEdit } />
             <PrivateRoute exact path="/contract-form" component={ ContractForm } />
             <Route exact path='/services' component={ Service } />
+            <Route exact path='/services/decoration' component={ Decoration } />
+            <Route exact path='/services/dismantling' component={ Dismantling } />
+            <Route exact path='/services/fence' component={ Fence } />
+            <Route exact path='/services/landscape' component={ Landscape } />
+            <Route exact path='/services/monument' component={ Monument } />
+            <Route exact path='/services/production' component={ Production } />
             <Route exact path="/register" component={ Register } />
             <Route exact path="/login" component={ Login } />
             <Route exact path='/404' component={ ErrorPage } />
