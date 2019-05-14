@@ -1,15 +1,24 @@
-export const types = [
-    {value: 'square', label: 'square', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Square_-_black_simple.svg/1200px-Square_-_black_simple.svg.png'},
-    {value: 'triangle', label: 'Triangle', href: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Regular_triangle.svg/1024px-Regular_triangle.svg.png'}
+export const forms = [
+    {value: 'square', label: 'square', href: '1200px-Square_-_black_simple.svg.png'},
+    {value: 'triangle', label: 'Triangle', href: '400px-Regular_triangle.svg.png'}
 ];
 
 export const colors = [
-    {value: 'black', label: 'Black'},
-    {value: 'white', label: 'White'},
-    {value: 'red', label: 'Red'},
-    {value: 'green', label: 'Green'}
+    {value: 'black', label: 'Чёрный'},
+    {value: 'gray', label: 'Серый'},
+    {value: 'white', label: 'Белый'},
+    {value: 'red', label: 'Красный'},
+    {value: 'green', label: 'Зелёный'}
 ];
-export const forms = [
-    {value: 'single', label: 'Single'},
-    {value: 'double', label: 'Double'}
+
+export const types = [
+    {value: 'vertical', label: 'Вертикальный'},
+    {value: 'horizontal', label: 'Горизонтальный'}
+];
+
+export const categories = [
+    {value: 'monument', label: 'Памятники'},
+    {value: 'fence', label: 'Ограды'},
+    {value: 'vase', label: 'Вазы'},
+    {value: 'tombstone', label: 'Надгробные плиты'}
 ];

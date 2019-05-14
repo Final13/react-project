@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import { getAllWorks, getWorkById, searchWorks } from '../../actions/portfolio';
 import styles from './Portfolio.module.scss';
-import { uploadsUrl } from '../../config'
+import { imagesUrl, uploadsUrl } from '../../config'
 import Select, { components } from 'react-select';
 import {colors, forms, types} from "../../SelectOptions";
 import Pagination from "rc-pagination";
@@ -19,7 +19,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -145,7 +145,6 @@ class Portfolio extends Component {
                             onChange={ (event) => {this.handleFilter(event,'type')} }
                             value={ type }
                             options={ modifiedTypes }
-                            components={{ Option: ImageOption }}
                         />
                     </div>
                     <div className={`col-3`}>
@@ -155,6 +154,7 @@ class Portfolio extends Component {
                             onChange={ (event) => {this.handleFilter(event,'form')} }
                             value={ form }
                             options={ modifiedForms }
+                            components={{ Option: ImageOption }}
                         />
                     </div>
                 </div>

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { getWorkById, updateWork } from '../../../actions/portfolio';
-import styles from './PortfolioEdit.module.scss';
+import { createProduct } from '../../../actions/product';
+import styles from './ProductForm.module.scss';
 import Dropzone from 'react-dropzone';
-import State from '../../../reducers/state';
-import {imagesUrl, uploadsUrl} from '../../../config'
 import Select, { components } from 'react-select';
-import { colors, forms, types } from '../../../SelectOptions';
+import { colors, forms, types, categories } from '../../../SelectOptions';
+import { imagesUrl } from '../../../config';
 
+const set = require('lodash.set');
 const { Option } = components;
 
 const ImageOption = (props) => {
@@ -24,88 +24,82 @@ const ImageOption = (props) => {
 };
 
 
-class PortfolioEdit extends Component {
+class ProductForm extends Component {
 
     state = {
-        work: State.work(),
+        title: '',
+        description: '',
+        details: {},
+        price: '',
+        category: '',
+        image: [],
         errors: {}
     };
 
-    componentDidMount() {
-        this.props.getWorkById(this.props.match.params.id);
-    }
-
     handleInputChange = (e) => {
-        const work = {...this.state.work};
-        work[e.target.name] = e.target.value;
         this.setState({
-            work: work
+            [e.target.name]: e.target.value
         })
     };
 
-    handleSelectChange = (event, type) => {
-        const work = {...this.state.work};
-        work[type] = event;
+    handleSelectChange = (event, path) => {
+        if (path === 'category') {
+            return (
+                this.setState({
+                    category: event
+                })
+            )
+        }
+        const details = {...this.state.details};
+        set(details, path, event );
         this.setState({
-            work: work
+            details: details
         })
     };
 
-    handleImageChange = (images) => {
-        const work = {...this.state.work};
-        images.forEach( image => {
-            work.images = [...work.images, image];
-        });
+    handleImageChange = (image) => {
+        console.log(image);
         this.setState({
-            work: work
+            image: image
         });
     };
 
-    removeImage = (event, image) => {
+    removeImage = (event) => {
         event.preventDefault();
         event.stopPropagation();
-
-        const work = {...this.state.work};
-        work.images = work.images.filter(el => el !== image);
         this.setState({
-            work: work
+            image: []
         });
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const work = new FormData();
-        work.append('title', this.state.work.title);
-        work.append('description', this.state.work.description);
-        work.append('type', JSON.stringify(this.state.work.type));
-        work.append('form', JSON.stringify(this.state.work.form));
-        work.append('color', JSON.stringify(this.state.work.color));
-        this.state.work.images.forEach(image => {
-            work.append('files', image);
-        });
-        this.props.updateWork(this.props.match.params.id, work, this.props.history);
+        const product = new FormData();
+        product.append('title', this.state.title);
+        product.append('description', this.state.description);
+        product.append('price', this.state.price);
+        product.append('details', JSON.stringify(this.state.details));
+        product.append('category', JSON.stringify(this.state.category));
+        product.append('file', this.state.image[0]);
+
+        this.props.createProduct(product, this.props.history);
     };
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if(nextProps.errors) {
-            this.setState({
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps.errors !== prevState.errors){
+            return {
                 errors: nextProps.errors
-            });
+            };
         }
-
-        if(nextProps.work) {
-            this.setState({
-                work: nextProps.work
-            });
-        }
+        return null;
     };
 
     render() {
-        const { errors, work } = this.state;
+        const { errors, image } = this.state;
         return(
             <div className={`container ${styles.container}`}>
-                <h2 className={styles.workHeader}>New Work</h2>
+                <h2 className={styles.workHeader}>New Product</h2>
                 <form onSubmit={ this.handleSubmit }>
                     <div className={`row`}>
                         <div className={`col-sm-12 col-lg-6`}>
@@ -117,7 +111,7 @@ class PortfolioEdit extends Component {
                                     className={`form-control ${errors.title && 'is-invalid'}`}
                                     name="title"
                                     onChange={ this.handleInputChange }
-                                    value={ work.title }
+                                    value={ this.state.title }
                                 />
                                 {errors.title && (<div className={`invalid-feedback`}>{errors.title}</div>)}
                             </div>
@@ -128,7 +122,7 @@ class PortfolioEdit extends Component {
                                     className={`form-control ${ styles.textarea} ${errors.description && 'is-invalid'}`}
                                     name="description"
                                     onChange={ this.handleInputChange }
-                                    value={ work.description }
+                                    value={ this.state.description }
                                 />
                                 {errors.description && (<div className={`invalid-feedback`}>{errors.description}</div>)}
                             </div>
@@ -141,7 +135,7 @@ class PortfolioEdit extends Component {
                                     className={`${errors.type && 'is-invalid'}`}
                                     name="type"
                                     onChange={ (event) => {this.handleSelectChange(event,'type')} }
-                                    value={ work.type }
+                                    value={ this.state.details.type }
                                     options={types}
                                 />
                                 {errors.type && (<div className={`invalid-feedback`}>{errors.type}</div>)}
@@ -153,7 +147,7 @@ class PortfolioEdit extends Component {
                                     className={`${errors.form && 'is-invalid'}`}
                                     name="form"
                                     onChange={ (event) => {this.handleSelectChange(event,'form')} }
-                                    value={ work.form }
+                                    value={ this.state.details.form }
                                     options={forms}
                                     components={{ Option: ImageOption }}
                                 />
@@ -166,34 +160,43 @@ class PortfolioEdit extends Component {
                                     className={`${errors.color && 'is-invalid'}`}
                                     name="color"
                                     onChange={ (event) => {this.handleSelectChange(event,'color')} }
-                                    value={ work.color }
+                                    value={ this.state.details.color }
                                     options={colors}
                                 />
                                 {errors.color && (<div className={`invalid-feedback`}>{errors.color}</div>)}
                             </div>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Select category:</label>
+                                <Select
+                                    placeholder="Category"
+                                    className={`${errors.category && 'is-invalid'}`}
+                                    name="category"
+                                    onChange={ (event) => {this.handleSelectChange(event,'category')} }
+                                    value={ this.state.category }
+                                    options={categories}
+                                />
+                                {errors.category && (<div className={`invalid-feedback`}>{errors.category}</div>)}
+                            </div>
                         </div>
                     </div>
-                    <Dropzone onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles)}}>
+                    <Dropzone multiple={false} onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles)}}>
                         {({getRootProps, getInputProps}) => (
                             <section>
                                 <div {...getRootProps()}>
                                     <input {...getInputProps()} />
                                     <div className={`mb-4 ${styles.dropArea}`}>
-                                        {work.images ?
+                                        {
+                                            this.state.image.length > 0 ?
                                             <React.Fragment>
-                                                {work.images.map((image, index) => (
-                                                    <React.Fragment key={typeof image === 'object' ? index + image.name : index + image}>
-                                                        <img
-                                                            alt={typeof image === 'object' ? image.name : image}
-                                                            src={typeof image === 'object' ? URL.createObjectURL(image): uploadsUrl + image}
-                                                            className={styles.thumbImg}
-                                                        />
-                                                        <i
-                                                            className={`fas fa-minus-circle ${styles.removeIcon}`}
-                                                            onClick={(event) => {this.removeImage(event, image)}}
-                                                        />
-                                                    </React.Fragment>
-                                                ))}
+                                                <img
+                                                    alt={image.name}
+                                                    // src={URL.createObjectURL(image)}
+                                                    className={styles.thumbImg}
+                                                />
+                                                <i
+                                                    className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                    onClick={ this.removeImage }
+                                                />
                                             </React.Fragment>
                                             :
                                             <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
@@ -206,7 +209,7 @@ class PortfolioEdit extends Component {
                     </Dropzone>
                     <div className={`form-group text-right`}>
                         <button type="submit" className={`btn btn-primary btn-lg`}>
-                            Update
+                            Create
                         </button>
                     </div>
                 </form>
@@ -215,15 +218,14 @@ class PortfolioEdit extends Component {
     }
 }
 
-PortfolioEdit.propTypes = {
-    getWorkById: PropTypes.func.isRequired,
-    updateWork: PropTypes.func.isRequired,
-    work: PropTypes.object,
+ProductForm.propTypes = {
+    createProduct: PropTypes.func.isRequired,
+    product: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-    work: state.work.work,
+    product: state.product.product,
     errors: state.errors
 });
 
-export default connect(mapStateToProps,{ getWorkById, updateWork })(withRouter(PortfolioEdit));
+export default connect(mapStateToProps,{ createProduct })(withRouter(ProductForm));

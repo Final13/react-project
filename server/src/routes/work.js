@@ -1,5 +1,5 @@
 const work = require('../controllers/work');
-const upload = require('../storage');
+const { upload } = require('../storage');
 
 
 module.exports = (app) => {

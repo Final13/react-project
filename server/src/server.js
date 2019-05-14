@@ -1,3 +1,4 @@
+const databaseSeed = require('./seeds');
 const express = require('express');
 
 const app = express();
@@ -12,6 +13,8 @@ routes.user(app);
 routes.work(app);
 routes.contract(app);
 routes.builder(app);
+routes.product(app);
 
+databaseSeed();
 
 app.listen(config.app.appPort, () => { console.log(`Listening on port ${config.app.appPort}...`); });

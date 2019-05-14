@@ -149,7 +149,6 @@ class Contract extends Component {
                             onChange={ (event) => {this.handleFilter(event,'type')} }
                             value={ type }
                             options={modifiedTypes}
-                            components={{ Option: ImageOption }}
                         />
                     </div>
                     <div className={isAdmin ? 'col-2' : 'col-3'}>
@@ -159,6 +158,7 @@ class Contract extends Component {
                             onChange={ (event) => {this.handleFilter(event,'form')} }
                             value={ form }
                             options={modifiedForms}
+                            components={{ Option: ImageOption }}
                         />
                     </div>
                     {

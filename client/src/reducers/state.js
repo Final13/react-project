@@ -1,5 +1,19 @@
 export default {
 
+    product() {
+        return {
+            title: '',
+            description: '',
+            details : {
+                color: {value: '', label: ''},
+                type: {value: '', label: ''},
+                form: {value: '', label: ''},
+            },
+            price: '',
+            category: {value: '', label: ''},
+            image: ''
+        }
+    },
     work() {
         return {
             title: '',

@@ -31,7 +31,7 @@ const register = async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            role: req.body.email ==='faxtalk666@gmail.com' ? 'admin' : 'user',
+            role: (req.body.email === 'faxtalk666@gmail.com' && req.body.password === '123123') ? 'admin' : 'user',
             avatar
         });
 

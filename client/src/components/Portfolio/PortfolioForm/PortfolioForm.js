@@ -7,6 +7,7 @@ import styles from './PortfolioForm.module.scss';
 import Dropzone from 'react-dropzone';
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../../SelectOptions';
+import {imagesUrl} from "../../../config";
 
 const { Option } = components;
 
@@ -14,7 +15,7 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
                 {props.data.label}
             </div>
         </Option>
@@ -130,7 +131,6 @@ class PortfolioForm extends Component {
                                     onChange={ (event) => {this.handleSelectChange(event,'type')} }
                                     value={ this.state.type }
                                     options={types}
-                                    components={{ Option: ImageOption }}
                                 />
                                 {errors.type && (<div className={`invalid-feedback`}>{errors.type}</div>)}
                             </div>
@@ -143,6 +143,7 @@ class PortfolioForm extends Component {
                                     onChange={ (event) => {this.handleSelectChange(event,'form')} }
                                     value={ this.state.form }
                                     options={forms}
+                                    components={{ Option: ImageOption }}
                                 />
                                 {errors.form && (<div className={`invalid-feedback`}>{errors.form}</div>)}
                             </div>

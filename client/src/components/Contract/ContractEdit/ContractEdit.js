@@ -151,7 +151,6 @@ class ContractEdit extends Component {
                                     onChange={ (event) => {this.handleSelectChange(event,'stone.type')} }
                                     value={ contract.stone.type }
                                     options={types}
-                                    components={{ Option: ImageOption }}
                                 />
                                 {errors.stone && (<div className={`invalid-feedback`}>{errors.stone}</div>)}
                             </div>
@@ -166,6 +165,7 @@ class ContractEdit extends Component {
                                     onChange={ (event) => {this.handleSelectChange(event,'stone.form')} }
                                     value={ contract.stone.form }
                                     options={forms}
+                                    components={{ Option: ImageOption }}
                                 />
                                 {errors.stone && (<div className={`invalid-feedback`}>{errors.stone}</div>)}
                             </div>

@@ -49,10 +49,10 @@ class Header extends Component {
                         <div className={`navbar-nav ml-auto`}>
                             <Link className={styles.link} to='/services'>Услуги</Link>
                             <div className={`d-flex`}>
-                                <Link className={styles.link} to='/catalog'>Каталог</Link>
+                                <Link className={styles.link} to='/product'>Каталог</Link>
                                 {
                                     this.props.auth.user.role === 'admin' ?
-                                        <Link className={styles.addLink} to='/catalog-form'>
+                                        <Link className={styles.addLink} to='/product-form'>
                                             <i className={`fas fa-plus-circle`} />
                                         </Link>
                                         : null

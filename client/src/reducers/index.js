@@ -5,6 +5,7 @@ import navbarReducer from './navbarReducer';
 import workReducer from './workReducer';
 import contractReducer from './contractReducer';
 import builderReducer from './builderReducer';
+import productReducer from './productReducer';
 
 export default combineReducers({
     errors: errorReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     nav: navbarReducer,
     work: workReducer,
     contract: contractReducer,
-    builder: builderReducer
+    builder: builderReducer,
+    product: productReducer,
 });
