@@ -94,10 +94,12 @@ const updateProduct = (req, res) => {
             if (!product) {
                 return res.status(404).send("data is not found");
             }
+
+            console.log(req.body);
             product.title = req.body.title;
             product.description = req.body.description;
             product.details = JSON.parse(req.body.details);
-            product.image = req.image || req.body.image;
+            product.image = req.file ? req.file.filename : req.body.file;
             product.price = req.body.price;
             product.category = JSON.parse(req.body.category);
 

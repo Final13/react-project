@@ -13,9 +13,6 @@ const validateProductInput = (data) => {
     if(Validator.isEmpty(data.title)) {
         errors.title = 'Заголовок обязателен для заполнения';
     }
-    if(Validator.isNumeric(data.price)) {
-        errors.price = 'Цена может содержать только цифры';
-    }
 
     return {
         errors,

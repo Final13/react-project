@@ -9,6 +9,7 @@ import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../SelectOptions';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
+import Tippy from "@tippy.js/react";
 
 const { Option } = components;
 
@@ -177,71 +178,75 @@ class Contract extends Component {
                 <div className={`row`}>
                     {
                         currentContracts.map( (contract) => (
-                            <div key={contract._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
-                                <div className={styles.cardWhite}>
-                                    <div className={styles.cardContent}>
-                                        <h4 className={`pb-3 ${styles.contractTitle}`}>{contract.number}</h4>
-                                        <div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                            <Tippy
+                                key={contract._id}
+                                content='Click for details'
+                                arrow={true}
+                                animation="scale"
+                                className={`bg-dark`}
+                                duration={100}
+                                delay={[0, 50]}
+                            >
+                                <div className={`${styles.cardEffects} col-xs-12 col-lg-6 col-xl-4`}>
+                                    <Link className={styles.link} to={`/contract/${contract._id}`}>
+                                        <div className={styles.cardWhite}>
+                                            <div className={styles.cardContent}>
+                                                <h4 className={`pb-3 ${styles.contractTitle}`}>{contract.number}</h4>
+                                                <div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Customer:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.customer.name}
                                                 </span>
-                                            </div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                    </div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Phone:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.customer.phone}
                                                 </span>
-                                            </div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                    </div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Payments:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.payments}
                                                 </span>
-                                            </div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                    </div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Total:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.total}
                                                 </span>
-                                            </div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                    </div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Balance:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.total - contract.payments}
                                                 </span>
-                                            </div>
-                                            <div className={`d-flex justify-content-between mb-2 border-bottom`}>
+                                                    </div>
+                                                    <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                 <span>
                                                     Builder:
                                                 </span>
-                                                <span>
+                                                        <span>
                                                     {contract.builder.name}
                                                 </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <Link
-                                            to={`/contract/${contract._id}`}
-                                            className={`btn btn-outline-primary mt-3`}
-                                        >
-                                            Details
-                                        </Link>
-                                    </div>
+                                    </Link>
                                 </div>
-
-
-                            </div>
+                            </Tippy>
                         ))
                     }
                 </div>

@@ -52,6 +52,10 @@
   position: relative;
 }
 
+.cardWhite:hover {
+  box-shadow: 0 0 15px 10px rgba(0, 155, 255, 0.2);
+}
+
 .cardContent {
   position: absolute;
   padding: 20px;
@@ -69,4 +73,22 @@
 .pagination {
   padding-top: 40px !important;
   display: inline-block;
+}
+
+.price {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.cardEffects:hover {
+  transform: translateY(-10px);
+  transition-duration: .5s;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  color: black;
 }

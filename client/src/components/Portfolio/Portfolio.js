@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import { getAllWorks, getWorkById, searchWorks } from '../../actions/portfolio';
 import styles from './Portfolio.module.scss';
-import { imagesUrl, uploadsUrl } from '../../config'
+import {productUrl, workUrl} from '../../config'
 import Select, { components } from 'react-select';
 import {colors, forms, types} from "../../SelectOptions";
 import Pagination from "rc-pagination";
 import {Helmet} from "react-helmet";
+import Tippy from "@tippy.js/react";
 
 const { Option } = components;
 
@@ -19,7 +20,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -161,37 +162,41 @@ class Portfolio extends Component {
                 <div className={`row`}>
                     {
                         currentWorks.map( (work) => (
-                            <div key={work._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
-                                <div className={styles.cardWhite}>
-                                    <div className={styles.cardContent}>
-                                        <h4 className={`pb-3 ${styles.workTitle}`}>{work.title}</h4>
-                                        <Slider {...settings}>
-                                            {
-                                                work.images.map( image => (
-                                                    <div key={image}>
-                                                        <img
-                                                            className={styles.sliderImage}
-                                                            alt={image}
-                                                            src={uploadsUrl + image}
-                                                        />
-                                                    </div>
-                                                ))
-                                            }
-                                        </Slider>
-                                        <div className={styles.description}>
-                                            {work.description}
+                            <Tippy
+                                key={work._id}
+                                content='Click for details'
+                                arrow={true}
+                                animation="scale"
+                                className={`bg-dark`}
+                                duration={100}
+                                delay={[0, 50]}
+                            >
+                                <div className={`${styles.cardEffects} col-xs-12 col-lg-6 col-xl-4`}>
+                                    <Link className={styles.link} to={`/portfolio/${work._id}`}>
+                                        <div className={styles.cardWhite}>
+                                            <div className={styles.cardContent}>
+                                                <h4 className={`pb-3 ${styles.workTitle}`}>{work.title}</h4>
+                                                <Slider {...settings}>
+                                                    {
+                                                        work.images.map( (image, index) => (
+                                                            <div key={image}>
+                                                                <img
+                                                                    className={styles.sliderImage}
+                                                                    alt={`${work.title || 'Work'} ${index+1}`}
+                                                                    src={workUrl + image}
+                                                                />
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </Slider>
+                                                <div className={styles.description}>
+                                                    {work.description}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <Link
-                                            to={`/portfolio/${work._id}`}
-                                            className={`btn btn-outline-primary mt-2`}
-                                        >
-                                            Details
-                                        </Link>
-                                    </div>
+                                    </Link>
                                 </div>
-
-
-                            </div>
+                            </Tippy>
                         ))
                     }
                 </div>

@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import { getAllProducts, getProductById, searchProducts } from '../../actions/product';
 import styles from './Product.module.scss';
-import { imagesUrl } from '../../config'
+import { productUrl, defaultImage } from '../../config'
 import Select, { components } from 'react-select';
 import {colors, forms, types, categories} from "../../SelectOptions";
 import Pagination from "rc-pagination";
 import {Helmet} from "react-helmet";
+import Tippy from '@tippy.js/react'
 
 const { Option } = components;
 
@@ -18,7 +19,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -165,34 +166,38 @@ class Product extends Component {
                 <div className={`row`}>
                     {
                         currentProducts.map( (product) => (
-                            <div key={product._id} className={`col-xs-12 col-lg-6 col-xl-4`}>
-                                <div className={styles.cardWhite}>
-                                    <div className={styles.cardContent}>
-                                        <h4 className={`pb-3 ${styles.workTitle}`}>{product.title}</h4>
-                                        {
-                                            product.image &&
-                                            <img
-                                                className={styles.cardImage}
-                                                alt={product.image}
-                                                src={imagesUrl + product.image}
-                                            />
-                                        }
-                                        <div className={styles.description}>
-                                            {
-                                                product.price ? `Цена от: ${product.price}` : 'Цена по запросу'
-                                            }
+                            <Tippy
+                                key={product._id}
+                                content='Click for details'
+                                arrow={true}
+                                animation="scale"
+                                className={`bg-dark`}
+                                duration={100}
+                                delay={[0, 50]}
+                            >
+                                <div className={`${styles.cardEffects} col-xs-12 col-lg-6 col-xl-4`}>
+                                    <Link className={styles.link} to={`/product/${product._id}`}>
+                                        <div className={styles.cardWhite}>
+                                            <div className={styles.cardContent}>
+                                                <h4 className={`pb-3 ${styles.workTitle}`}>{product.title}</h4>
+                                                <img
+                                                    className={styles.cardImage}
+                                                    alt={ product.title || 'Product image' }
+                                                    src={ product.image ? productUrl + product.image : defaultImage }
+                                                />
+                                                <div className={styles.description}>
+                                                    {
+                                                        product.price ?
+                                                            `Цена от: ${product.price} бел.руб.` :
+                                                            'Цена по запросу'
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
-                                        <Link
-                                            to={`/portfolio/${product._id}`}
-                                            className={`btn btn-outline-primary mt-2`}
-                                        >
-                                            Details
-                                        </Link>
-                                    </div>
+                                    </Link>
                                 </div>
+                            </Tippy>
 
-
-                            </div>
                         ))
                     }
                 </div>

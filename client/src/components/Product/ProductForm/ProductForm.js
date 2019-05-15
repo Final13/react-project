@@ -7,7 +7,7 @@ import styles from './ProductForm.module.scss';
 import Dropzone from 'react-dropzone';
 import Select, { components } from 'react-select';
 import { colors, forms, types, categories } from '../../../SelectOptions';
-import { imagesUrl } from '../../../config';
+import { productUrl } from '../../../config';
 
 const set = require('lodash.set');
 const { Option } = components;
@@ -16,7 +16,7 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
+                <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
                 {props.data.label}
             </div>
         </Option>
@@ -58,7 +58,6 @@ class ProductForm extends Component {
     };
 
     handleImageChange = (image) => {
-        console.log(image);
         this.setState({
             image: image
         });
@@ -186,11 +185,11 @@ class ProductForm extends Component {
                                     <input {...getInputProps()} />
                                     <div className={`mb-4 ${styles.dropArea}`}>
                                         {
-                                            this.state.image.length > 0 ?
+                                            image.length > 0 ?
                                             <React.Fragment>
                                                 <img
-                                                    alt={image.name}
-                                                    // src={URL.createObjectURL(image)}
+                                                    alt={typeof image === 'object' ? image.name : image}
+                                                    src={typeof image === 'object' ? URL.createObjectURL(image[0]) : productUrl + image}
                                                     className={styles.thumbImg}
                                                 />
                                                 <i

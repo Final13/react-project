@@ -5,8 +5,9 @@ import Slider from "react-slick";
 import { withRouter, Link } from 'react-router-dom';
 import { getWorkById, deleteWork } from '../../../actions/portfolio';
 import styles from './PortfolioDetails.module.scss';
-import {uploadsUrl} from "../../../config";
+import {workUrl} from "../../../config";
 import {Helmet} from "react-helmet";
+import { defaultDescription, defaultTitle } from '../../../defaultMeta';
 
 class PortfolioDetails extends Component {
     componentDidMount() {
@@ -34,9 +35,9 @@ class PortfolioDetails extends Component {
             <div className={`${styles.container}`}>
                 <Helmet>
                     <title>{work.title} | Brand Name</title>
-                    <meta property="og:title" content={`${work.title} | Brand Name`} />
-                    <meta property="description" content={work.description.slice(0, 150)} />
-                    <meta property="og:description" content={work.description.slice(0, 150)} />
+                    <meta property="og:title" content={`${ work.title || defaultTitle } | Brand Name`} />
+                    <meta property="description" content={ work.description ? work.description.slice(0, 150) : defaultDescription } />
+                    <meta property="og:description" content={ work.description ? work.description.slice(0, 150) : defaultDescription } />
                     <meta property="og:url" content={`https://website.com/portfolio/${work._id}`} />
                 </Helmet>
                 {
@@ -62,12 +63,12 @@ class PortfolioDetails extends Component {
                     <div className={`col-sm-12 col-lg-6`}>
                         <Slider {...settings}>
                             {
-                                work.images.map( image => (
+                                work.images.map( (image,index) => (
                                     <div key={image}>
                                         <img
                                             className={styles.sliderImage}
-                                            alt={image}
-                                            src={uploadsUrl + image}
+                                            alt={`${work.title || 'Work'} ${index+1}`}
+                                            src={workUrl + image}
                                         />
                                     </div>
                                 ))

@@ -25,8 +25,8 @@ import Monument from '../Service/Monument';
 import Production from '../Service/Production';
 import Product from '../Product';
 import ProductForm from '../Product/ProductForm';
-// import ProductDetails from '../Product/ProductDetails';
-// import ProductEdit from '../Product/ProductEdit';
+import ProductDetails from '../Product/ProductDetails';
+import ProductEdit from '../Product/ProductEdit';
 
 const Main = () => (
     <main className={`text-center ${styles.wrapper}`}>
@@ -49,8 +49,8 @@ const Main = () => (
             <Route exact path='/services/monument' component={ Monument } />
             <Route exact path='/services/production' component={ Production } />
             <Route exact path='/product' component={ Product } />
-            {/*<Route exact path='/product/:id' component={ ProductDetails } />*/}
-            {/*<PrivateRoute exact path='/product/edit/:id' component={ ProductEdit } />*/}
+            <Route exact path='/product/:id' component={ ProductDetails } />
+            <PrivateRoute exact path='/product/edit/:id' component={ ProductEdit } />
             <PrivateRoute exact path="/product-form" component={ ProductForm } />
             <Route exact path="/register" component={ Register } />
             <Route exact path="/login" component={ Login } />

@@ -7,7 +7,7 @@ import styles from './PortfolioForm.module.scss';
 import Dropzone from 'react-dropzone';
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../../SelectOptions';
-import {imagesUrl} from "../../../config";
+import { productUrl } from "../../../config";
 
 const { Option } = components;
 
@@ -15,7 +15,7 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
+                <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
                 {props.data.label}
             </div>
         </Option>

@@ -1,20 +1,20 @@
 const multer = require('multer');
 
-const uploadStorage = multer.diskStorage({
-    destination: '../client/public/uploads',
+const workStorage = multer.diskStorage({
+    destination: '../client/public/images/worksImages',
     filename(req, file, cb) {
         cb(null, `${new Date().getTime()}-${file.originalname.replace(/\s/g, '')}`);
     },
 });
 
-const imageStorage = multer.diskStorage({
-    destination: '../client/public/images',
+const productStorage = multer.diskStorage({
+    destination: '../client/public/images/productsImages',
     filename(req, file, cb) {
         cb(null, `${new Date().getTime()}-${file.originalname.replace(/\s/g, '')}`);
     },
 });
 
-const upload = multer({ storage: uploadStorage });
-const imageUpload = multer({ storage: imageStorage });
+const workUpload = multer({ storage: workStorage });
+const productUpload = multer({ storage: productStorage });
 
-module.exports = { upload, imageUpload };
+module.exports = { workUpload, productUpload };

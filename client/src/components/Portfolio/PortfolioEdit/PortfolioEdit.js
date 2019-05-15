@@ -6,7 +6,7 @@ import { getWorkById, updateWork } from '../../../actions/portfolio';
 import styles from './PortfolioEdit.module.scss';
 import Dropzone from 'react-dropzone';
 import State from '../../../reducers/state';
-import {imagesUrl, uploadsUrl} from '../../../config'
+import {productUrl, workUrl} from '../../../config'
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../../SelectOptions';
 
@@ -16,7 +16,7 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={imagesUrl + props.data.href} alt={props.data.label} />
+                <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
                 {props.data.label}
             </div>
         </Option>
@@ -185,7 +185,7 @@ class PortfolioEdit extends Component {
                                                     <React.Fragment key={typeof image === 'object' ? index + image.name : index + image}>
                                                         <img
                                                             alt={typeof image === 'object' ? image.name : image}
-                                                            src={typeof image === 'object' ? URL.createObjectURL(image): uploadsUrl + image}
+                                                            src={typeof image === 'object' ? URL.createObjectURL(image): workUrl + image}
                                                             className={styles.thumbImg}
                                                         />
                                                         <i

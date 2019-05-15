@@ -1,4 +1,5 @@
 module.exports = {
-    uploadsUrl: '/uploads/',
-    imagesUrl: '/images/',
+    defaultImage: '/images/default.png',
+    workUrl: '/images/worksImages/',
+    productUrl: '/images/productsImages/',
 };

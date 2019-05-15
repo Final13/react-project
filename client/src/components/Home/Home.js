@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import {getAllWorks} from '../../actions/portfolio';
-import {uploadsUrl} from '../../config'
+import {workUrl} from '../../config'
 import styles from './Home.module.scss';
 import {Helmet} from "react-helmet";
 
@@ -86,7 +86,7 @@ class Home extends Component {
                                                                 <img
                                                                     className={styles.sliderImage}
                                                                     alt={image}
-                                                                    src={uploadsUrl + image}
+                                                                    src={workUrl + image}
                                                                 />
                                                             </div>
                                                         ))
