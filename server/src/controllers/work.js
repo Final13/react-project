@@ -19,7 +19,7 @@ const createWork = (req, res) => {
         type: JSON.parse(req.body.type),
         form: JSON.parse(req.body.form),
         color: JSON.parse(req.body.color),
-        images: images.length > 0 ? images : 'default.png',
+        images: images,
     });
 
     newWork
@@ -100,15 +100,10 @@ const updateWork = (req, res) => {
             req.files.forEach(image => {
                 return images = [...images, image.filename]
             });
-            
-            //TODO: fix bug when array length = 1 in update
+
             if (req.body.files) {
-                // if (req.body.files.length === 1)
-                // {
-                //     return images = [...images, req.body.files]
-                // }
-                Array.from(req.body.files).forEach(image => {
-                    return images = [...images, image]
+                Array.from(new Set([req.body.files])).forEach(image => {
+                    return images = [...images, image];
                 });
             }
             work.title = req.body.title;

@@ -80,7 +80,7 @@ class ProductEdit extends Component {
         product.append('details', JSON.stringify(this.state.product.details));
         product.append('category', JSON.stringify(this.state.product.category));
         product.append('file',
-            typeof this.state.product.image === 'object' ?
+            typeof this.state.product.image === 'object' && this.state.product.image !== null ?
                 this.state.product.image[0] :
                 this.state.product.image
         );

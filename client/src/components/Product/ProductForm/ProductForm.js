@@ -29,9 +29,11 @@ class ProductForm extends Component {
     state = {
         title: '',
         description: '',
-        details: {},
+        details: {
+            color: {value: 'all', Label: 'All'}
+        },
         price: '',
-        category: '',
+        category: {value: 'all', Label: 'All'},
         image: [],
         errors: {}
     };

@@ -5,12 +5,12 @@ export default {
             title: '',
             description: '',
             details : {
-                color: {value: '', label: ''},
+                color: {value: 'all', label: 'All'},
                 type: {value: '', label: ''},
                 form: {value: '', label: ''},
             },
             price: '',
-            category: {value: '', label: ''},
+            category: {value: 'all', label: 'All'},
             image: ''
         }
     },

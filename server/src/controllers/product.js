@@ -12,7 +12,7 @@ const createProduct = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         details: JSON.parse(req.body.details),
-        image: req.file ? req.file.filename : 'default.png',
+        image: req.file ? req.file.filename : null,
         price: req.body.price,
         category: JSON.parse(req.body.category)
     });
@@ -95,11 +95,11 @@ const updateProduct = (req, res) => {
                 return res.status(404).send("data is not found");
             }
 
-            console.log(req.body);
             product.title = req.body.title;
             product.description = req.body.description;
             product.details = JSON.parse(req.body.details);
-            product.image = req.file ? req.file.filename : req.body.file;
+            product.image = req.file ? req.file.filename : (
+                (req.body.file === 'null' || 'undefined' || undefined || null) ? null : req.body.file);
             product.price = req.body.price;
             product.category = JSON.parse(req.body.category);
 
@@ -109,6 +109,7 @@ const updateProduct = (req, res) => {
                     res.json('Product updated!');
                 })
                 .catch(err => {
+                    console.log(err);
                     res.status(400).send("Update not possible");
                 });
         });
