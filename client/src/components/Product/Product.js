@@ -127,6 +127,15 @@ class Product extends Component {
                     </div>
                     <div className={`col-2`}>
                         <Select
+                            placeholder="Category"
+                            name="category"
+                            onChange={ (event) => {this.handleFilter(event,'category')} }
+                            value={ category }
+                            options={ modifiedCategories }
+                        />
+                    </div>
+                    <div className={`col-2`}>
+                        <Select
                             placeholder="Color"
                             name="color"
                             onChange={ (event) => {this.handleFilter(event,'color')} }
@@ -151,15 +160,6 @@ class Product extends Component {
                             value={ form }
                             options={ modifiedForms }
                             components={{ Option: ImageOption }}
-                        />
-                    </div>
-                    <div className={`col-2`}>
-                        <Select
-                            placeholder="Category"
-                            name="category"
-                            onChange={ (event) => {this.handleFilter(event,'category')} }
-                            value={ category }
-                            options={ modifiedCategories }
                         />
                     </div>
                 </div>
@@ -187,7 +187,7 @@ class Product extends Component {
                                                 />
                                                 <div className={styles.description}>
                                                     {
-                                                        product.price ?
+                                                        product.price && product.price !== 0 ?
                                                             `Цена от: ${product.price} бел.руб.` :
                                                             'Цена по запросу'
                                                     }

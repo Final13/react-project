@@ -29,11 +29,9 @@ class ProductForm extends Component {
     state = {
         title: '',
         description: '',
-        details: {
-            color: {value: 'all', Label: 'All'}
-        },
+        details: {},
         price: '',
-        category: {value: 'all', Label: 'All'},
+        category: {value: '', Label: ''},
         image: [],
         errors: {}
     };
@@ -80,8 +78,8 @@ class ProductForm extends Component {
         product.append('title', this.state.title);
         product.append('description', this.state.description);
         product.append('price', this.state.price);
-        product.append('details', JSON.stringify(this.state.details));
-        product.append('category', JSON.stringify(this.state.category));
+        product.append('details', this.state.details ? JSON.stringify(this.state.details) : {detail: {value: 'all', Label: 'All'}});
+        product.append('category', this.state.category ? JSON.stringify(this.state.category) : {value: 'all', Label: 'All'});
         product.append('file', this.state.image[0]);
 
         this.props.createProduct(product, this.props.history);
@@ -115,6 +113,30 @@ class ProductForm extends Component {
                                     value={ this.state.title }
                                 />
                                 {errors.title && (<div className={`invalid-feedback`}>{errors.title}</div>)}
+                            </div>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Select category:</label>
+                                <Select
+                                    placeholder="Category"
+                                    className={`${errors.category && 'is-invalid'}`}
+                                    name="category"
+                                    onChange={ (event) => {this.handleSelectChange(event,'category')} }
+                                    value={ this.state.category }
+                                    options={categories}
+                                />
+                                {errors.category && (<div className={`invalid-feedback`}>{errors.category}</div>)}
+                            </div>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Price:</label>
+                                <input
+                                    type="number"
+                                    placeholder="Price"
+                                    className={`form-control ${errors.price && 'is-invalid'}`}
+                                    name="price"
+                                    onChange={ this.handleInputChange }
+                                    value={ this.state.price }
+                                />
+                                {errors.price && (<div className={`invalid-feedback`}>{errors.price}</div>)}
                             </div>
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Description:</label>
@@ -165,18 +187,6 @@ class ProductForm extends Component {
                                     options={colors}
                                 />
                                 {errors.color && (<div className={`invalid-feedback`}>{errors.color}</div>)}
-                            </div>
-                            <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Select category:</label>
-                                <Select
-                                    placeholder="Category"
-                                    className={`${errors.category && 'is-invalid'}`}
-                                    name="category"
-                                    onChange={ (event) => {this.handleSelectChange(event,'category')} }
-                                    value={ this.state.category }
-                                    options={categories}
-                                />
-                                {errors.category && (<div className={`invalid-feedback`}>{errors.category}</div>)}
                             </div>
                         </div>
                     </div>

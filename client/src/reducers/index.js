@@ -6,6 +6,7 @@ import workReducer from './workReducer';
 import contractReducer from './contractReducer';
 import builderReducer from './builderReducer';
 import productReducer from './productReducer';
+import settingsReducer from './settingsReducer';
 
 export default combineReducers({
     errors: errorReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
     contract: contractReducer,
     builder: builderReducer,
     product: productReducer,
+    settings: settingsReducer,
 });

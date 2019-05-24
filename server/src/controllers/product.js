@@ -76,7 +76,6 @@ const getProductById = (req, res) => {
         .findById(id)
         .then(product => {
             if(!product) {
-                errors.email = 'Product not found';
                 return res.status(404).json(errors);
             }
             res.json(product);
@@ -98,8 +97,7 @@ const updateProduct = (req, res) => {
             product.title = req.body.title;
             product.description = req.body.description;
             product.details = JSON.parse(req.body.details);
-            product.image = req.file ? req.file.filename : (
-                (req.body.file === 'null' || 'undefined' || undefined || null) ? null : req.body.file);
+            product.image = req.file ? req.file.filename : req.body.file;
             product.price = req.body.price;
             product.category = JSON.parse(req.body.category);
 

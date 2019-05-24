@@ -303,4 +303,4 @@ const mapActionsToProps = {
     getAllBuilders
 };
 
-export default connect(mapStateToProps,mapActionsToProps)(withRouter(ContractEdit));
+export default connect(mapStateToProps, mapActionsToProps)(withRouter(ContractEdit));

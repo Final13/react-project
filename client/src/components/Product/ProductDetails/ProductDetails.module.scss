@@ -17,3 +17,28 @@
   position: absolute;
   right: 160px;
 }
+
+.row {
+  padding-top: 30px;
+  width: 1000px;
+  display: inline-flex !important;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.materialImage {
+  width: 230px;
+  height: 50px;
+  margin: 5px;
+}
+
+.materialImage {
+  &:active,
+  &:hover {
+    box-shadow: 0 0 5px 5px rgba(0, 155, 255, 0.4);
+    cursor: pointer;
+  }
+}

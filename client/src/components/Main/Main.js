@@ -27,6 +27,7 @@ import Product from '../Product';
 import ProductForm from '../Product/ProductForm';
 import ProductDetails from '../Product/ProductDetails';
 import ProductEdit from '../Product/ProductEdit';
+import Settings from '../Settings/Settings';
 
 const Main = () => (
     <main className={`text-center ${styles.wrapper}`}>
@@ -54,6 +55,7 @@ const Main = () => (
             <PrivateRoute exact path="/product-form" component={ ProductForm } />
             <Route exact path="/register" component={ Register } />
             <Route exact path="/login" component={ Login } />
+            <PrivateRoute exact path="/settings" component={ Settings } />
             <Route exact path='/404' component={ ErrorPage } />
             <Redirect to='/404'/>
         </Switch>

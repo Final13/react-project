@@ -133,6 +133,18 @@ class ProductEdit extends Component {
                                 />
                                 {errors.description && (<div className={`invalid-feedback`}>{errors.description}</div>)}
                             </div>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Price:</label>
+                                <input
+                                    type="number"
+                                    placeholder="Price"
+                                    className={`form-control ${errors.price && 'is-invalid'}`}
+                                    name="price"
+                                    onChange={ this.handleInputChange }
+                                    value={ product.price }
+                                />
+                                {errors.price && (<div className={`invalid-feedback`}>{errors.price}</div>)}
+                            </div>
                         </div>
                     </div>
                     <Dropzone multiple={false} onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles)}}>

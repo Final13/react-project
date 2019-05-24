@@ -4,6 +4,7 @@ const work = require('./work');
 const contract = require('./contract');
 const builder = require('./builder');
 const product = require('./product');
+const settings = require('./settings');
 
 module.exports = {
     mail,
@@ -12,4 +13,5 @@ module.exports = {
     contract,
     builder,
     product,
+    settings,
 };

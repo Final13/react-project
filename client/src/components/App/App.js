@@ -7,6 +7,9 @@ import store from '../../store'
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../setAuthToken';
 import { setCurrentUser, logoutUser } from '../../actions/authentication';
+import { getCurrency } from '../../actions/settings';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
 
 class App extends Component {
     componentDidMount() {
@@ -20,6 +23,8 @@ class App extends Component {
                 store.dispatch(logoutUser());
             }
         }
+
+        store.dispatch(getCurrency());
     }
 
     render() {
@@ -30,6 +35,7 @@ class App extends Component {
                     <Main />
                 </ScrollToTop>
                 <Footer />
+                <Alert stack={{limit: 3}} />
             </div>
         );
     }

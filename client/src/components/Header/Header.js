@@ -51,7 +51,7 @@ class Header extends Component {
                             <div className={`d-flex`}>
                                 <Link className={styles.link} to='/product'>Каталог</Link>
                                 {
-                                    this.props.auth.user.role === 'admin' ?
+                                    user.role === 'admin' ?
                                         <Link className={styles.addLink} to='/product-form'>
                                             <i className={`fas fa-plus-circle`} />
                                         </Link>
@@ -61,7 +61,7 @@ class Header extends Component {
                             <div className={`d-flex`}>
                                     <Link className={styles.link} to='/price'>Цены</Link>
                                 {
-                                    this.props.auth.user.role === 'admin' ?
+                                    user.role === 'admin' ?
                                         <Link className={styles.addLink} to='/price-form'>
                                             <i className={`fas fa-plus-circle`} />
                                         </Link>
@@ -71,7 +71,7 @@ class Header extends Component {
                             <div className={`d-flex`}>
                                 <Link className={styles.link} to='/portfolio'>Наши работы</Link>
                                 {
-                                    this.props.auth.user.role === 'admin' ?
+                                    user.role === 'admin' ?
                                         <React.Fragment>
                                             <Link className={styles.addLink} to='/portfolio-form'>
                                                 <i className={`fas fa-plus-circle`} />
@@ -87,6 +87,13 @@ class Header extends Component {
                                 }
                             </div>
                             <Link className={styles.link} to='/contacts'>Контакты</Link>
+                            {
+                                user.role === 'admin' ? (
+                                    <Link className={`btn btn-outline-secondary text-info ml-2 mr-2 ${styles.link}`} to='/settings'>
+                                        Настройки
+                                    </Link>
+                                ) : null
+                            }
                             {isAuthenticated ? authLinks : guestLinks}
                         </div>
                     </div>

@@ -14,6 +14,7 @@ routes.work(app);
 routes.contract(app);
 routes.builder(app);
 routes.product(app);
+routes.settings(app);
 
 databaseSeed();
 
