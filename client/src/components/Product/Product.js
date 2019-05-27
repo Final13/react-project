@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import { getAllProducts, getProductById, searchProducts } from '../../actions/product';
+import { getSettings } from '../../actions/settings';
 import styles from './Product.module.scss';
 import { productUrl, defaultImage } from '../../config'
 import Select, { components } from 'react-select';
@@ -46,6 +47,7 @@ class Product extends Component {
 
     componentDidMount() {
         this.props.getAllProducts();
+        this.props.getSettings();
     }
 
     handleChangePage = (page) => {
@@ -83,6 +85,7 @@ class Product extends Component {
     };
 
     render() {
+        const { rate, monumentPrice} = this.props.settings;
         const { query, color, form, type, category } = this.state;
         const modifiedColors = [
             {value: '', label: 'Все цвета'},
@@ -187,8 +190,8 @@ class Product extends Component {
                                                 />
                                                 <div className={styles.description}>
                                                     {
-                                                        product.price && product.price !== 0 ?
-                                                            `Цена от: ${product.price} бел.руб.` :
+                                                        product.price && monumentPrice && rate && product.price !== 0 ?
+                                                            `Цена от: ${(product.price * monumentPrice * rate).toFixed()} бел.руб.` :
                                                             'Цена по запросу'
                                                     }
                                                 </div>
@@ -222,11 +225,13 @@ Product.propTypes = {
     getAllProducts: PropTypes.func.isRequired,
     getProductById: PropTypes.func.isRequired,
     searchProducts: PropTypes.func.isRequired,
+    getSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     products: state.product.products,
+    settings: state.settings,
     errors: state.errors
 });
 
-export default connect(mapStateToProps,{ getAllProducts, getProductById, searchProducts })(withRouter(Product));
+export default connect(mapStateToProps,{ getAllProducts, getProductById, searchProducts, getSettings })(withRouter(Product));

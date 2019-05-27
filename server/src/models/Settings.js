@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const SettingSchema = new Schema({
-    defaultPrices: {
-        type: Object
+    monumentPrice: {
+        type: Number
     },
     portraitPrice: {
         type: Number

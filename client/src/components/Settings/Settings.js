@@ -27,6 +27,14 @@ class Settings extends Component {
         });
     };
 
+    handleArrayChange = (event, index) => {
+        const settings = {...this.state.settings};
+        settings[event.target.name][[index]].value = event.target.value;
+        this.setState({
+            settings: settings
+        });
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
 
@@ -72,11 +80,12 @@ class Settings extends Component {
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <div className={`row text-left pb-3 pt-3`}>
-                        <div className={`col-6`}>
+                        <div className={`col-4`}>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Portrait price USD:</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>Portrait price(USD):</label>
                                 <input
-                                    type="text"
+                                    type='number'
+                                    step={1}
                                     placeholder="Portrait price"
                                     className={`form-control ${errors.portraitPrice && 'is-invalid'}`}
                                     name="portraitPrice"
@@ -86,11 +95,12 @@ class Settings extends Component {
                                 {errors.portraitPrice && (<div className={`invalid-feedback`}>{errors.portraitPrice}</div>)}
                             </div>
                         </div>
-                        <div className={`col-6`}>
+                        <div className={`col-4`}>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Text price USD:</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>Text price (USD):</label>
                                 <input
-                                    type="text"
+                                    type='number'
+                                    step={1}
                                     placeholder="Text price"
                                     className={`form-control ${errors.textPrice && 'is-invalid'}`}
                                     name="textPrice"
@@ -100,6 +110,67 @@ class Settings extends Component {
                                 {errors.textPrice && (<div className={`invalid-feedback`}>{errors.textPrice}</div>)}
                             </div>
                         </div>
+                        <div className={`col-4`}>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Monument price (USD):</label>
+                                <input
+                                    type='number'
+                                    step={1}
+                                    placeholder="Monument price"
+                                    className={`form-control ${errors.monumentPrice && 'is-invalid'}`}
+                                    name="monumentPrice"
+                                    onChange={ this.handleInputChange }
+                                    value={ settings.monumentPrice }
+                                />
+                                {errors.monumentPrice && (<div className={`invalid-feedback`}>{errors.monumentPrice}</div>)}
+                            </div>
+                        </div>
+                        <div className={`col-12 border-bottom mb-2 pt-2 pb-1`}>
+                            Size coefficients (ratio):
+                        </div>
+                        {
+                            settings.sizeCoefficient.map((coefficient, index) => (
+                                <div className={`col-6`} key={index + coefficient.label}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>{coefficient.label}:</label>
+                                        <input
+                                            type='number'
+                                            step={0.1}
+                                            disabled={coefficient.name === '80405'}
+                                            placeholder='Portrait price'
+                                            className={`form-control ${errors.sizeCoefficient && 'is-invalid'}`}
+                                            name='sizeCoefficient'
+                                            onChange={ event => {this.handleArrayChange(event, index)} }
+                                            value={ coefficient.value }
+                                        />
+                                        {errors.sizeCoefficient && (<div className={`invalid-feedback`}>{errors.sizeCoefficient}</div>)}
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        <div className={`col-12 border-bottom mb-2 pt-2 pb-1`}>
+                            Material coefficients (ratio):
+                        </div>
+                        {
+                            settings.materialCoefficient.map((coefficient, index) => (
+                                <div className={`col-6`} key={index + coefficient.label}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>{coefficient.label}:</label>
+                                        <input
+                                            type='number'
+                                            step={0.1}
+                                            disabled={coefficient.name === 'black'}
+                                            placeholder='Portrait price'
+                                            className={`form-control ${errors.materialCoefficient && 'is-invalid'}`}
+                                            name='materialCoefficient'
+                                            onChange={ event => {this.handleArrayChange(event, index)} }
+                                            value={ coefficient.value }
+                                        />
+                                        {errors.materialCoefficient && (<div className={`invalid-feedback`}>{errors.materialCoefficient}</div>)}
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className={`form-group text-right`}>
                         <button type="submit" className={`btn btn-primary btn-lg`}>

@@ -113,10 +113,10 @@ class ProductEdit extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Title:</label>
                                 <input
-                                    type="text"
-                                    placeholder="Title"
+                                    type='text'
+                                    placeholder='Title'
                                     className={`form-control ${errors.title && 'is-invalid'}`}
-                                    name="title"
+                                    name='title'
                                     onChange={ this.handleInputChange }
                                     value={ product.title }
                                 />
@@ -125,21 +125,22 @@ class ProductEdit extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Description:</label>
                                 <textarea
-                                    placeholder="Description"
+                                    placeholder='Description'
                                     className={`form-control ${ styles.textarea} ${errors.description && 'is-invalid'}`}
-                                    name="description"
+                                    name='description'
                                     onChange={ this.handleInputChange }
                                     value={ product.description }
                                 />
                                 {errors.description && (<div className={`invalid-feedback`}>{errors.description}</div>)}
                             </div>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Price:</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>Price coefficient:</label>
                                 <input
-                                    type="number"
-                                    placeholder="Price"
+                                    type='number'
+                                    step={0.1}
+                                    placeholder='Price'
                                     className={`form-control ${errors.price && 'is-invalid'}`}
-                                    name="price"
+                                    name='price'
                                     onChange={ this.handleInputChange }
                                     value={ product.price }
                                 />
@@ -176,7 +177,7 @@ class ProductEdit extends Component {
                         )}
                     </Dropzone>
                     <div className={`form-group text-right`}>
-                        <button type="submit" className={`btn btn-primary btn-lg`}>
+                        <button type='submit' className={`btn btn-primary btn-lg`}>
                             Update
                         </button>
                     </div>

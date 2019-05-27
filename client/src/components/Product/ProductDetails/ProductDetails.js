@@ -13,10 +13,17 @@ class ProductDetails extends Component {
     state = {
         errors: {},
         settings: {},
-        material: 1,
-        size: 1,
+        material: {
+            value: 1,
+            label: '"Карельский" - чёрный гранит'
+        },
+        size: {
+            value: 1,
+            label: "80x40x5",
+            stand: "50x10x15",
+            flowerGarden: "100x50x8x5"
+        },
         decoration: 0,
-        materialLabel: '"Карельский" - чёрный гранит'
     };
 
     componentDidMount() {
@@ -30,16 +37,28 @@ class ProductDetails extends Component {
 
     handleMaterialChange = (event, material) => {
         this.setState({
-            material: material.value,
-            materialLabel: material.label,
+            material: material,
         });
     };
 
+    handleSizeChange = (event, size) => {
+        this.setState({
+            size: size,
+        });
+    };
+
+    handleDecorationChange = (event, value) => {
+        this.setState({
+            decoration: value,
+        });
+    };
+
+
     render() {
-        const { product, settings, defaultPrices } = this.props;
-        const { material, size, decoration, materialLabel } = this.state;
+        const { product, settings } = this.props;
+        const { material, size, decoration } = this.state;
         const { role } = this.props.auth.user;
-        const totalPrice = ((product.price * settings.rate * material * size) + decoration).toFixed();
+        const totalPrice = ((( settings.monumentPrice * product.price * material.value * size.value ) + decoration) * settings.rate ).toFixed();
         return(
             <div className={`${styles.container}`}>
                 <Helmet>
@@ -96,16 +115,94 @@ class ProductDetails extends Component {
                                     ) : <h5>Цена по запросу</h5>
                                 }
                             </div>
-                            <div className={`col-sm-6 mb-2`}>
-                                <div className={`col-sm-12 mb-2`}>
+                            <div className={`col-sm-6 mb-2 text-left`}>
+                                <div className={`col-sm-12 mb-2 border-bottom`}>
                                     <h6 className={`m-0`}>Description:</h6>
                                     {product.description}
                                 </div>
+                                <div className={`col-sm-12 mb-2 border-bottom`}>
+                                    <h6>Monument size:</h6>
+                                    {
+                                        settings.sizeCoefficient &&
+                                        settings.sizeCoefficient.map((size, index) => (
+                                            <div className={`radio`}  key={index}>
+                                                <label>
+                                                    <input
+                                                        type='radio'
+                                                        name='size'
+                                                        defaultChecked={size.name === '80405'}
+                                                        onClick={event => {this.handleSizeChange(event, size)}}
+                                                    />
+                                                    <div className={`pl-1 d-inline`}>
+                                                        {size.label}
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                <div className={`col-sm-12 mb-2 border-bottom`}>
+                                    <div className={`d-flex`}>
+                                        <h6>Stand size:</h6>
+                                        <span className={`d-inline pl-2`}>
+                                            { size.stand}
+                                        </span>
+                                    </div>
+                                    <div className={`d-flex`}>
+                                        <h6>Flower garden size:</h6>
+                                        <span className={`d-inline pl-2`}>
+                                            { size.flowerGarden}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className={`col-sm-12 text-left`}>
+                                    <div className={`radio`}>
+                                        <label>
+                                            <input
+                                                type='radio'
+                                                name='decoration'
+                                                defaultChecked
+                                                onClick={event => {this.handleDecorationChange(event, 0)}}
+                                            />
+                                            <div className={`pl-1 d-inline`}>
+                                                Without decoration
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div className={`radio`}>
+                                        <label>
+                                            <input
+                                                type='radio'
+                                                name='decoration'
+                                                onClick={event => {this.handleDecorationChange(event, this.props.settings.textPrice)}}
+                                            />
+                                            <div className={`pl-1 d-inline`}>
+                                                With text (without portrait)
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div className={`radio`}>
+                                        <label>
+                                            <input
+                                                type='radio'
+                                                name='decoration'
+                                                onClick={event => {
+                                                    this.handleDecorationChange(event, (
+                                                        this.props.settings.portraitPrice + this.props.settings.textPrice
+                                                    ))
+                                                }}
+                                            />
+                                            <div className={`pl-1 d-inline`}>
+                                                With text and portrait
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div className={`col-sm-6 mb-2`}>
-                                <div className={`col-sm-12 mb-2 text-center`}>
-                                    <h6 className={`m-0`}>{materialLabel}</h6>
-                                        {
+                                <div className={`col-sm-12 mb-2`}>
+                                    <h6 className={`m-0`}>{material.label}</h6>
+                                    {
                                         settings.materialCoefficient &&
                                         settings.materialCoefficient.map((material, index) => (
                                             <div

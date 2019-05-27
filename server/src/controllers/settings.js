@@ -72,7 +72,7 @@ const updateSettings = (req, res) => {
                 return res.status(404).send("data is not found");
             }
 
-            settings.defaultPrices = (req.body.defaultPrices);
+            settings.monumentPrice = (req.body.monumentPrice);
             settings.portraitPrice = req.body.portraitPrice;
             settings.textPrice = req.body.textPrice;
             settings.sizeCoefficient = (req.body.sizeCoefficient);

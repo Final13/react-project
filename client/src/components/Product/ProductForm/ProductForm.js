@@ -105,10 +105,10 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Title:</label>
                                 <input
-                                    type="text"
+                                    type='text'
                                     placeholder="Title"
                                     className={`form-control ${errors.title && 'is-invalid'}`}
-                                    name="title"
+                                    name='title'
                                     onChange={ this.handleInputChange }
                                     value={ this.state.title }
                                 />
@@ -117,9 +117,9 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Select category:</label>
                                 <Select
-                                    placeholder="Category"
+                                    placeholder='Category'
                                     className={`${errors.category && 'is-invalid'}`}
-                                    name="category"
+                                    name='category'
                                     onChange={ (event) => {this.handleSelectChange(event,'category')} }
                                     value={ this.state.category }
                                     options={categories}
@@ -127,12 +127,13 @@ class ProductForm extends Component {
                                 {errors.category && (<div className={`invalid-feedback`}>{errors.category}</div>)}
                             </div>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Price:</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>Price coefficient:</label>
                                 <input
-                                    type="number"
-                                    placeholder="Price"
+                                    type='number'
+                                    step={0.1}
+                                    placeholder='Price'
                                     className={`form-control ${errors.price && 'is-invalid'}`}
-                                    name="price"
+                                    name='price'
                                     onChange={ this.handleInputChange }
                                     value={ this.state.price }
                                 />
@@ -141,9 +142,9 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Description:</label>
                                 <textarea
-                                    placeholder="Description"
+                                    placeholder='Description'
                                     className={`form-control ${ styles.textarea} ${errors.description && 'is-invalid'}`}
-                                    name="description"
+                                    name='description'
                                     onChange={ this.handleInputChange }
                                     value={ this.state.description }
                                 />
@@ -154,9 +155,9 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Select type:</label>
                                 <Select
-                                    placeholder="Type"
+                                    placeholder='Type'
                                     className={`${errors.type && 'is-invalid'}`}
-                                    name="type"
+                                    name='type'
                                     onChange={ (event) => {this.handleSelectChange(event,'type')} }
                                     value={ this.state.details.type }
                                     options={types}
@@ -166,9 +167,9 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Select form:</label>
                                 <Select
-                                    placeholder="Form"
+                                    placeholder='Form'
                                     className={`${errors.form && 'is-invalid'}`}
-                                    name="form"
+                                    name='form'
                                     onChange={ (event) => {this.handleSelectChange(event,'form')} }
                                     value={ this.state.details.form }
                                     options={forms}
@@ -179,9 +180,9 @@ class ProductForm extends Component {
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Select color:</label>
                                 <Select
-                                    placeholder="Color"
+                                    placeholder='Color'
                                     className={`${errors.color && 'is-invalid'}`}
-                                    name="color"
+                                    name='color'
                                     onChange={ (event) => {this.handleSelectChange(event,'color')} }
                                     value={ this.state.details.color }
                                     options={colors}
@@ -219,7 +220,7 @@ class ProductForm extends Component {
                         )}
                     </Dropzone>
                     <div className={`form-group text-right`}>
-                        <button type="submit" className={`btn btn-primary btn-lg`}>
+                        <button type='submit' className={`btn btn-primary btn-lg`}>
                             Create
                         </button>
                     </div>

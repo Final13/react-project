@@ -6,8 +6,8 @@ module.exports = () => {
             Product.create({
                 title: 'Product One',
                 description: 'Product One Description',
-                image: null,
-                price: 100,
+                image: '1',
+                price: 1,
                 details : {
                     detail: ''
                 },
@@ -17,7 +17,7 @@ module.exports = () => {
                 title: 'Product Two',
                 description: 'Product Two Description',
                 image: null,
-                price: 100,
+                price: 1.1,
                 details : {
                     detail: ''
                 },
@@ -27,7 +27,7 @@ module.exports = () => {
                 title: 'Product Three',
                 description: 'Product Three Description',
                 image: null,
-                price: 100,
+                price: 1.2,
                 details : {
                     detail: ''
                 },
@@ -37,7 +37,7 @@ module.exports = () => {
                 title: 'Product Four',
                 description: 'Product Four Description',
                 image: null,
-                price: 100,
+                price: 1.3,
                 details : {
                     detail: ''
                 },
@@ -47,7 +47,7 @@ module.exports = () => {
                 title: 'Product Five',
                 description: 'Product Five Description',
                 image: null,
-                price: 100,
+                price: 1.4,
                 details : {
                     detail: ''
                 },
