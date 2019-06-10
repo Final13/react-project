@@ -4,6 +4,7 @@ const isEmpty = require('./is-empty');
 const validateContractInput = (data) => {
     let errors = {};
     data.number = !isEmpty(data.number) ? data.number : '';
+    data.image = !isEmpty(data.image) ? data.image : '';
     data.customer = !isEmpty(data.customer) ? data.customer : {};
     data.stone = !isEmpty(data.stone) ? data.stone : {};
     data.extra = !isEmpty(data.extra) ? data.extra : {};

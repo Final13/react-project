@@ -69,7 +69,7 @@ export const getContractById = (id) => dispatch => {
 export const updateContract = (id, contract, history) => dispatch => {
     axios.put(`/api/contract/edit/${id}`, contract)
         .then(() => {
-            history.push('/contract');
+            history.push(`/contract/${id}`);
             dispatch({
                 type: GET_ERRORS,
                 payload: {}

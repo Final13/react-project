@@ -15,7 +15,8 @@ class ProductDetails extends Component {
         settings: {},
         material: {
             value: 1,
-            label: '"Карельский" - чёрный гранит'
+            label: '"Карельский" - чёрный гранит',
+            name: 'black'
         },
         size: {
             value: 1,
@@ -51,6 +52,14 @@ class ProductDetails extends Component {
         this.setState({
             decoration: value,
         });
+    };
+
+    addActiveClass = (event) => {
+        const currentActive = document.querySelector('.active');
+        if (currentActive) {
+            currentActive.classList.remove('active');
+        }
+        event.target.classList.add('active');
     };
 
 
@@ -91,11 +100,11 @@ class ProductDetails extends Component {
                     <div className={`col-sm-5`}>
                         <div className={`col-sm-12 pb-3`}>
                             {
-                                product.image &&
+                                product.images &&
                                 <img
                                     className={styles.image}
                                     alt={product.title || 'Product Image'}
-                                    src={productUrl + product.image}
+                                    src={productUrl + product.images[material.name]}
                                 />
                             }
                         </div>
@@ -105,7 +114,7 @@ class ProductDetails extends Component {
                     </div>
                     <div className={`col-sm-7`}>
                         <div className={`row`}>
-                            <div className={`col-sm-12 mb-2`}>
+                            <div className={`col-sm-12 m-3 border-bottom`}>
                                 {
                                     product.price ? (
                                         <React.Fragment>
@@ -126,16 +135,15 @@ class ProductDetails extends Component {
                                         settings.sizeCoefficient &&
                                         settings.sizeCoefficient.map((size, index) => (
                                             <div className={`radio`}  key={index}>
-                                                <label>
+                                                <label className={`inputContainer`}>
+                                                    {size.label}
                                                     <input
                                                         type='radio'
                                                         name='size'
                                                         defaultChecked={size.name === '80405'}
                                                         onClick={event => {this.handleSizeChange(event, size)}}
                                                     />
-                                                    <div className={`pl-1 d-inline`}>
-                                                        {size.label}
-                                                    </div>
+                                                    <span className={`checkMarkRadio`} />
                                                 </label>
                                             </div>
                                         ))
@@ -157,32 +165,31 @@ class ProductDetails extends Component {
                                 </div>
                                 <div className={`col-sm-12 text-left`}>
                                     <div className={`radio`}>
-                                        <label>
+                                        <label className={`inputContainer`}>
+                                            Without decoration
                                             <input
                                                 type='radio'
                                                 name='decoration'
                                                 defaultChecked
                                                 onClick={event => {this.handleDecorationChange(event, 0)}}
                                             />
-                                            <div className={`pl-1 d-inline`}>
-                                                Without decoration
-                                            </div>
+                                            <span className={`checkMarkRadio`} />
                                         </label>
                                     </div>
                                     <div className={`radio`}>
-                                        <label>
+                                        <label className={`inputContainer`}>
+                                            With text (without portrait)
                                             <input
                                                 type='radio'
                                                 name='decoration'
                                                 onClick={event => {this.handleDecorationChange(event, this.props.settings.textPrice)}}
                                             />
-                                            <div className={`pl-1 d-inline`}>
-                                                With text (without portrait)
-                                            </div>
+                                            <span className={`checkMarkRadio`} />
                                         </label>
                                     </div>
                                     <div className={`radio`}>
-                                        <label>
+                                        <label className={`inputContainer`}>
+                                            With text and portrait
                                             <input
                                                 type='radio'
                                                 name='decoration'
@@ -192,9 +199,7 @@ class ProductDetails extends Component {
                                                     ))
                                                 }}
                                             />
-                                            <div className={`pl-1 d-inline`}>
-                                                With text and portrait
-                                            </div>
+                                            <span className={`checkMarkRadio`} />
                                         </label>
                                     </div>
                                 </div>
@@ -210,7 +215,8 @@ class ProductDetails extends Component {
                                                 key={index}
                                             >
                                                 <div
-                                                    className={styles.materialImage}
+                                                    className={`${styles.materialImage} ${(material.name === 'black') ? 'active' : ''}`}
+                                                    onClick={this.addActiveClass}
                                                     style={{backgroundImage: `url(${regularUrl + material.href})`}}
                                                 />
                                             </div>

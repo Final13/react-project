@@ -6,6 +6,12 @@ const ContractSchema = new Schema({
     number: {
         type: String
     },
+    image: {
+        type: String
+    },
+    customForm: {
+        type: Boolean
+    },
     customer: {
         type: Object
     },

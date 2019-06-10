@@ -186,7 +186,7 @@ class Product extends Component {
                                                 <img
                                                     className={styles.cardImage}
                                                     alt={ product.title || 'Product image' }
-                                                    src={ product.image && product.image !== 'default.png' ? productUrl + product.image : defaultImage }
+                                                    src={ product.images ? productUrl + product.images.black : defaultImage }
                                                 />
                                                 <div className={styles.description}>
                                                     {

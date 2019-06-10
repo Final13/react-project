@@ -69,7 +69,7 @@ export const getWorkById = (id) => dispatch => {
 export const updateWork = (id, work, history) => dispatch => {
     axios.put(`/api/works/edit/${id}`, work)
         .then(() => {
-            history.push('/portfolio');
+            history.push(`/portfolio/${id}`);
             dispatch({
                 type: GET_ERRORS,
                 payload: {}

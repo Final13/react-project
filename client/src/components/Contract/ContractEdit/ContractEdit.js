@@ -8,6 +8,7 @@ import styles from './ContractEdit.module.scss';
 import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../../SelectOptions';
+import { productUrl } from '../../../config';
 
 const { Option } = components;
 const set = require('lodash.set');
@@ -18,7 +19,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={`${productUrl + props.data.href}black.jpg`} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -58,7 +59,7 @@ class ContractEdit extends Component {
 
     handleInputChange = (e) => {
         const contract = {...this.state.contract};
-        set(contract, e.target.name, e.target.value );
+        set(contract, e.target.name, e.target.value);
         this.setState({
             contract: contract
         });
@@ -66,7 +67,15 @@ class ContractEdit extends Component {
 
     handleSelectChange = (event, path) => {
         const contract = {...this.state.contract};
-        set(contract, path, event );
+        set(contract, path, event);
+        this.setState({
+            contract: contract
+        });
+    };
+
+    handleCustomForm = () => {
+        const contract = {...this.state.contract};
+        contract.customForm = !this.state.contract.customForm;
         this.setState({
             contract: contract
         });
@@ -74,7 +83,12 @@ class ContractEdit extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.updateContract(this.props.match.params.id, this.state.contract, this.props.history);
+        const contract = {...this.state.contract};
+        contract.image = (contract.stone.form && contract.stone.color) ? (contract.stone.form.href + contract.stone.color.href) : '';
+        if (this.state.customForm) {
+            contract.image = '';
+        }
+        this.props.updateContract(this.props.match.params.id, contract, this.props.history);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -99,6 +113,26 @@ class ContractEdit extends Component {
                 <h2 className={styles.contractHeader}>New Contract</h2>
                 <form onSubmit={ this.handleSubmit }>
                     <div className={`row`}>
+                        <div className={`col-sm-12`}>
+                            {
+                                (!contract.customForm && contract.stone.form.href && contract.stone.color.href) && (
+                                    <img
+                                        src={productUrl + contract.stone.form.href + contract.stone.color.href}
+                                        alt={`${contract.stone.form.label} ${contract.stone.color.label}`}
+                                    />
+                                )
+                            }
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        onChange={this.handleCustomForm}
+                                        checked={contract.customForm || false}
+                                    />
+                                    Custom form?
+                                </label>
+                            </div>
+                        </div>
                         <div className={`col-sm-12 col-lg-6`}>
                             <div className={`form-group text-left`}>
                                 <label className={`pr-3 ${styles.labelFont}`}>Number:</label>

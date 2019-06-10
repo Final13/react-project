@@ -31,9 +31,14 @@ export default {
                 type: {value: '', label: ''},
                 form: {value: '', label: ''},
             },
-            price: '',
+            price: 1,
             category: {value: 'all', label: 'All'},
-            image: ''
+            images: {
+                black: '',
+                red: '',
+                white: '',
+                gray: '',
+            },
         }
     },
     work() {
@@ -57,14 +62,16 @@ export default {
     contract() {
         return {
             number: '',
+            customForm: false,
             customer: {
                 name: '',
                 phone: '',
             },
             stone: {
-                color: {value: '', label: ''},
+                color: {value: '', label: '', href: ''},
                 type: {value: '', label: ''},
-                form: {value: '', label: ''},
+                form: {value: '', label: '', href: ''},
+                size: {value: '', label: ''},
             },
             extra: {
                 stella: '',

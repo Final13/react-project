@@ -5,6 +5,7 @@ import {withRouter} from "react-router-dom";
 import { getSettings, updateSettings } from '../../actions/settings';
 import styles from './Settings.module.scss';
 import State from '../../reducers/state';
+import Tippy from '@tippy.js/react';
 
 
 const set = require('lodash.set');
@@ -82,7 +83,19 @@ class Settings extends Component {
                     <div className={`row text-left pb-3 pt-3`}>
                         <div className={`col-4`}>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Portrait price(USD):</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    <Tippy
+                                        content='Default portrait price (A4)'
+                                        arrow={true}
+                                        animation="scale"
+                                        className={`bg-dark`}
+                                        duration={100}
+                                        delay={[0, 50]}
+                                    >
+                                        <i className="far fa-question-circle pr-1" />
+                                    </Tippy>
+                                    Portrait price (USD):
+                                </label>
                                 <input
                                     type='number'
                                     step={1}
@@ -97,7 +110,19 @@ class Settings extends Component {
                         </div>
                         <div className={`col-4`}>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Text price (USD):</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    <Tippy
+                                        content='Default text price (text, 20 char epitaph, cross)'
+                                        arrow={true}
+                                        animation="scale"
+                                        className={`bg-dark`}
+                                        duration={100}
+                                        delay={[0, 50]}
+                                    >
+                                        <i className="far fa-question-circle pr-1" />
+                                    </Tippy>
+                                    Text price (USD):
+                                </label>
                                 <input
                                     type='number'
                                     step={1}
@@ -112,7 +137,19 @@ class Settings extends Component {
                         </div>
                         <div className={`col-4`}>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Monument price (USD):</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    <Tippy
+                                        content='Form: square, color: black, size: 80x40x5'
+                                        arrow={true}
+                                        animation="scale"
+                                        className={`bg-dark`}
+                                        duration={100}
+                                        delay={[0, 50]}
+                                    >
+                                        <i className="far fa-question-circle pr-1" />
+                                    </Tippy>
+                                    Monument price (USD):
+                                </label>
                                 <input
                                     type='number'
                                     step={1}
@@ -125,7 +162,17 @@ class Settings extends Component {
                                 {errors.monumentPrice && (<div className={`invalid-feedback`}>{errors.monumentPrice}</div>)}
                             </div>
                         </div>
-                        <div className={`col-12 border-bottom mb-2 pt-2 pb-1`}>
+                        <div className={`col-12 border-bottom mb-2 pt-4 pb-1`}>
+                            <Tippy
+                                content='Square black size price / default monument price'
+                                arrow={true}
+                                animation="scale"
+                                className={`bg-dark`}
+                                duration={100}
+                                delay={[0, 50]}
+                            >
+                                <i className="far fa-question-circle pr-1" />
+                            </Tippy>
                             Size coefficients (ratio):
                         </div>
                         {
@@ -148,7 +195,17 @@ class Settings extends Component {
                                 </div>
                             ))
                         }
-                        <div className={`col-12 border-bottom mb-2 pt-2 pb-1`}>
+                        <div className={`col-12 border-bottom mb-2 pt-4 pb-1`}>
+                            <Tippy
+                                content='Square 80x40x5 material price / default monument price'
+                                arrow={true}
+                                animation="scale"
+                                className={`bg-dark`}
+                                duration={100}
+                                delay={[0, 50]}
+                            >
+                                <i className="far fa-question-circle pr-1" />
+                            </Tippy>
                             Material coefficients (ratio):
                         </div>
                         {

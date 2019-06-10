@@ -194,52 +194,28 @@ class Contract extends Component {
                                                 <h4 className={`pb-3 ${styles.contractTitle}`}>{contract.number}</h4>
                                                 <div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Customer:
-                                                </span>
-                                                        <span>
-                                                    {contract.customer.name}
-                                                </span>
+                                                        <span>Customer:</span>
+                                                        <span>{contract.customer.name}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Phone:
-                                                </span>
-                                                        <span>
-                                                    {contract.customer.phone}
-                                                </span>
+                                                        <span>Phone:</span>
+                                                        <span>{contract.customer.phone}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Payments:
-                                                </span>
-                                                        <span>
-                                                    {contract.payments}
-                                                </span>
+                                                        <span>Payments:</span>
+                                                        <span>{contract.payments}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Total:
-                                                </span>
-                                                        <span>
-                                                    {contract.total}
-                                                </span>
+                                                        <span>Total:</span>
+                                                        <span>{contract.total}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Balance:
-                                                </span>
-                                                        <span>
-                                                    {contract.total - contract.payments}
-                                                </span>
+                                                        <span>Balance:</span>
+                                                        <span>{contract.total - contract.payments}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
-                                                <span>
-                                                    Builder:
-                                                </span>
-                                                        <span>
-                                                    {contract.builder.name}
-                                                </span>
+                                                        <span>Builder:</span>
+                                                        <span>{contract.builder.name}</span>
                                                     </div>
                                                 </div>
                                             </div>

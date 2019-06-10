@@ -1,14 +1,14 @@
 export const forms = [
-    {value: 'square', label: 'square', href: '1200px-Square_-_black_simple.svg.png'},
-    {value: 'triangle', label: 'Triangle', href: '400px-Regular_triangle.svg.png'}
+    {value: 'square', label: 'Прямоугольник', href: '1'},
+    {value: 'wave-left', label: 'Волна левая', href: '1'},
+    {value: 'wave-right', label: 'Волна правая', href: '1'}
 ];
 
 export const colors = [
-    {value: 'black', label: 'Чёрный'},
-    {value: 'gray', label: 'Серый'},
-    {value: 'white', label: 'Белый'},
-    {value: 'red', label: 'Красный'},
-    {value: 'green', label: 'Зелёный'}
+    {value: 'black', label: 'Чёрный', href: 'black.jpg'},
+    {value: 'gray', label: 'Серый', href: 'gray.jpg'},
+    {value: 'white', label: 'Белый', href: 'white.jpg'},
+    {value: 'red', label: 'Красный', href: 'red.jpg'}
 ];
 
 export const types = [

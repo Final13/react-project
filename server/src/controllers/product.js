@@ -7,12 +7,16 @@ const createProduct = (req, res) => {
     if(!isValid) {
         return res.status(400).json(errors);
     }
-
     const newProduct = new Product({
         title: req.body.title,
         description: req.body.description,
         details: JSON.parse(req.body.details),
-        image: req.file ? req.file.filename : null,
+        images: {
+            black: req.files.black ? req.files.black[0].filename : '',
+            red: req.files.red ? req.files.red[0].filename : '',
+            white: req.files.white ? req.files.white[0].filename : '',
+            gray: req.files.gray ? req.files.gray[0].filename : '',
+        },
         price: req.body.price,
         category: JSON.parse(req.body.category)
     });
@@ -27,6 +31,7 @@ const createProduct = (req, res) => {
 const getAllProducts = (req, res) => {
     Product
         .find()
+        .sort({ _id: 1})
         .then(products => {
             if(!products) {
                 errors.email = 'Products not found';
@@ -61,6 +66,7 @@ const searchProducts = (req, res) => {
         .and([
             filter
         ])
+        .sort({ _id: 1})
         .then(products => {
             if(!products) {
                 errors.email = 'Products not found';
@@ -94,10 +100,16 @@ const updateProduct = (req, res) => {
                 return res.status(404).send("data is not found");
             }
 
+
             product.title = req.body.title;
             product.description = req.body.description;
-            product.details = JSON.parse(req.body.details);
-            product.image = req.file ? req.file.filename : req.body.file;
+            product.details = req.body.details;
+            product.images = {
+                black: req.files.black ? req.files.black[0].filename : req.body.black,
+                red: req.files.red ? req.files.red[0].filename : req.body.red,
+                white: req.files.white ? req.files.white[0].filename : req.body.white,
+                gray: req.files.gray ? req.files.gray[0].filename : req.body.gray,
+            };
             product.price = req.body.price;
             product.category = JSON.parse(req.body.category);
 

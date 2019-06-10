@@ -17,8 +17,9 @@
 }
 
 .optionImage {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
+  padding-right: 5px;
 }
 
 .addButton, .addButton:hover {
@@ -32,4 +33,19 @@
 .selectWithFormControl {
   padding: 0 !important;
   border: none !important;
+}
+
+.imageArea {
+  height: 250px;
+  min-width: 250px;
+  display: inline-block;
+  overflow: hidden;
+}
+.image {
+  height: 248px;
+  width: auto;
+}
+
+.numberInput {
+  width: 100px !important;
 }

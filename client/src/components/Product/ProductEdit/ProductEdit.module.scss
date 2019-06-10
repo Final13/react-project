@@ -8,12 +8,29 @@
   margin-bottom: 40px;
 }
 
+.dropAreaWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
 .dropArea {
+  cursor: pointer;
   display: flex;
   align-items: center;
-  height: 120px;
+  min-height: 120px;
+  height: auto;
+  width: fit-content;
   border: 2px dashed #ced4da;
   border-radius: 10px;
+}
+
+.thumbImg {
+  padding: 10px;
+  width: 80%;
+  min-width: 200px;
+  height: auto;
+  margin: auto;
 }
 
 .labelFont {
@@ -27,12 +44,6 @@
 
 .textarea {
   min-height: 130px;
-}
-
-.thumbImg {
-  padding: 10px;
-  width: 100px;
-  height: 100px;
 }
 
 .removeIcon {

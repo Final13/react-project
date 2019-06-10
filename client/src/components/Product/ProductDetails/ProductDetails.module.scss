@@ -35,10 +35,8 @@
   margin: 5px auto;
 }
 
-.materialImage {
-  &:active,
-  &:hover {
-    box-shadow: 0 0 5px 5px rgba(0, 155, 255, 0.4);
+.materialImage:hover {
+    box-shadow: 0 0 8px 5px rgba(0, 155, 255, 0.3);
     cursor: pointer;
-  }
 }
+

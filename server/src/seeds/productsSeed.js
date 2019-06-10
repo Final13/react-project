@@ -6,7 +6,12 @@ module.exports = () => {
             Product.create({
                 title: 'Product One',
                 description: 'Product One Description',
-                image: '1',
+                images: {
+                    black: '1black.jpg',
+                    red: '1red.jpg',
+                    white: '1white.jpg',
+                    gray: '1gray.jpg',
+                },
                 price: 1,
                 details : {
                     detail: ''
@@ -16,7 +21,12 @@ module.exports = () => {
             Product.create({
                 title: 'Product Two',
                 description: 'Product Two Description',
-                image: null,
+                images: {
+                    black: '1black.jpg',
+                    red: '1red.jpg',
+                    white: '1white.jpg',
+                    gray: '1gray.jpg',
+                },
                 price: 1.1,
                 details : {
                     detail: ''
@@ -26,7 +36,12 @@ module.exports = () => {
             Product.create({
                 title: 'Product Three',
                 description: 'Product Three Description',
-                image: null,
+                images: {
+                    black: '1black.jpg',
+                    red: '1red.jpg',
+                    white: '1white.jpg',
+                    gray: '1gray.jpg',
+                },
                 price: 1.2,
                 details : {
                     detail: ''
@@ -36,7 +51,12 @@ module.exports = () => {
             Product.create({
                 title: 'Product Four',
                 description: 'Product Four Description',
-                image: null,
+                images: {
+                    black: '1black.jpg',
+                    red: '1red.jpg',
+                    white: '1white.jpg',
+                    gray: '1gray.jpg',
+                },
                 price: 1.3,
                 details : {
                     detail: ''
@@ -46,7 +66,12 @@ module.exports = () => {
             Product.create({
                 title: 'Product Five',
                 description: 'Product Five Description',
-                image: null,
+                images: {
+                    black: '1black.jpg',
+                    red: '1red.jpg',
+                    white: '1white.jpg',
+                    gray: '1gray.jpg',
+                },
                 price: 1.4,
                 details : {
                     detail: ''

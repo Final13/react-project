@@ -16,7 +16,10 @@ const ImageOption = (props) => {
     return (
         <Option {...props}>
             <div>
-                <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
+                {
+                    props.data.href &&
+                    <img className={styles.optionImage} src={`${productUrl + props.data.href}black.jpg`} alt={props.data.label} />
+                }
                 {props.data.label}
             </div>
         </Option>
@@ -32,7 +35,12 @@ class ProductForm extends Component {
         details: {},
         price: '',
         category: {value: '', Label: ''},
-        image: [],
+        images: {
+            black: [],
+            red: [],
+            white: [],
+            gray: []
+        },
         errors: {}
     };
 
@@ -57,17 +65,21 @@ class ProductForm extends Component {
         })
     };
 
-    handleImageChange = (image) => {
+    handleImageChange = (image, path) => {
+        const images = {...this.state.images};
+        set(images, path, image );
         this.setState({
-            image: image
+            images: images
         });
     };
 
-    removeImage = (event) => {
+    removeImage = (event, path) => {
         event.preventDefault();
         event.stopPropagation();
+        const images = {...this.state.images};
+        images[path] = [];
         this.setState({
-            image: []
+            images: images
         });
     };
 
@@ -80,7 +92,10 @@ class ProductForm extends Component {
         product.append('price', this.state.price);
         product.append('details', this.state.details ? JSON.stringify(this.state.details) : {detail: {value: 'all', Label: 'All'}});
         product.append('category', this.state.category ? JSON.stringify(this.state.category) : {value: 'all', Label: 'All'});
-        product.append('file', this.state.image[0]);
+        product.append('black', this.state.images.black[0]);
+        product.append('red', this.state.images.red[0]);
+        product.append('white', this.state.images.white[0]);
+        product.append('gray', this.state.images.gray[0]);
 
         this.props.createProduct(product, this.props.history);
     };
@@ -95,7 +110,7 @@ class ProductForm extends Component {
     };
 
     render() {
-        const { errors, image } = this.state;
+        const { errors, images } = this.state;
         return(
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.workHeader}>New Product</h2>
@@ -191,34 +206,144 @@ class ProductForm extends Component {
                             </div>
                         </div>
                     </div>
-                    <Dropzone multiple={false} onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles)}}>
-                        {({getRootProps, getInputProps}) => (
-                            <section>
-                                <div {...getRootProps()}>
-                                    <input {...getInputProps()} />
-                                    <div className={`mb-4 ${styles.dropArea}`}>
-                                        {
-                                            image.length > 0 ?
-                                            <React.Fragment>
-                                                <img
-                                                    alt={typeof image === 'object' ? image.name : image}
-                                                    src={typeof image === 'object' ? URL.createObjectURL(image[0]) : productUrl + image}
-                                                    className={styles.thumbImg}
-                                                />
-                                                <i
-                                                    className={`fas fa-minus-circle ${styles.removeIcon}`}
-                                                    onClick={ this.removeImage }
-                                                />
-                                            </React.Fragment>
-                                            :
-                                            <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
-                                        }
-                                    </div>
+                    <div className={styles.dropAreaWrapper}>
+                        <div className={`col-3`}>
+                            <div>Black:</div>
+                            <Dropzone
+                                multiple={false}
+                                onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles, 'black')}}
+                            >
+                                {({getRootProps, getInputProps}) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <div className={`mb-4 ${styles.dropArea}`}>
+                                                {
+                                                    images.black.length > 0 ?
+                                                        <React.Fragment>
+                                                            <img
+                                                                alt={typeof images.black === 'object' ? images.black.name : images.black}
+                                                                src={typeof images.black === 'object' ? URL.createObjectURL(images.black[0]) : productUrl + images.black}
+                                                                className={styles.thumbImg}
+                                                            />
+                                                            <i
+                                                                className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                                onClick={ (event) => {this.removeImage(event,'black')} }
+                                                            />
+                                                        </React.Fragment>
+                                                        :
+                                                        <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
+                                                }
+                                            </div>
 
-                                </div>
-                            </section>
-                        )}
-                    </Dropzone>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                        </div>
+                        <div className={`col-3`}>
+                            <div>Red:</div>
+                            <Dropzone
+                                multiple={false}
+                                onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles, 'red')}}
+                            >
+                                {({getRootProps, getInputProps}) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <div className={`mb-4 ${styles.dropArea}`}>
+                                                {
+                                                    images.red.length > 0 ?
+                                                        <React.Fragment>
+                                                            <img
+                                                                alt={typeof images.red === 'object' ? images.red.name : images.red}
+                                                                src={typeof images.red === 'object' ? URL.createObjectURL(images.red[0]) : productUrl + images.red}
+                                                                className={styles.thumbImg}
+                                                            />
+                                                            <i
+                                                                className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                                onClick={ (event) => {this.removeImage(event,'red')} }
+                                                            />
+                                                        </React.Fragment>
+                                                        :
+                                                        <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                        </div>
+                        <div className={`col-3`}>
+                            <div>White:</div>
+                            <Dropzone
+                                multiple={false}
+                                onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles, 'white')}}
+                            >
+                                {({getRootProps, getInputProps}) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <div className={`mb-4 ${styles.dropArea}`}>
+                                                {
+                                                    images.white.length > 0 ?
+                                                        <React.Fragment>
+                                                            <img
+                                                                alt={typeof images.white === 'object' ? images.white.name : images.white}
+                                                                src={typeof images.white === 'object' ? URL.createObjectURL(images.white[0]) : productUrl + images.white}
+                                                                className={styles.thumbImg}
+                                                            />
+                                                            <i
+                                                                className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                                onClick={ (event) => {this.removeImage(event,'white')} }
+                                                            />
+                                                        </React.Fragment>
+                                                        :
+                                                        <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                        </div>
+                        <div className={`col-3`}>
+                            <div>Gray:</div>
+                            <Dropzone
+                                multiple={false}
+                                onDrop={(acceptedFiles) => {this.handleImageChange(acceptedFiles, 'gray')}}
+                            >
+                                {({getRootProps, getInputProps}) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <div className={`mb-4 ${styles.dropArea}`}>
+                                                {
+                                                    images.gray.length > 0 ?
+                                                        <React.Fragment>
+                                                            <img
+                                                                alt={typeof images.gray === 'object' ? images.gray.name : images.gray}
+                                                                src={typeof images.gray === 'object' ? URL.createObjectURL(images.gray[0]) : productUrl + images.gray}
+                                                                className={styles.thumbImg}
+                                                            />
+                                                            <i
+                                                                className={`fas fa-minus-circle ${styles.removeIcon}`}
+                                                                onClick={ (event) => {this.removeImage(event,'gray')} }
+                                                            />
+                                                        </React.Fragment>
+                                                        :
+                                                        <div className={`m-auto`}>Drag 'n' drop some files here, or click to select files</div>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                        </div>
+                    </div>
                     <div className={`form-group text-right`}>
                         <button type='submit' className={`btn btn-primary btn-lg`}>
                             Create

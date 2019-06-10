@@ -32,6 +32,7 @@ const createWork = (req, res) => {
 const getAllWorks = (req, res) => {
     Work
         .find()
+        .sort({ _id: 1})
         .then(works => {
             if(!works) {
                 errors.email = 'Works not found';
@@ -63,6 +64,7 @@ const searchWorks = (req, res) => {
         .and([
             filter
         ])
+        .sort({ _id: 1})
         .then(works => {
             if(!works) {
                 errors.email = 'Contracts not found';

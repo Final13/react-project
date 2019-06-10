@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { getContractById, deleteContract } from '../../../actions/contract';
 import styles from './ContractDetails.module.scss';
+import { productUrl } from '../../../config';
 
 class ContractDetails extends Component {
     componentDidMount() {
@@ -31,6 +32,14 @@ class ContractDetails extends Component {
                     Delete
                 </button>
                 <h2 className={styles.contractHeader}>{`Contract: ${contract.number}`}</h2>
+                {
+                    (!contract.customForm && contract.stone.form.href && contract.stone.color.href) && (
+                        <img
+                            src={productUrl + contract.image}
+                            alt={`${contract.stone.form.label}, ${contract.stone.color.label}`}
+                        />
+                    )
+                }
                 <div className={`row`}>
                     <div className={`col-4`}>
                         <h2>Customer:</h2>

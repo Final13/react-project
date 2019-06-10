@@ -69,7 +69,7 @@ export const getProductById = (id) => dispatch => {
 export const updateProduct = (id, product, history) => dispatch => {
     axios.put(`/api/product/edit/${id}`, product)
         .then(() => {
-            history.push('/product');
+            history.push(`/product/${id}`);
             dispatch({
                 type: GET_ERRORS,
                 payload: {}

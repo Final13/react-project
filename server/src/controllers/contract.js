@@ -28,6 +28,8 @@ const createContract = (req, res) => {
                     const newContract = new Contract({
                         builder: builder._id,
                         number: req.body.number,
+                        image: req.body.image,
+                        customForm: req.body.customForm,
                         customer: req.body.customer,
                         stone: req.body.stone,
                         extra: req.body.extra,
@@ -51,6 +53,7 @@ const getAllContracts = (req, res) => {
     Contract
         .find({ deleted: false })
         .populate('builder')
+        .sort({ _id: 1})
         .then(contracts => {
             if(!contracts) {
                 errors.email = 'Contracts not found';
@@ -113,6 +116,7 @@ const searchContracts = (req, res) => {
                 }
             }
         ])
+        .sort({ _id: 1})
         .then(contracts => {
             if(!contracts) {
                 errors.email = 'Contracts not found';
@@ -164,6 +168,8 @@ const updateContract = (req, res) => {
                             }
                             contract.builder = builder._id;
                             contract.number = req.body.number;
+                            contract.image = req.body.image;
+                            contract.customForm = req.body.customForm;
                             contract.customer = req.body.customer;
                             contract.stone = req.body.stone;
                             contract.extra = req.body.extra;

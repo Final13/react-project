@@ -17,3 +17,116 @@
 .s-alert-close {
   display: none;
 }
+
+/*CUSTOM CHECKBOX AND RADIOBUTTON STYLES STARTS*/
+/* Customize the label (the checkboxContainer) */
+.inputContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.inputContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkMark, .checkMarkRadio {
+  border: 1px solid #c7c7c7;
+  border-radius: 5px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.inputContainer:hover input ~ .checkMark {
+  background-color: #ccc;
+  box-shadow: 0 0 10px 3px rgba(0, 155, 255, 0.3);
+}
+
+.inputContainer:hover input ~ .checkMarkRadio {
+  background-color: #ccc;
+  box-shadow: 0 0 10px 3px rgba(0, 155, 255, 0.3);
+}
+
+/* When the checkbox is checked, add a blue background */
+.inputContainer input:checked ~ .checkMark {
+  background-color: #2196F3;
+}
+
+.inputContainer input:checked ~ .checkMarkRadio {
+  background-color: #2196F3;
+}
+
+/* Create the checkMark/indicator (hidden when not checked) */
+.checkMark:after, .checkMarkRadio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkMark when checked */
+.inputContainer input:checked ~ .checkMark:after {
+  display: block;
+}
+
+.inputContainer input:checked ~ .checkMarkRadio:after {
+  display: block;
+}
+
+/* Style the checkMark/indicator */
+.inputContainer .checkMark:after {
+  left: 7px;
+  top: 2px;
+  width: 9px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Create a custom radio button */
+.checkMarkRadio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* Style the indicator (dot/circle) */
+.inputContainer .checkMarkRadio:after {
+  top: 4px;
+  left: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: white;
+}
+/*CUSTOM CHECKBOX AND RADIOBUTTON STYLES ENDS*/
+
+.active {
+  outline: none;
+  box-shadow: 0 0 8px 5px rgba(0, 155, 255, 0.6) !important;
+}
