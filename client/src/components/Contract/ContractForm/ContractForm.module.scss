@@ -31,9 +31,32 @@
   text-decoration: none !important;
 }
 
+.removeButton, .removeButton:hover {
+  font-size: 15px !important;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  color: #ff8190 !important;
+  z-index: 999;
+  text-decoration: none !important;
+}
+
+.removeButton:hover {
+  color: red !important;
+}
+
 .selectWithFormControl {
   padding: 0 !important;
   border: none !important;
+}
+
+.zIndex1000 {
+  z-index: 1000;
+}
+
+.addInfo {
+  composes: addButton;
+  top: -30px !important;
 }
 
 .imageArea {

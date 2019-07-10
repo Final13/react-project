@@ -97,7 +97,11 @@ export default {
                 flowers: '',
                 adds: '',
             },
-            cemetery: {},
+            cemetery: {
+                address: '',
+                sector: '',
+                place: ''
+            },
             builder: {
                 value: '',
                 label: '',

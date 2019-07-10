@@ -79,7 +79,7 @@ class ContractForm extends Component {
         });
     };
 
-    handleInfoChange = (event, array, index) => {
+    handleArrayChange = (event, array, index) => {
         const contract = {...this.state.contract};
         contract[array][event.target.name] = event.target.value;
         if (typeof index !== 'undefined') {
@@ -101,6 +101,16 @@ class ContractForm extends Component {
         };
         const contract = {...this.state.contract};
         contract.mainInfo = [...contract.mainInfo, info];
+        this.setState({
+            contract: contract
+        });
+    };
+
+    removeInfoSection = (event, index) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const contract = {...this.state.contract};
+        contract.mainInfo.splice(index, 1);
         this.setState({
             contract: contract
         });
@@ -154,7 +164,7 @@ class ContractForm extends Component {
                         {errors.number && (<div className={`invalid-feedback`}>{errors.number}</div>)}
                     </div>
                     <div className={`row`}>
-                        <div className={`col-sm-12`}>
+                        <div className={`col-sm-12 mb-5`}>
                             <div className={`row`}>
                                 <div className={`col-3 text-left`}>
                                     <label className={`inputContainer`}>
@@ -167,7 +177,7 @@ class ContractForm extends Component {
                                         <span className={`checkMark`} />
                                     </label>
                                     <div
-                                        className={`${styles.imageArea} ${(contract.customForm || !contract.stone.form.href || !contract.stone.color.href) && 'border'}`}
+                                        className={`${styles.imageArea} ${(contract.customForm || !contract.stone.form.href || !contract.stone.color.href) && 'border rounded'}`}
                                     >
                                         {
                                             (!contract.customForm && contract.stone.form.href && contract.stone.color.href) && (
@@ -280,7 +290,7 @@ class ContractForm extends Component {
                                             <div className={`form-group text-left`}>
                                                 <Select
                                                     placeholder="Builder"
-                                                    className={`${styles.selectWithFormControl} form-control ${errors.builder && 'is-invalid'}`}
+                                                    className={`${styles.selectWithFormControl} ${styles.zIndex1000} form-control ${errors.builder && 'is-invalid'}`}
                                                     name="builder"
                                                     onChange={ (event) => {this.handleSelectChange(event,'builder')} }
                                                     value={ contract.builder }
@@ -322,13 +332,19 @@ class ContractForm extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className={`d-flex col-12`}>
-                            <button className={`btn btn-link ${styles.addButton}`} onClick={ this.addInfoSection }>
+                        <div className={`d-flex col-12 mt-5 border rounded-top`}>
+                            <button className={`btn btn-link ${styles.addInfo}`} onClick={ this.addInfoSection }>
                                 Add info section
                             </button>
                             {
                                 contract.mainInfo.map( (info, index) => (
-                                    <div className={`m-2 w-100`} key={index}>
+                                    <div className={`w-100 position-relative ${(index > 0) && 'ml-2 pl-2 border-left'}`} key={index}>
+                                        <button
+                                            className={`btn btn-link ${styles.removeButton}`}
+                                            onClick={ event => this.removeInfoSection(event, index) }
+                                        >
+                                            Clear
+                                        </button>
                                         <div className={`row`}>
                                             <div className={`col-12`}>
                                                 <div className={`form-group text-left`}>
@@ -338,7 +354,7 @@ class ContractForm extends Component {
                                                         placeholder="First name"
                                                         className={`form-control ${errors.info && 'is-invalid'}`}
                                                         name="firstName"
-                                                        onChange={ event => {this.handleInfoChange(event, 'mainInfo', index)} }
+                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
                                                         value={ info.firstName }
                                                     />
                                                     {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
@@ -352,7 +368,7 @@ class ContractForm extends Component {
                                                         placeholder="Second Name"
                                                         className={`form-control ${errors.info && 'is-invalid'}`}
                                                         name="secondName"
-                                                        onChange={ event => {this.handleInfoChange(event, 'mainInfo', index)} }
+                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
                                                         value={ info.secondName }
                                                     />
                                                     {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
@@ -366,7 +382,7 @@ class ContractForm extends Component {
                                                         placeholder="Last Name"
                                                         className={`form-control ${errors.info && 'is-invalid'}`}
                                                         name="lastName"
-                                                        onChange={ event => {this.handleInfoChange(event, 'mainInfo', index)} }
+                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
                                                         value={ info.lastName }
                                                     />
                                                     {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
@@ -380,7 +396,7 @@ class ContractForm extends Component {
                                                         placeholder="Date"
                                                         className={`form-control ${errors.info && 'is-invalid'}`}
                                                         name="date"
-                                                        onChange={ event => {this.handleInfoChange(event, 'mainInfo', index)} }
+                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
                                                         value={ info.date }
                                                     />
                                                     {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
@@ -391,89 +407,181 @@ class ContractForm extends Component {
                                 ) )
                             }
                         </div>
-                        <div className={`row`}>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Epitaph:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Epitaph"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="epitaph"
-                                        onChange={ event => {this.handleInfoChange(event,  'otherInfo')} }
-                                        value={ contract.otherInfo.epitaph }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                        <div className={`col-12 mb-5 border border-top-0 pt-3 rounded-bottom`}>
+                            <div className={`form-group text-left`}>
+                                <label className={`pr-3 ${styles.labelFont}`}>Epitaph:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Epitaph"
+                                    className={`form-control ${errors.info && 'is-invalid'}`}
+                                    name="epitaph"
+                                    onChange={ event => {this.handleArrayChange(event,  'otherInfo')} }
+                                    value={ contract.otherInfo.epitaph }
+                                />
+                                {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                            </div>
+                        </div>
+                        <div className={`d-flex mt-5`}>
+                            <div className={`col-6`}>
+                                <div className={`row`}>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Cemetery address:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Cemetery"
+                                                className={`form-control ${errors.cemetery && 'is-invalid'}`}
+                                                name="address"
+                                                onChange={ event => {this.handleArrayChange(event,  'cemetery')} }
+                                                value={ contract.cemetery.address }
+                                            />
+                                            {errors.cemetery && (<div className={`invalid-feedback`}>{errors.cemetery}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-6`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Cemetery sector:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Sector"
+                                                className={`form-control ${errors.cemetery && 'is-invalid'}`}
+                                                name="sector"
+                                                onChange={ event => {this.handleArrayChange(event,  'cemetery')} }
+                                                value={ contract.cemetery.sector }
+                                            />
+                                            {errors.cemetery && (<div className={`invalid-feedback`}>{errors.cemetery}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-6`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Cemetery place:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Place"
+                                                className={`form-control ${errors.cemetery && 'is-invalid'}`}
+                                                name="place"
+                                                onChange={ event => {this.handleArrayChange(event,  'cemetery')} }
+                                                value={ contract.cemetery.place }
+                                            />
+                                            {errors.cemetery && (<div className={`invalid-feedback`}>{errors.cemetery}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Install date:</label>
+                                            <input
+                                                type="date"
+                                                placeholder="Date"
+                                                className={`form-control ${errors.install && 'is-invalid'}`}
+                                                name="install"
+                                                onChange={ this.handleInputChange }
+                                                value={ contract.install }
+                                            />
+                                            {errors.install && (<div className={`invalid-feedback`}>{errors.install}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Payments:</label>
+                                            <input
+                                                type="number"
+                                                placeholder="Payments"
+                                                className={`form-control ${errors.payments && 'is-invalid'}`}
+                                                name="payments"
+                                                onChange={ this.handleInputChange }
+                                                value={ contract.payments }
+                                            />
+                                            {errors.payments && (<div className={`invalid-feedback`}>{errors.payments}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Total:</label>
+                                            <input
+                                                type="number"
+                                                placeholder="Total"
+                                                className={`form-control ${errors.total && 'is-invalid'}`}
+                                                name="total"
+                                                onChange={ this.handleInputChange }
+                                                value={ contract.total }
+                                            />
+                                            {errors.total && (<div className={`invalid-feedback`}>{errors.total}</div>)}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Portrait:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Portrait"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="portrait"
-                                        onChange={ event => {this.handleInfoChange(event,  'otherInfo')} }
-                                        value={ contract.otherInfo.portrait }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
-                                </div>
-                            </div>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Text:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Text"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="text"
-                                        onChange={ event => {this.handleInfoChange(event,  'otherInfo')} }
-                                        value={ contract.otherInfo.text }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
-                                </div>
-                            </div>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Cross:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Cross"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="cross"
-                                        onChange={ event => {this.handleInfoChange(event,  'otherInfo')} }
-                                        value={ contract.otherInfo.cross }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
-                                </div>
-                            </div>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Flowers:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Flowers"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="flowers"
-                                        onChange={ event => {this.handleInfoChange(event, 'otherInfo')} }
-                                        value={ contract.otherInfo.flowers }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
-                                </div>
-                            </div>
-                            <div className={`col-12`}>
-                                <div className={`form-group text-left`}>
-                                    <label className={`pr-3 ${styles.labelFont}`}>Adds:</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Adds"
-                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                        name="adds"
-                                        onChange={ event => {this.handleInfoChange(event, 'otherInfo')} }
-                                        value={ contract.otherInfo.adds }
-                                    />
-                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                            <div className={`col-6`}>
+                                <div className={`row`}>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Portrait:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Portrait"
+                                                className={`form-control ${errors.info && 'is-invalid'}`}
+                                                name="portrait"
+                                                onChange={ event => {this.handleArrayChange(event,  'otherInfo')} }
+                                                value={ contract.otherInfo.portrait }
+                                            />
+                                            {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Text:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Text"
+                                                className={`form-control ${errors.info && 'is-invalid'}`}
+                                                name="text"
+                                                onChange={ event => {this.handleArrayChange(event,  'otherInfo')} }
+                                                value={ contract.otherInfo.text }
+                                            />
+                                            {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Cross:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Cross"
+                                                className={`form-control ${errors.info && 'is-invalid'}`}
+                                                name="cross"
+                                                onChange={ event => {this.handleArrayChange(event,  'otherInfo')} }
+                                                value={ contract.otherInfo.cross }
+                                            />
+                                            {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Flowers:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Flowers"
+                                                className={`form-control ${errors.info && 'is-invalid'}`}
+                                                name="flowers"
+                                                onChange={ event => {this.handleArrayChange(event, 'otherInfo')} }
+                                                value={ contract.otherInfo.flowers }
+                                            />
+                                            {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                        </div>
+                                    </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Adds:</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Adds"
+                                                className={`form-control ${errors.info && 'is-invalid'}`}
+                                                name="adds"
+                                                onChange={ event => {this.handleArrayChange(event, 'otherInfo')} }
+                                                value={ contract.otherInfo.adds }
+                                            />
+                                            {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
