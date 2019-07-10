@@ -81,24 +81,20 @@ export default {
                 vase: '',
                 adds: '',
             },
-            info: {
-                firstName: '',
-                secondName: '',
-                lastName: '',
-                date: '',
+            mainInfo: [
+                {
+                    firstName: '',
+                    secondName: '',
+                    lastName: '',
+                    date: ''
+                }
+            ],
+            otherInfo: {
                 epitaph: '',
                 portrait: '',
                 text: '',
-                adds: '',
-            },
-            info2: {
-                firstName: '',
-                secondName: '',
-                lastName: '',
-                date: '',
-                epitaph: '',
-                portrait: '',
-                text: '',
+                cross: '',
+                flowers: '',
                 adds: '',
             },
             cemetery: {},

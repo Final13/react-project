@@ -3,8 +3,8 @@ import {GET_ERRORS, GET_ALL_CONTRACTS, GET_CONTRACT_BY_ID, SEARCH_CONTRACTS} fro
 
 export const createContract = (contract, history) => dispatch => {
     axios.post('/api/contract/create', contract)
-        .then(() => {
-            history.push('/contract');
+        .then((res) => {
+            history.push(`/contract/${res.data._id}`);
             dispatch({
                 type: GET_ERRORS,
                 payload: {}

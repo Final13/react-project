@@ -21,10 +21,10 @@ const ContractSchema = new Schema({
     extra: {
         type: Object
     },
-    info: {
-        type: Object
+    mainInfo: {
+        type: Array
     },
-    info2: {
+    otherInfo: {
         type: Object
     },
     cemetery: {
