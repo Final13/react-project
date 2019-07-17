@@ -31,7 +31,7 @@ const ContractSchema = new Schema({
         type: Object
     },
     payments: {
-        type: Number
+        type: Array
     },
     total: {
         type: Number

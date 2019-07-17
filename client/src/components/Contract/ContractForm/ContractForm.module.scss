@@ -73,3 +73,11 @@
 .numberInput {
   width: 100px !important;
 }
+
+.addPayment, .addPayment:hover {
+  font-size: 25px !important;
+  position: relative !important;
+  top: -5px !important;
+  padding: 0 0 0 5px !important;
+  text-decoration: none !important;
+}

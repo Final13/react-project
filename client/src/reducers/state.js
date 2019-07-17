@@ -108,7 +108,7 @@ export default {
                 name: '',
                 phone: '',
             },
-            payments: 0,
+            payments: [0],
             total: 0,
             install: '',
             deleted: false

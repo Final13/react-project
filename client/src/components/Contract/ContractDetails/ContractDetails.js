@@ -18,7 +18,7 @@ class ContractDetails extends Component {
     render() {
         const { contract } = this.props;
         return(
-            <div className={`${styles.container}`}>
+            <div className={`text-left ${styles.container}`}>
                 <Link
                     to={`/contract/edit/${contract._id}`}
                     className={`btn btn-primary ${styles.editButton}`}
@@ -31,32 +31,27 @@ class ContractDetails extends Component {
                 >
                     Delete
                 </button>
-                <h2 className={styles.contractHeader}>{`Contract: ${contract.number}`}</h2>
-                {
-                    (!contract.customForm && contract.stone.form.href && contract.stone.color.href) && (
-                        <img
-                            src={productUrl + contract.image}
-                            alt={`${contract.stone.form.label}, ${contract.stone.color.label}`}
-                        />
-                    )
-                }
+                <div className={`text-center ${styles.contractHeader}`}>
+                    <span className={styles.contractNumber}>Contract № </span>
+                    <h2 className={`d-inline`}>{contract.number}</h2>
+                </div>
                 <div className={`row`}>
-                    <div className={`col-4`}>
-                        <h2>Customer:</h2>
-                        <div className={`mb-2`}>
-                            <h6 className={`m-0 d-inline`}>Name:</h6>
-                            <div className={`pl-2 d-inline`}>
-                                {contract.customer.name}
-                            </div>
-                        </div>
-                        <div className={`mb-2`}>
-                            <h6 className={`m-0 d-inline`}>Phone:</h6>
-                            <div className={`pl-2 d-inline`}>
-                                {contract.customer.phone}
-                            </div>
+                    <div className={`col-sm-3`}>
+                        <div
+                            className={`${styles.imageArea} ${(contract.customForm || !contract.stone.form.href || !contract.stone.color.href) && 'border rounded'}`}
+                        >
+                            {
+                                (!contract.customForm && contract.stone.form.href && contract.stone.color.href) && (
+                                    <img
+                                        className={styles.image}
+                                        src={productUrl + contract.stone.form.href + contract.stone.color.href}
+                                        alt={`${contract.stone.form.label} ${contract.stone.color.label}`}
+                                    />
+                                )
+                            }
                         </div>
                     </div>
-                    <div className={`col-4`}>
+                    <div className={`col-3`}>
                         <h2>Stone:</h2>
                         <div className={`mb-2`}>
                             <h6 className={`m-0 d-inline`}>Type:</h6>
@@ -77,7 +72,22 @@ class ContractDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={`col-4`}>
+                    <div className={`col-3`}>
+                        <h2>Customer:</h2>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0 d-inline`}>Name:</h6>
+                            <div className={`pl-2 d-inline`}>
+                                {contract.customer.name}
+                            </div>
+                        </div>
+                        <div className={`mb-2`}>
+                            <h6 className={`m-0 d-inline`}>Phone:</h6>
+                            <div className={`pl-2 d-inline`}>
+                                {contract.customer.phone}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`col-3`}>
                         <h2>Builder:</h2>
                         <div className={`mb-2`}>
                             <h6 className={`m-0 d-inline`}>Name:</h6>
@@ -92,76 +102,102 @@ class ContractDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={`col-12 pt-5`}>
-                        <h2>Info:</h2>
-                        <div className={`row`}>
+                </div>
+                <div className={`row`}>
+                    <div className={`d-flex col-12 mt-4 border`}>
+                        {
+                            contract.mainInfo.map( (info, index) => (
+                                <div className={`w-100 ${(index > 0) && 'ml-2 pl-2 border-left'}`} key={index}>
+                                    <div className={`row`}>
+                                        <div className={`col-12 border-bottom`}>
+                                            <div className={`p-1`}>
+                                                <h6 className={`m-0 d-inline pr-1`}>First name:</h6>
+                                                { info.firstName }
+                                            </div>
+                                        </div>
+                                        <div className={`col-12 border-bottom`}>
+                                            <div className={`p-1`}>
+                                                <h6 className={`m-0 d-inline pr-1`}>Second name:</h6>
+                                                { info.secondName }
+                                            </div>
+                                        </div>
+                                        <div className={`col-12 border-bottom`}>
+                                            <div className={`p-1`}>
+                                                <h6 className={`m-0 d-inline pr-1`}>Last name:</h6>
+                                                { info.lastName }
+                                            </div>
+                                        </div>
+                                        <div className={`col-12`}>
+                                            <div className={`p-1`}>
+                                                <h6 className={`m-0 d-inline pr-1`}>Date:</h6>
+                                                { info.date }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) )
+                        }
+                    </div>
+                    <div className={`col-12 p-1 mb-5 border border-top-0 ${ (contract.mainInfo.length > 1) && 'text-center' }`}>
+                        <h6 className={`m-0 pl-3 d-inline`}>Epitaph:</h6>
+                        <div className={`pl-2 d-inline`}>
+                            { contract.otherInfo.epitaph }
+                        </div>
+                    </div>
+                    <div className={`col-12`}>
+                        <div className={`d-flex`}>
                             <div className={`col-6`}>
-                                <div className={`mb-2`}>
-                                    <h6 className={`m-0 d-inline`}>Last name:</h6>
-                                    <div className={`pl-2 d-inline`}>
-                                        {contract.info.lastName}
-                                    </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Cemetery address:</h6>
+                                    { contract.cemetery.address }
                                 </div>
-                                <div className={`mb-2`}>
-                                    <h6 className={`m-0 d-inline`}>First name:</h6>
-                                    <div className={`pl-2 d-inline`}>
-                                        {contract.info.firstName}
-                                    </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Cemetery sector:</h6>
+                                    { contract.cemetery.sector }
                                 </div>
-                                <div className={`mb-2`}>
-                                    <h6 className={`m-0 d-inline`}>Second name:</h6>
-                                    <div className={`pl-2 d-inline`}>
-                                        {contract.info.secondName}
-                                    </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Cemetery place:</h6>
+                                    { contract.cemetery.place }
                                 </div>
-                                <div className={`mb-2`}>
-                                    <h6 className={`m-0 d-inline`}>Date:</h6>
-                                    <div className={`pl-2 d-inline`}>
-                                        {contract.info.date}
-                                    </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Install date:</h6>
+                                    { contract.install && (new Date(contract.install).toLocaleDateString('ru-RU')) }
                                 </div>
-                                <div className={`mb-2`}>
-                                    <h6 className={`m-0 d-inline`}>Epitaph:</h6>
-                                    <div className={`pl-2 d-inline`}>
-                                        {contract.info.epitaph}
-                                    </div>
+                                {
+                                    contract.payments.map((payment, index) => (
+                                        <div key={index} className={`p-1 border-bottom`}>
+                                            <h6 className={`m-0 d-inline pr-1`}>Payment {index + 1}:</h6>
+                                            { payment }
+                                        </div>
+                                    ))
+                                }
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Total:</h6>
+                                    { contract.total }
                                 </div>
                             </div>
-                            {
-                                contract.info2 &&
-                                <div className={`col-6 border-left`}>
-                                    <div className={`mb-2`}>
-                                        <h6 className={`m-0 d-inline`}>Last name:</h6>
-                                        <div className={`pl-2 d-inline`}>
-                                            {contract.info2.lastName}
-                                        </div>
-                                    </div>
-                                    <div className={`mb-2`}>
-                                        <h6 className={`m-0 d-inline`}>First name:</h6>
-                                        <div className={`pl-2 d-inline`}>
-                                            {contract.info2.firstName}
-                                        </div>
-                                    </div>
-                                    <div className={`mb-2`}>
-                                        <h6 className={`m-0 d-inline`}>Second name:</h6>
-                                        <div className={`pl-2 d-inline`}>
-                                            {contract.info2.secondName}
-                                        </div>
-                                    </div>
-                                    <div className={`mb-2`}>
-                                        <h6 className={`m-0 d-inline`}>Date:</h6>
-                                        <div className={`pl-2 d-inline`}>
-                                            {contract.info2.date}
-                                        </div>
-                                    </div>
-                                    <div className={`mb-2`}>
-                                        <h6 className={`m-0 d-inline`}>Epitaph:</h6>
-                                        <div className={`pl-2 d-inline`}>
-                                            {contract.info2.epitaph}
-                                        </div>
-                                    </div>
+                            <div className={`col-6`}>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Portrait:</h6>
+                                    { contract.mainInfo.portrait }
                                 </div>
-                            }
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Text:</h6>
+                                    { contract.mainInfo.text }
+                                </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Cross:</h6>
+                                    { contract.mainInfo.cross }
+                                </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Flowers:</h6>
+                                    { contract.mainInfo.flowers }
+                                </div>
+                                <div className={`p-1 border-bottom`}>
+                                    <h6 className={`m-0 d-inline pr-1`}>Adds:</h6>
+                                    { contract.mainInfo.adds }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

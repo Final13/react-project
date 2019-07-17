@@ -203,7 +203,11 @@ class Contract extends Component {
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                         <span>Payments:</span>
-                                                        <span>{contract.payments}</span>
+                                                        {
+                                                            contract.payments.length && (
+                                                                <span>{contract.payments.reduce((a,b) => a+b)}</span>
+                                                            )
+                                                        }
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                         <span>Total:</span>
@@ -211,7 +215,7 @@ class Contract extends Component {
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                         <span>Balance:</span>
-                                                        <span>{contract.total - contract.payments}</span>
+                                                        <span>{contract.total - contract.payments.reduce((a,b) => a+b)}</span>
                                                     </div>
                                                     <div className={`d-flex justify-content-between mb-2 border-bottom`}>
                                                         <span>Builder:</span>

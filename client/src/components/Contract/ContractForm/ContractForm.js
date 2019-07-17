@@ -90,6 +90,14 @@ class ContractForm extends Component {
         });
     };
 
+    handlePaymentsChange = (event, index) => {
+        const contract = {...this.state.contract};
+        contract.payments[index] = Number(event.target.value);
+        this.setState({
+            contract: contract
+        });
+    };
+
     addInfoSection = (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -101,6 +109,16 @@ class ContractForm extends Component {
         };
         const contract = {...this.state.contract};
         contract.mainInfo = [...contract.mainInfo, info];
+        this.setState({
+            contract: contract
+        });
+    };
+
+    addPayment = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const contract = {...this.state.contract};
+        contract.payments = [...contract.payments, 0];
         this.setState({
             contract: contract
         });
@@ -480,19 +498,27 @@ class ContractForm extends Component {
                                             {errors.install && (<div className={`invalid-feedback`}>{errors.install}</div>)}
                                         </div>
                                     </div>
-                                    <div className={`col-12`}>
-                                        <div className={`form-group text-left`}>
-                                            <label className={`pr-3 ${styles.labelFont}`}>Payments:</label>
-                                            <input
-                                                type="number"
-                                                placeholder="Payments"
-                                                className={`form-control ${errors.payments && 'is-invalid'}`}
-                                                name="payments"
-                                                onChange={ this.handleInputChange }
-                                                value={ contract.payments }
-                                            />
-                                            {errors.payments && (<div className={`invalid-feedback`}>{errors.payments}</div>)}
-                                        </div>
+                                    <div className={`col-12 text-left`}>
+                                        <div className={`d-inline ${styles.labelFont}`}>Payments:</div>
+                                        <button className={`btn btn-link d-inline ${styles.addPayment}`} onClick={ this.addPayment }>
+                                            +
+                                        </button>
+                                        {
+                                            contract.payments.length &&
+                                            contract.payments.map((payment, index) => (
+                                                <div key={index} className={`form-group text-left`}>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Payments"
+                                                        className={`form-control ${errors.payments && 'is-invalid'}`}
+                                                        name="payments"
+                                                        onChange={ event => {this.handlePaymentsChange(event, index)} }
+                                                        value={ payment }
+                                                    />
+                                                    {errors.payments && (<div className={`invalid-feedback`}>{errors.payments}</div>)}
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                     <div className={`col-12`}>
                                         <div className={`form-group text-left`}>

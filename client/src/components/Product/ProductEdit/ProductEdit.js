@@ -154,7 +154,19 @@ class ProductEdit extends Component {
                                 {errors.description && (<div className={`invalid-feedback`}>{errors.description}</div>)}
                             </div>
                             <div className={`form-group text-left`}>
-                                <label className={`pr-3 ${styles.labelFont}`}>Price coefficient:</label>
+                                <label className={`pr-3 ${styles.labelFont}`}>
+                                    <Tippy
+                                        content='Form coefficient compared to square'
+                                        arrow={true}
+                                        animation="scale"
+                                        className={`bg-dark`}
+                                        duration={100}
+                                        delay={[0, 50]}
+                                    >
+                                        <i className="far fa-question-circle pr-1" />
+                                    </Tippy>
+                                    Price coefficient:
+                                </label>
                                 <input
                                     type='number'
                                     step={0.1}

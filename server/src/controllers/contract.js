@@ -35,6 +35,7 @@ const createContract = (req, res) => {
                         extra: req.body.extra,
                         mainInfo: req.body.mainInfo,
                         otherInfo: req.body.otherInfo,
+                        cemetery: req.body.cemetery,
                         payments: req.body.payments,
                         total: req.body.total,
                         install: req.body.install,
