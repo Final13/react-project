@@ -5,10 +5,12 @@ const validateContractInput = (data) => {
     let errors = {};
     data.number = !isEmpty(data.number) ? data.number : '';
     data.image = !isEmpty(data.image) ? data.image : '';
+    data.customForm = !isEmpty(data.customForm) ? data.customForm : false;
     data.customer = !isEmpty(data.customer) ? data.customer : {};
     data.stone = !isEmpty(data.stone) ? data.stone : {};
     data.extra = !isEmpty(data.extra) ? data.extra : {};
-    data.info = !isEmpty(data.info) ? data.info : {};
+    data.mainInfo = !isEmpty(data.mainInfo) ? data.mainInfo: {};
+    data.otherInfo = !isEmpty(data.otherInfo) ? data.otherInfo: {};
     data.cemetery = !isEmpty(data.cemetery) ? data.cemetery : {};
     data.payments = !isEmpty(data.payments) ? data.payments : [];
     data.total = !isEmpty(data.total) ? data.total : '';
@@ -38,6 +40,21 @@ const validateContractInput = (data) => {
     if(Validator.isEmpty(data.builder.phone)) {
 
         errors.builderPhone = 'Builder phone is required';
+    }
+
+    if(Validator.isBefore(data.install)) {
+
+        errors.install = 'This date already passed';
+    }
+
+    if(Validator.isAfter(data.install, (new Date(new Date().setFullYear(new Date().getFullYear() + 2))).toString())) {
+
+        errors.install = 'This date is not too soon';
+    }
+
+    if(data.total < (data.payments.reduce((a,b) => a+b))) {
+
+        errors.total = 'Total can not be less than payments';
     }
 
     return {

@@ -21,15 +21,73 @@
   width: 100px;
 }
 
+.selectWithFormControl {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.numberInput {
+  width: 100px !important;
+}
+
+.optionImage {
+  height: 80px;
+  width: 80px;
+  padding-right: 5px;
+}
+
+.addPayment, .addPayment:hover {
+  font-size: 25px !important;
+  position: relative !important;
+  top: -5px !important;
+  padding: 0 0 0 5px !important;
+  text-decoration: none !important;
+}
+
 .addButton, .addButton:hover {
   font-size: 15px !important;
   position: absolute !important;
   top: 0;
   right: 0;
+  z-index: 999;
   text-decoration: none !important;
+}
+
+.removeButton, .removeButton:hover {
+  font-size: 15px !important;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  color: #ff8190 !important;
+  z-index: 999;
+  text-decoration: none !important;
+}
+
+.removeButton:hover {
+  color: red !important;
 }
 
 .selectWithFormControl {
   padding: 0 !important;
   border: none !important;
+}
+
+.zIndex1000 {
+  z-index: 1000;
+}
+
+.addInfo {
+  composes: addButton;
+  top: -30px !important;
+}
+
+.imageArea {
+  height: 250px;
+  min-width: 250px;
+  display: inline-block;
+  overflow: hidden;
+}
+.image {
+  height: 248px;
+  width: auto;
 }

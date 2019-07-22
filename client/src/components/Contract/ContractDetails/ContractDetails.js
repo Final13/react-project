@@ -179,23 +179,23 @@ class ContractDetails extends Component {
                             <div className={`col-6`}>
                                 <div className={`p-1 border-bottom`}>
                                     <h6 className={`m-0 d-inline pr-1`}>Portrait:</h6>
-                                    { contract.mainInfo.portrait }
+                                    { contract.otherInfo.portrait }
                                 </div>
                                 <div className={`p-1 border-bottom`}>
                                     <h6 className={`m-0 d-inline pr-1`}>Text:</h6>
-                                    { contract.mainInfo.text }
+                                    { contract.otherInfo.text }
                                 </div>
                                 <div className={`p-1 border-bottom`}>
                                     <h6 className={`m-0 d-inline pr-1`}>Cross:</h6>
-                                    { contract.mainInfo.cross }
+                                    { contract.otherInfo.cross }
                                 </div>
                                 <div className={`p-1 border-bottom`}>
                                     <h6 className={`m-0 d-inline pr-1`}>Flowers:</h6>
-                                    { contract.mainInfo.flowers }
+                                    { contract.otherInfo.flowers }
                                 </div>
                                 <div className={`p-1 border-bottom`}>
                                     <h6 className={`m-0 d-inline pr-1`}>Adds:</h6>
-                                    { contract.mainInfo.adds }
+                                    { contract.otherInfo.adds }
                                 </div>
                             </div>
                         </div>

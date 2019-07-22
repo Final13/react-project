@@ -38,7 +38,7 @@ const createContract = (req, res) => {
                         cemetery: req.body.cemetery,
                         payments: req.body.payments,
                         total: req.body.total,
-                        install: req.body.install,
+                        install: req.body.install || new Date(new Date().setMonth(new Date().getMonth() + 1)),
                     });
 
                     newContract
@@ -172,11 +172,12 @@ const updateContract = (req, res) => {
                             contract.customer = req.body.customer;
                             contract.stone = req.body.stone;
                             contract.extra = req.body.extra;
-                            contract.info = req.body.info;
-                            contract.info2 = req.body.info2;
+                            contract.mainInfo = req.body.mainInfo;
+                            contract.otherInfo = req.body.otherInfo;
+                            contract.cemetery = req.body.cemetery;
                             contract.payments = req.body.payments;
                             contract.total = req.body.total;
-                            contract.install = req.body.install;
+                            contract.install = req.body.install || new Date(new Date().setMonth(new Date().getMonth() + 1));
 
                             contract
                                 .save()

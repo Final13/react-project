@@ -9,6 +9,7 @@ import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
 import { colors, forms, types } from '../../../SelectOptions';
 import { productUrl } from '../../../config';
+import Tippy from "@tippy.js/react";
 
 const { Option } = components;
 const set = require('lodash.set');
@@ -98,6 +99,16 @@ class ContractForm extends Component {
         });
     };
 
+    addPayment = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const contract = {...this.state.contract};
+        contract.payments = [...contract.payments, 0];
+        this.setState({
+            contract: contract
+        });
+    };
+
     addInfoSection = (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -114,15 +125,6 @@ class ContractForm extends Component {
         });
     };
 
-    addPayment = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const contract = {...this.state.contract};
-        contract.payments = [...contract.payments, 0];
-        this.setState({
-            contract: contract
-        });
-    };
 
     removeInfoSection = (event, index) => {
         event.preventDefault();
@@ -308,7 +310,7 @@ class ContractForm extends Component {
                                             <div className={`form-group text-left`}>
                                                 <Select
                                                     placeholder="Builder"
-                                                    className={`${styles.selectWithFormControl} ${styles.zIndex1000} form-control ${errors.builder && 'is-invalid'}`}
+                                                    className={`${styles.selectWithFormControl} ${styles.zIndex1000} form-control ${errors.builder && 'is-invalid is-invalid-select'}`}
                                                     name="builder"
                                                     onChange={ (event) => {this.handleSelectChange(event,'builder')} }
                                                     value={ contract.builder }
@@ -486,7 +488,19 @@ class ContractForm extends Component {
                                     </div>
                                     <div className={`col-12`}>
                                         <div className={`form-group text-left`}>
-                                            <label className={`pr-3 ${styles.labelFont}`}>Install date:</label>
+                                            <label className={`pr-3 ${styles.labelFont}`}>
+                                                <Tippy
+                                                    content='Must be a valid date in 2 years range from now'
+                                                    arrow={true}
+                                                    animation="scale"
+                                                    className={`bg-dark`}
+                                                    duration={100}
+                                                    delay={[0, 50]}
+                                                >
+                                                    <i className="far fa-question-circle pr-1" />
+                                                </Tippy>
+                                                Install date:
+                                            </label>
                                             <input
                                                 type="date"
                                                 placeholder="Date"

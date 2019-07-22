@@ -134,3 +134,7 @@
 .form-control.is-invalid~.invalid-feedback {
   display: contents !important;
 }
+
+.is-invalid-select>div {
+  border-color: #dc3545 !important;
+}
