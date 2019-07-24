@@ -138,3 +138,21 @@
 .is-invalid-select>div {
   border-color: #dc3545 !important;
 }
+
+@media print {
+  .react-easy-print-print {
+    margin: -50px -180px !important;
+  }
+
+  .footer {
+    display: none !important;
+  }
+
+  .newPage {
+    page-break-before: always !important;
+  }
+
+  .newPage:first-child {
+    margin-top: 50px !important;
+  }
+}
