@@ -89,6 +89,42 @@ class ContractDetails extends Component {
                                                 {contract.stone.color.label}
                                             </div>
                                         </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Size:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.stone.size.label}
+                                            </div>
+                                        </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Stand:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.extra.stand}
+                                            </div>
+                                        </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Flower Garden:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.extra.flowerGarden}
+                                            </div>
+                                        </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Tombstone:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.extra.tombstone}
+                                            </div>
+                                        </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Vase:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.extra.vase}
+                                            </div>
+                                        </div>
+                                        <div className={`mb-2`}>
+                                            <h6 className={`m-0 d-inline`}>Adds:</h6>
+                                            <div className={`pl-2 d-inline`}>
+                                                {contract.extra.adds}
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className={`col-3`}>
                                         <h2>Customer:</h2>

@@ -7,7 +7,7 @@ import { getAllBuilders } from '../../../actions/builder';
 import styles from './ContractForm.module.scss';
 import State from '../../../reducers/state';
 import Select, { components } from 'react-select';
-import { colors, forms, types } from '../../../SelectOptions';
+import { colors, forms, types, sizes } from '../../../SelectOptions';
 import { productUrl } from '../../../config';
 import Tippy from "@tippy.js/react";
 
@@ -66,7 +66,15 @@ class ContractForm extends Component {
 
     handleSelectChange = (event, path) => {
         const contract = {...this.state.contract};
-        set(contract, path, event );
+        set(contract, path, event);
+        if (path === 'stone.size') {
+            contract.extra.stand = (contract.stone.type.value === 'horizontal') ? event.horizontalStand : event.stand;
+            contract.extra.flowerGarden = (contract.stone.type.value === 'horizontal') ? event.horizontalFlowerGarden : event.flowerGarden;
+        }
+        if (path === 'stone.type') {
+            contract.extra.stand = (event.value === 'horizontal') ? contract.stone.size.horizontalStand : contract.stone.size.stand;
+            contract.extra.flowerGarden = (event.value === 'horizontal') ? contract.stone.size.horizontalFlowerGarden : contract.stone.size.flowerGarden;
+        }
         this.setState({
             contract: contract
         });
@@ -257,6 +265,21 @@ class ContractForm extends Component {
                                             {errors.stone && (<div className={`invalid-feedback`}>{errors.stone}</div>)}
                                         </div>
                                     </div>
+                                    <div className={`col-12`}>
+                                        <div className={`form-group text-left`}>
+                                            <label className={`pr-3 ${styles.labelFont}`}>Select size:</label>
+                                            <Select
+                                                placeholder="Size"
+                                                className={`${styles.selectWithFormControl} form-control ${errors.size && 'is-invalid'}`}
+                                                styles={customStyles}
+                                                name="size"
+                                                onChange={ (event) => {this.handleSelectChange(event, 'stone.size')} }
+                                                value={ contract.stone.size }
+                                                options={sizes}
+                                            />
+                                            {errors.size && (<div className={`invalid-feedback`}>{errors.size}</div>)}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className={`col-3`}>
                                     <div className={`col-12`}>
@@ -348,6 +371,79 @@ class ContractForm extends Component {
                                                 </div>
                                             </div>
                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`col-sm-12 bm-5`}>
+                            <div className={`row`}>
+                                <div className={`col-6`}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Stand:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Stand"
+                                            className={`form-control ${errors.stand && 'is-invalid'}`}
+                                            name="extra.stand"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.extra.stand }
+                                        />
+                                        {errors.stand && (<div className={`invalid-feedback`}>{errors.stand}</div>)}
+                                    </div>
+                                </div>
+                                <div className={`col-6`}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Flower Garden:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Flower Garden"
+                                            className={`form-control ${errors.flowerGarden && 'is-invalid'}`}
+                                            name="extra.flowerGarden"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.extra.flowerGarden }
+                                        />
+                                        {errors.flowerGarden && (<div className={`invalid-feedback`}>{errors.flowerGarden}</div>)}
+                                    </div>
+                                </div>
+                                <div className={`col-6`}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Tombstone:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Tombstone"
+                                            className={`form-control ${errors.tombstone && 'is-invalid'}`}
+                                            name="extra.tombstone"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.extra.tombstone }
+                                        />
+                                        {errors.tombstone && (<div className={`invalid-feedback`}>{errors.tombstone}</div>)}
+                                    </div>
+                                </div>
+                                <div className={`col-6`}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Vase:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Vase"
+                                            className={`form-control ${errors.vase && 'is-invalid'}`}
+                                            name="extra.vase"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.extra.vase }
+                                        />
+                                        {errors.vase && (<div className={`invalid-feedback`}>{errors.vase}</div>)}
+                                    </div>
+                                </div>
+                                <div className={`col-12`}>
+                                    <div className={`form-group text-left`}>
+                                        <label className={`pr-3 ${styles.labelFont}`}>Adds:</label>
+                                        <textarea
+                                            placeholder="Adds"
+                                            className={`form-control ${errors.adds && 'is-invalid'}`}
+                                            name="extra.adds"
+                                            onChange={ this.handleInputChange }
+                                            value={ contract.extra.adds }
+                                        />
+                                        {errors.adds && (<div className={`invalid-feedback`}>{errors.adds}</div>)}
                                     </div>
                                 </div>
                             </div>
