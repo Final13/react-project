@@ -6,10 +6,11 @@ import { getAllContracts, getContractById, searchContracts } from '../../actions
 import { getAllBuilders } from '../../actions/builder';
 import styles from './Contract.module.scss';
 import Select, { components } from 'react-select';
-import { colors, forms, types } from '../../SelectOptions';
+import { colors, forms, types, sizes } from '../../SelectOptions';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import Tippy from "@tippy.js/react";
+import {productUrl} from "../../config";
 
 const { Option } = components;
 
@@ -19,7 +20,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={`${productUrl + props.data.href}black.jpg`} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -36,12 +37,14 @@ class Contract extends Component {
             color: '',
             builder: '',
             type: '',
-            form: ''
+            form: '',
+            size: ''
         },
         color: '',
         builder: '',
         type: '',
-        form: ''
+        form: '',
+        size: ''
     };
 
     componentDidMount() {
@@ -97,8 +100,7 @@ class Contract extends Component {
 
 
     render() {
-        const { query, color, form, type } = this.state;
-        const isAdmin = (this.props.role === 'admin');
+        const { query, color, form, type, size } = this.state;
         const {builders} = this.props;
         const modifiedBuilders = [
             {value: '', label: 'All builders'},
@@ -116,6 +118,10 @@ class Contract extends Component {
             {value: '', label: 'All forms'},
             ...forms
         ];
+        const modifiedSizes = [
+            {value: '', label: 'All sizes'},
+            ...sizes
+        ];
         const indexOfLastContract = this.state.currentPage * this.state.pageSize;
         const indexOfFirstContract = indexOfLastContract - this.state.pageSize;
         const currentContracts = this.props.contracts.slice(indexOfFirstContract, indexOfLastContract);
@@ -124,17 +130,18 @@ class Contract extends Component {
             <div className={`container ${styles.container}`}>
                 <h2 className={styles.contractHeader}>Contracts</h2>
                 <div className={`row text-left pb-3 pt-3`}>
-                    <div className={isAdmin ? 'col-4' : 'col-3'}>
+                    <div className={`col-2`}>
                         <input
                             type="text"
                             placeholder="Search"
-                            className={`form-control`}
+                            className={`form-control ${styles.searchInput}`}
                             name="search"
                             onChange={ this.handleSearch }
                             value={ query.search }
                         />
+                        <i className={`fas fa-search ${styles.searchIcon}`} />
                     </div>
-                    <div className={isAdmin ? 'col-2' : 'col-3'}>
+                    <div className={`col-2`}>
                         <Select
                             placeholder="Color"
                             name="color"
@@ -143,7 +150,7 @@ class Contract extends Component {
                             options={modifiedColors}
                         />
                     </div>
-                    <div className={isAdmin ? 'col-2' : 'col-3'}>
+                    <div className={`col-2`}>
                         <Select
                             placeholder="Type"
                             name="type"
@@ -152,7 +159,7 @@ class Contract extends Component {
                             options={modifiedTypes}
                         />
                     </div>
-                    <div className={isAdmin ? 'col-2' : 'col-3'}>
+                    <div className={`col-2`}>
                         <Select
                             placeholder="Form"
                             name="form"
@@ -162,18 +169,24 @@ class Contract extends Component {
                             components={{ Option: ImageOption }}
                         />
                     </div>
-                    {
-                        isAdmin &&
-                        <div className={`col-2`}>
-                            <Select
-                                placeholder="Builder"
-                                name="builder"
-                                onChange={ this.handleBuilder }
-                                value={ query.builder }
-                                options={modifiedBuilders}
-                            />
-                        </div>
-                    }
+                    <div className={`col-2`}>
+                        <Select
+                            placeholder="Size"
+                            name="size"
+                            onChange={ (event) => {this.handleFilter(event,'size')} }
+                            value={ size }
+                            options={modifiedSizes}
+                        />
+                    </div>
+                    <div className={`col-2`}>
+                        <Select
+                            placeholder="Builder"
+                            name="builder"
+                            onChange={ this.handleBuilder }
+                            value={ query.builder }
+                            options={modifiedBuilders}
+                        />
+                    </div>
                 </div>
                 <div className={`row`}>
                     {
@@ -257,7 +270,6 @@ Contract.propTypes = {
 const mapStateToProps = state => ({
     contracts: state.contract.contracts,
     errors: state.errors,
-    role: state.auth.user.role,
     builders: state.builder.builders,
 });
 

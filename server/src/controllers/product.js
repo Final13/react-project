@@ -42,7 +42,10 @@ const getAllProducts = (req, res) => {
 };
 
 const searchProducts = (req, res) => {
-    const search = new RegExp(req.body.search, 'i');
+    const escapeRegExp = (string) => {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    };
+    const search = new RegExp(escapeRegExp(req.body.search), 'i');
     const filter = {};
     if (req.body.color) {
         filter['details.color.value'] = req.body.color;

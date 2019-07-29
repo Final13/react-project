@@ -65,7 +65,10 @@ const getAllContracts = (req, res) => {
 };
 
 const searchContracts = (req, res) => {
-    const search = new RegExp(req.body.search, 'i');
+    const escapeRegExp = (string) => {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    };
+    const search = new RegExp(escapeRegExp(req.body.search), 'i');
     const filter = {};
     if (req.body.color) {
          filter['stone.color.value'] = req.body.color;
@@ -75,6 +78,9 @@ const searchContracts = (req, res) => {
     }
     if (req.body.form) {
         filter['stone.form.value'] = req.body.form;
+    }
+    if (req.body.size) {
+        filter['stone.size.value'] = req.body.size;
     }
     if (req.body.builder._id) {
         filter['builder._id'] = mongoose.Types.ObjectId(req.body.builder._id);

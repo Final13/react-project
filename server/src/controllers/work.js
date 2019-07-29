@@ -43,7 +43,10 @@ const getAllWorks = (req, res) => {
 };
 
 const searchWorks = (req, res) => {
-    const search = new RegExp(req.body.search, 'i');
+    const escapeRegExp = (string) => {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    };
+    const search = new RegExp(escapeRegExp(req.body.search), 'i');
     const filter = {};
     if (req.body.color) {
         filter['color.value'] = req.body.color;

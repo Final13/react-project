@@ -122,11 +122,12 @@ class Product extends Component {
                         <input
                             type="text"
                             placeholder="Search"
-                            className={`form-control`}
+                            className={`form-control ${styles.searchInput}`}
                             name="search"
                             onChange={ this.handleSearch }
                             value={ query.search }
                         />
+                        <i className={`fas fa-search ${styles.searchIcon}`} />
                     </div>
                     <div className={`col-2`}>
                         <Select

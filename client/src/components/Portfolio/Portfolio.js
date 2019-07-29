@@ -20,7 +20,7 @@ const ImageOption = (props) => {
             <div>
                 {
                     props.data.href &&
-                    <img className={styles.optionImage} src={productUrl + props.data.href} alt={props.data.label} />
+                    <img className={styles.optionImage} src={`${productUrl + props.data.href}black.jpg`} alt={props.data.label} />
                 }
                 {props.data.label}
             </div>
@@ -124,11 +124,12 @@ class Portfolio extends Component {
                         <input
                             type="text"
                             placeholder="Search"
-                            className={`form-control`}
+                            className={`form-control ${styles.searchInput}`}
                             name="search"
                             onChange={ this.handleSearch }
                             value={ query.search }
                         />
+                        <i className={`fas fa-search ${styles.searchIcon}`} />
                     </div>
                     <div className={`col-3`}>
                         <Select
