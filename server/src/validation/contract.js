@@ -2,14 +2,17 @@ const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
 const validateContractInput = (data) => {
-    let errors = {};
+    let errors = {
+        dateOfBirth: [],
+        dateOfDeath: []
+    };
     data.number = !isEmpty(data.number) ? data.number : '';
     data.image = !isEmpty(data.image) ? data.image : '';
     data.customForm = !isEmpty(data.customForm) ? data.customForm : false;
     data.customer = !isEmpty(data.customer) ? data.customer : {};
     data.stone = !isEmpty(data.stone) ? data.stone : {};
     data.extra = !isEmpty(data.extra) ? data.extra : {};
-    data.mainInfo = !isEmpty(data.mainInfo) ? data.mainInfo: {};
+    data.mainInfo = !isEmpty(data.mainInfo) ? data.mainInfo: [];
     data.otherInfo = !isEmpty(data.otherInfo) ? data.otherInfo: {};
     data.cemetery = !isEmpty(data.cemetery) ? data.cemetery : {};
     data.payments = !isEmpty(data.payments) ? data.payments : [];
@@ -56,6 +59,24 @@ const validateContractInput = (data) => {
 
         errors.total = 'Total can not be less than payments';
     }
+
+    data.mainInfo.forEach((info, index) => {
+        if(Validator.isAfter(info.dateOfBirth, new Date().toString())) {
+            errors.dateOfBirth[index] = 'Future date impossible';
+        }
+
+        if(Validator.isAfter(info.dateOfDeath, new Date().toString())) {
+            errors.dateOfDeath[index] = 'Future date impossible';
+        }
+
+        if(Validator.isAfter(info.dateOfBirth.toString(), info.dateOfDeath.toString())) {
+            errors.dateOfBirth[index] = 'Date of birth can not be after death';
+            errors.dateOfDeath[index] = 'Date of death can not be before birth';
+        }
+    });
+
+    errors.dateOfBirth.length === 0 && delete errors.dateOfBirth;
+    errors.dateOfDeath.length === 0 && delete errors.dateOfDeath;
 
     return {
         errors,

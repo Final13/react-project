@@ -124,7 +124,8 @@ class ContractForm extends Component {
             firstName: '',
             secondName: '',
             lastName: '',
-            date: ''
+            dateOfBirth: '',
+            dateOfDeath: ''
         };
         const contract = {...this.state.contract};
         contract.mainInfo = [...contract.mainInfo, info];
@@ -505,17 +506,31 @@ class ContractForm extends Component {
                                                 </div>
                                             </div>
                                             <div className={`col-12`}>
-                                                <div className={`form-group text-left`}>
-                                                    <label className={`pr-3 ${styles.labelFont}`}>Date:</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Date"
-                                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                                        name="date"
-                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
-                                                        value={ info.date }
-                                                    />
-                                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                                <div className={`row`}>
+                                                    <div className={`col-6 form-group text-left`}>
+                                                        <label className={`pr-3 ${styles.labelFont}`}>Date of birth:</label>
+                                                        <input
+                                                            type="date"
+                                                            placeholder="Date of birth"
+                                                            className={`form-control ${errors.dateOfBirth && errors.dateOfBirth[index] && 'is-invalid'}`}
+                                                            name="dateOfBirth"
+                                                            onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                            value={ info.dateOfBirth }
+                                                        />
+                                                        {errors.dateOfBirth && errors.dateOfBirth[index] && (<div className={`invalid-feedback`}>{errors.dateOfBirth && errors.dateOfBirth[index]}</div>)}
+                                                    </div>
+                                                    <div className={`col-6 form-group text-left`}>
+                                                        <label className={`pr-3 ${styles.labelFont}`}>Date of death:</label>
+                                                        <input
+                                                            type="date"
+                                                            placeholder="Date of death"
+                                                            className={`form-control ${errors.dateOfDeath && errors.dateOfDeath[index] && 'is-invalid'}`}
+                                                            name="dateOfDeath"
+                                                            onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                            value={ info.dateOfDeath }
+                                                        />
+                                                        {errors.dateOfDeath && errors.dateOfDeath[index] && (<div className={`invalid-feedback`}>{errors.dateOfDeath && errors.dateOfDeath[index]}</div>)}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

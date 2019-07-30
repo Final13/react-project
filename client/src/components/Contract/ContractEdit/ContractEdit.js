@@ -125,7 +125,8 @@ class ContractEdit extends Component {
             firstName: '',
             secondName: '',
             lastName: '',
-            date: ''
+            dateOfBirth: '',
+            dateOfDeath: ''
         };
         const contract = {...this.state.contract};
         contract.mainInfo = [...contract.mainInfo, info];
@@ -148,7 +149,9 @@ class ContractEdit extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const contract = {...this.state.contract};
-        contract.image = (contract.stone.form && contract.stone.color) ? (contract.stone.form.href + contract.stone.color.href) : '';
+        contract.image = (contract.stone.form && contract.stone.color) ? (
+            contract.stone.form.href + contract.stone.color.href) : '';
+
         if (this.state.customForm) {
             contract.image = '';
         }
@@ -509,17 +512,57 @@ class ContractEdit extends Component {
                                                 </div>
                                             </div>
                                             <div className={`col-12`}>
-                                                <div className={`form-group text-left`}>
-                                                    <label className={`pr-3 ${styles.labelFont}`}>Date:</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Date"
-                                                        className={`form-control ${errors.info && 'is-invalid'}`}
-                                                        name="date"
-                                                        onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
-                                                        value={ info.date }
-                                                    />
-                                                    {errors.info && (<div className={`invalid-feedback`}>{errors.info}</div>)}
+                                                <div className={`row`}>
+                                                    <div className={`col-6 form-group text-left`}>
+                                                        <label className={`pr-3 ${styles.labelFont}`}>Date of birth:</label>
+                                                        {
+                                                            info.dateOfBirth ? (
+                                                                <input
+                                                                    type="date"
+                                                                    placeholder="Date of birth"
+                                                                    className={`form-control ${errors.dateOfBirth && errors.dateOfBirth[index] && 'is-invalid'}`}
+                                                                    name="dateOfBirth"
+                                                                    onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                                    value={ new Date(info.dateOfBirth).toISOString().split('T')[0] }
+                                                                />
+                                                            ) : (
+                                                                <input
+                                                                    type="date"
+                                                                    placeholder="Date of birth"
+                                                                    className={`form-control ${errors.dateOfBirth && errors.dateOfBirth[index] && 'is-invalid'}`}
+                                                                    name="dateOfBirth"
+                                                                    onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                                    value={ info.dateOfBirth }
+                                                                />
+                                                            )
+                                                        }
+                                                        {errors.dateOfBirth && errors.dateOfBirth[index] && (<div className={`invalid-feedback`}>{errors.dateOfBirth && errors.dateOfBirth[index]}</div>)}
+                                                    </div>
+                                                    <div className={`col-6 form-group text-left`}>
+                                                        <label className={`pr-3 ${styles.labelFont}`}>Date of death:</label>
+                                                        {
+                                                            info.dateOfDeath ? (
+                                                                <input
+                                                                    type="date"
+                                                                    placeholder="Date of death"
+                                                                    className={`form-control ${errors.dateOfDeath && errors.dateOfDeath[index] && 'is-invalid'}`}
+                                                                    name="dateOfDeath"
+                                                                    onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                                    value={ new Date(info.dateOfDeath).toISOString().split('T')[0] }
+                                                                />
+                                                            ) : (
+                                                                <input
+                                                                    type="date"
+                                                                    placeholder="Date of death"
+                                                                    className={`form-control ${errors.dateOfDeath && errors.dateOfDeath[index] && 'is-invalid'}`}
+                                                                    name="dateOfDeath"
+                                                                    onChange={ event => {this.handleArrayChange(event, 'mainInfo', index)} }
+                                                                    value={ info.dateOfDeath }
+                                                                />
+                                                            )
+                                                        }
+                                                        {errors.dateOfDeath && errors.dateOfDeath[index] && (<div className={`invalid-feedback`}>{errors.dateOfDeath && errors.dateOfDeath[index]}</div>)}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

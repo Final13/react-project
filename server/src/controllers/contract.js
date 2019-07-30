@@ -41,6 +41,11 @@ const createContract = (req, res) => {
                         install: req.body.install || new Date(new Date().setMonth(new Date().getMonth() + 1)),
                     });
 
+                    newContract.mainInfo.forEach(info => {
+                        info.dateOfBirth = info.dateOfBirth ? new Date(info.dateOfBirth) : '';
+                        info.dateOfDeath = info.dateOfDeath ? new Date(info.dateOfDeath) : '';
+                    });
+
                     newContract
                         .save()
                         .then(contract => {
@@ -111,7 +116,8 @@ const searchContracts = (req, res) => {
                         {'mainInfo': {$elemMatch: {firstName: search}}},
                         {'mainInfo': {$elemMatch: {secondName: search}}},
                         {'mainInfo': {$elemMatch: {lastName: search}}},
-                        {'mainInfo': {$elemMatch: {date: search}}},
+                        {'mainInfo': {$elemMatch: {dateOfBirth: search}}},
+                        {'mainInfo': {$elemMatch: {dateOfDeath: search}}},
                         {'builder.name': search},
                         {'builder.phone': search}
                     ],

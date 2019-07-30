@@ -181,10 +181,16 @@ class ContractDetails extends Component {
                                                                 { info.lastName }
                                                             </div>
                                                         </div>
-                                                        <div className={`col-12`}>
+                                                        <div className={`col-6`}>
                                                             <div className={`p-1`}>
-                                                                <h6 className={`m-0 d-inline pr-2`}>Date:</h6>
-                                                                { info.date }
+                                                                <h6 className={`m-0 d-inline pr-2`}>Date of Birth:</h6>
+                                                                {info.dateOfBirth && new Date(info.dateOfBirth).toLocaleDateString('ru-RU')}
+                                                            </div>
+                                                        </div>
+                                                        <div className={`col-6 border-left`}>
+                                                            <div className={`p-1`}>
+                                                                <h6 className={`m-0 d-inline pr-2`}>Date of Death:</h6>
+                                                                {info.dateOfDeath && new Date(info.dateOfDeath).toLocaleDateString('ru-RU')}
                                                             </div>
                                                         </div>
                                                     </div>

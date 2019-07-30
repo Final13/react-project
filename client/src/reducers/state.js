@@ -85,7 +85,8 @@ export default {
                     firstName: '',
                     secondName: '',
                     lastName: '',
-                    date: ''
+                    dateOfBirth: '',
+                    dateOfDeath: ''
                 }
             ],
             otherInfo: {
